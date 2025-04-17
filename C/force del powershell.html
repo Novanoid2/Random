@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Force Del</title>
+</head>
+<body>
+    <textarea id="." rows="5" cols="20" placeholder="gain perms + del"></textarea>
+    <button onclick="copy()">« Copy w del»</button>
+    <textarea id="," rows="5" cols="20" placeholder="gain perms"></textarea>
+    <button onclick="copy2()">« Copy w perms»</button>
+    <h4>*powershell!</h4>
+    <script>
+function copy() {
+  var a = document.getElementById(".").value;
+  document.getElementById(".").value = 'takeown /F "' + a + '" /A /R\r\nicacls "' + a + '" /grant Administrators:F /T\r\nRemove-Item "' + a + '" -Recurse -Force\r\n';
+  document.getElementById(".").select();
+  navigator.clipboard.writeText(document.getElementById(".").value);
+  document.getElementById(".").value = "";
+}
+function copy2() {
+  var b = document.getElementById(",").value;
+  document.getElementById(",").value = 'takeown /F "' + b + '" /A /R\r\nicacls "' + b + '" /grant Administrators:F /T\r\n';
+  document.getElementById(",").select();
+  navigator.clipboard.writeText(document.getElementById(",").value);
+  document.getElementById(",").value = "";
+}
+    </script>
+</body>
+</html>

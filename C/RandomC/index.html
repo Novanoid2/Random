@@ -1,0 +1,221 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
+    <title>Test 15/1</title>
+  </head>
+  <body style="background-color:black">
+    <h1>Hello world</h1>
+    <h3>This is a <span style="color:red">red</span> & <span style="color:green">green </span>part.</h3>
+    <p> This is an <em>emphasized</em> part.</p>
+    <button id="button1" onclick="buttonPressed()">Click me</button>
+    <button id="button2" onclick="button2Pressed()">   </button>
+    <input
+    type="text"
+    id="info"
+    size="25">
+    <script src="index.js"></script>
+  </body>
+  </html>
+<!--</style>
+<div id="myText">Zgadnij cyfre!</div>
+
+<script>
+    document.getElementById("myText").style.fontWeight = "bold";
+</script>
+
+<p>Tutaj wpisz cyfre (1-100) (bez przecinkow)</p>
+
+<style>
+.box {
+  display: inline-block;
+  margin-right: 0px;
+}
+.box input[type="text"] {
+  width: 100px;
+  height: 35px;
+}
+</style>
+<div class="box">
+  <input type="text" id="E" placeholder=" Cyfra">
+</div>
+<button onclick="calculateGuess()">Sprawdz</button>
+<p id="result1"></p>
+<p id="guessCount">Liczba prób: 0</p>
+<script>
+  var randomNum = Math.floor(Math.random() * 100) + 1;
+var guessCount = 0;
+<script>
+  function calculateGuess() {
+    var userGuess = parseFloat(document.getElementById("E").value);
+ guessCount++;     
+    if (userGuess < randomNum) {
+     document.getElementById("guessCount").innerHTML = "Liczba prób: " + guessCount;
+  }
+</script>
+
+</body>
+</html>
+
+<!--
+<style>
+.box {
+  display: inline-block;
+  margin-right: 100px;
+}
+.box input[type="text"] {
+  width: 70px;
+  height: 35px;
+}
+</style>
+<div id="myText1">Przeliczenie Euro na Zlotych</div>
+
+<script>
+    document.getElementById("myText1").style.fontWeight = "bold";
+</script>
+<!--<p>!UWAGA, przeliczenie moze byc niepoprawne jesli zmieni sie kurs wymiany!</p>
+-->
+<!--<div class="box">
+  <input type="text" id="E" placeholder=" Ilosc Euro">
+</div>
+<!--<div class="box">
+  <input type="text" id="KMInput" placeholder="Przejachanych kilometrow"> -->
+<!--</div>
+<button onclick="calculate1()">Przelicz</button>
+<p id="result2"></p>
+
+<script>
+  function calculate1() {
+    var L = parseFloat(document.getElementById("E").value);
+    var result3 = L * 4.3;
+    document.getElementById("result2").innerText = result3 + " Zlotych";
+  }
+</script>
+
+<style>
+.box {
+  display: inline-block;
+  margin-right: 2px;
+}
+.box input[type="text"] {
+  width: 100px;
+  height: 23px;
+}
+</style>
+<div id="myText2">Przeliczenie Zlotych na Euro</div>
+
+<script>
+    document.getElementById("myText2").style.fontWeight = "bold";
+</script>
+<!--<p>!UWAGA, przeliczenie moze byc niepoprawne jesli zmieni sie kurs wymiany!</p>
+-->
+<!--<div class="box">
+  <input type="text" id="Zl" placeholder=" Ilosc Zloty">
+</div>
+<!--<div class="box">
+  <input type="text" id="KMInput" placeholder="Przejachanych kilometrow">-->
+<!--</div>
+<button onclick="calculate2()">Przelicz</button>
+<p id="result4"></p>
+<script>
+  function calculate2() {
+    var A = parseFloat(document.getElementById("Zl").value);
+    var result5 = A / 4.32;
+    document.getElementById("result4").innerText = result5 + " Euro";
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    input {
+      width: 10%;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 6%;
+      height: 23px;
+      font-size: 14px;
+    }
+  </style>
+  <title>Simple Calculator</title>
+</head>
+<body>
+
+  </style>
+  <div id="myText10">Kalkulator</div>
+
+  <script>
+      document.getElementById("myText10").style.fontWeight = "bold";
+  </script>
+
+<div>
+  <input type="text" id="result6" placeholder="0" readonly>
+</div>
+
+<div>
+  <button onclick="appendToResult('1')">1</button>
+  <button onclick="appendToResult('2')">2</button>
+  <button onclick="appendToResult('3')">3</button>
+  <button onclick="setOperation('+')">+</button>
+</div>
+
+<div>
+  <button onclick="appendToResult('4')">4</button>
+  <button onclick="appendToResult('5')">5</button>
+  <button onclick="appendToResult('6')">6</button>
+  <button onclick="setOperation('-')">-</button>
+</div>
+
+<div>
+  <button onclick="appendToResult('7')">7</button>
+  <button onclick="appendToResult('8')">8</button>
+  <button onclick="appendToResult('9')">9</button>
+  <button onclick="setOperation('*')">*</button>
+</div>
+
+<div>
+  <button onclick="appendToResult('0')">0</button>
+  <button onclick="clearResult()">C</button>
+  <button onclick="setOperation('/')">/</button>
+  <button onclick="setOperation('**')">^</button>
+</div>
+</div>
+<button onclick="calculate()">=</button>
+</div>
+<script>
+  // JavaScript logic for the calculator goes here
+  var operation = "";
+
+  function appendToResult(value) {
+    document.getElementById("result6").value += value;
+  }
+
+  function setOperation(op) {
+    operation = op;
+    document.getElementById("result6").value += op;
+  }
+
+  function calculate() {
+    var expression = document.getElementById("result6").value;
+    var result = eval(expression);
+    document.getElementById("result6").value = result;
+    operation = "";
+  }
+
+  function clearResult() {
+    document.getElementById("result6").value = "";
+    operation = "";
+  }
+</script>
+
+</body>
+</html>

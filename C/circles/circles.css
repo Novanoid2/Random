@@ -1,0 +1,95 @@
+#ver{
+    position: absolute;
+    top: 95%;
+    left: 1%;
+}
+#h1 {
+    text-align: center;
+    font-size: 3em;
+}
+/*=========================================*/
+#row {
+    /*nowe*/
+    display: flex;
+    justify-content: space-around;
+}
+.dot {
+    height: var(--size);
+    width: var(--size);
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+#row2{
+    display: flex;
+    justify-content:space-around;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+#row3{
+   display: flex;
+   justify-content:space-around;
+   margin-left:5px;
+   margin-right: 5px;
+   margin-top: 60px;
+   margin-bottom: 60px;
+}
+#row4{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+    margin-bottom: 60px;
+ }
+#last{
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+ }
+.bluedot {
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    animation-name: test;
+    animation-delay: 0.7s;
+    animation-duration: 3s;
+    background-color: var(--color);
+}
+/*#bluedots{}*/
+#canvas{
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    z-index: -1;
+ }
+
+@keyframes test {
+  from {background-color: var(--color);
+        top: 120px;}
+  to {background-color: red;
+      top: 225px;}
+}
+/* css anim change pos todo*/
+/*now for each ball custom keyframes &
+import vars to css for top: and left:*/
+/*a lot of work but worth it*/
+
+#b1{    position: absolute;}
+#b2{    position: absolute;}
+#b3{    position: absolute;}
+#b4{    position: absolute;}
+#b5{    position: absolute;}
+#b6{    position: absolute;}
+#b7{    position: absolute;}
+#b8{    position: absolute;}
+#b9{    position: absolute;}
+#b10{    position: absolute;}
+#b11{    position: absolute;}
+#b12{    position: absolute;}
+#b13{    position: absolute;}
+#b14{    position: absolute;}
+#b15{    position: absolute;}
+#b16{    position: absolute;}

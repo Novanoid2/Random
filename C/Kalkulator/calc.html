@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="calc.css" />
+    <title>Kalkulator</title>
+  </head>
+  <body co>
+    <h1><span style="color:white">Kalkulator</span></h1>
+    <p id="oczekiwanie">- - - - - - - - - - - - - - - -</p>
+    <input id="calc_output" type="text" size="1" placeholder="wyliczenia tutaj sa robione"/>
+    <input id="visible_output" type="text" size="30" placeholder="..." readonly />
+    <div>
+        <button id="pierw" onclick="pierw()">√</button>
+        <button id="silnia" onclick="silnia()">!</button>
+        </div>
+    <div>
+      <button id="pow" onclick="action('^')">^</button>
+      <button id="C" onclick="clearAll()">C</button>
+      <button id="backspace" onclick="backspace()">⌫</button>
+    </div>
+    <div>
+      <button id="divide" onclick="action('/')">/</button>
+      <button id="sie" onclick="addnumb('7')">7</button>
+      <button id="osi" onclick="addnumb('8')">8</button>
+      <button id="dzie" onclick="addnumb('9')">9</button>
+    </div>
+    <div>
+      <button id="times" onclick="action('·')">x</button>
+      <button id="czt" onclick="addnumb('4')">4</button>
+      <button id="piec" onclick="addnumb('5')">5</button>
+      <button id="sze" onclick="addnumb('6')">6</button>
+    </div>
+    <div>
+      <button id="min" onclick="action('-')">-</button>
+      <button id="jed" onclick="addnumb('1')">1</button>
+      <button id="dwa" onclick="addnumb('2')">2</button>
+      <button id="trzy" onclick="addnumb('3')">3</button>
+    </div>
+    <div>
+      <button id="plus" onclick="action('+')">+</button>
+      <button id="komma" onclick="action('.')">.</button>
+      <button id="zero" onclick="addnumb('0')">0</button>
+      <button id="result" onclick="showresult()">=</button>
+    </div>
+    <input type="checkbox" id="z" onclick="zprz()">
+    <input type="checkbox" id="bez" onclick="bezprz()">
+    <label id="zlabel" for="z"><span style="color:white">Odpowiedz z przecinkiem</span></label>
+    <label id="bezlabel" for="bez"><span style="color:white">Odpowiedz bez przecinka</span></label>
+    <label id="ver"><span style="color:white">wersia 3.2.6</span></label>
+    <label id="extra" for="visible_output"> <span style="color:white">Extra:</span></label>
+    <script src="calc.js"></script>
+  </body>
+</html>
