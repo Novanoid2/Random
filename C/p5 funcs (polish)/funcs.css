@@ -1,0 +1,64 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+}
+h1 {
+  position: fixed;
+  top: -8px;
+  left: 120px;
+  font-family: Times-New-Roman;
+  font-size: 40px;
+}
+#datainfo {
+  position: absolute;
+  top: 105px;
+  left: 27px;
+  border: none;
+  border-radius: 7px;
+  font-size: 16px;
+  font-family: Times-New-Roman;
+}
+#min1 {
+  position: absolute;
+  top: 105px;
+  left: 250px;
+  border: none;
+  border-radius: 7px;
+  font-size: 16px;
+  font-family: Times-New-Roman;
+}
+#max2 {
+  position: absolute;
+  top: 105px;
+  left: 350px;
+  border: none;
+  border-radius: 7px;
+  font-size: 16px;
+  font-family: Times-New-Roman;
+}
+#output1 {
+  position: absolute;
+  top: 305px;
+  left: 27px;
+  font-family: Verdana;
+  font-size: 21px;
+}
+#output2 {
+  position: absolute;
+  top: 340px;
+  left: 27px;
+  font-family: Verdana;
+  font-size: 21px;
+}
+button {
+  background-color: #000000;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 7px;
+}
