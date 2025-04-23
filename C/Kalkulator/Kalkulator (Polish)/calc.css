@@ -1,0 +1,324 @@
+#ver {
+    position: absolute;
+    top: 95%;
+    left: 94%;
+    font-family: Timer-New-Roman;
+}
+#extra{
+    position:absolute;
+    top: 400px;
+    left: 522px;
+    font-size: 26px;
+}
+#z{
+    position:absolute;
+    top: 440px;
+    left: 434px;
+}
+#bez{
+    position:absolute;
+    top: 480px;
+    left: 434px;
+}
+#zlabel{
+  position:absolute;
+  top: 438px;
+  left: 459px;
+  font-size: 20px
+}
+#bezlabel{
+  position:absolute;
+  top: 478px;
+  left: 459px;
+  font-size: 20px
+}
+#oczekiwanie {
+  color: white;
+}
+  h1 {
+    position: absolute;
+    top: 25px;
+    left: 465px;
+    font-family: Calibri;
+    font-size: 3em;
+  }
+  #visible_output {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.875);
+    color: black;
+    border: none;
+    top: 125px;
+    left: 405px;
+    font-family: Calibri;
+    border-radius: 9px;
+    font-size: 22px;
+  }
+  ::placeholder {
+    color: black;
+  }
+  #calc_output{
+    position:absolute;
+    top: 99%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    font-size: 3px;
+  }
+
+  /*-----------------------------------------------------------------------------------------------------------------------*/
+  #pierw{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 520px;
+    left: 518px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
+  }
+  #silnia{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 519px;
+    left: 558px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  } 
+  /*-----------------------------------------------------------------------------------------------------------------------*/
+ #pow {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 181px;
+    left: 503px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
+  }
+  #divide {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 215px;
+    left: 505px;
+    cursor: pointer;
+    font-size: 22px;
+    border-radius: 7px;
+  }
+  #times{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 252px;
+    left: 503px;
+    cursor: pointer;
+    font-size: 19px;
+    border-radius: 7px;
+  }
+  #min{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 285px;
+    left: 504px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #plus{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 321px;
+    left: 503px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 7px;
+  }
+  /* --------------------------------------------------------------------------------------------------------------------*/
+  
+  #sie {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 215px;
+    left: 531px;
+    cursor: pointer;
+    font-size: 22px;
+    border-radius: 7px;
+  }
+#czt{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 250px;
+    left: 531px;
+    cursor: pointer;
+    font-size: 22px;
+    border-radius: 7px;
+}
+  #jed{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 285px;
+    left: 531px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #komma{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 320px;
+    left: 534px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
+  } 
+  /*---------------------------------------------------------------------------------------------------------------------*/
+  #C {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 181px;
+    left: 550px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
+  }
+  #osi {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 215px;
+    left: 562px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #piec{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 250px;
+    left: 562px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #dwa{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 285px;
+    left: 562px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #zero{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 320px;
+    left: 562px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
+  }
+  /* ----------------------------------------------------------------------------------------------------------------------*/
+  #backspace {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 180px;
+    left: 582px;
+    cursor: pointer;
+    font-size: 17.5px;
+    border-radius: 7px;
+  }
+  #dzie {
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 215px;
+    left: 592px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #sze{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 250px;
+    left: 592px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #trzy{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 285px;
+    left: 592px;
+    cursor: pointer;
+    font-size: 21px;
+    border-radius: 7px;
+  }
+  #result{
+    position: absolute;
+    background-color: #000000;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    top: 320px;
+    left: 592px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 7px;
+  }
