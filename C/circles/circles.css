@@ -1,0 +1,529 @@
+#ver {
+    position: absolute;
+    top: 95%;
+    left: 1%;
+}
+#restart{
+    position: absolute;
+    top: 78%;
+    font-size: 2.5em;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 10px;
+    background-color: pink;
+    border-color: green;
+    border-width: 3px;
+}
+#h1 {
+    text-align: center;
+    font-size: 3em;
+}
+
+/*=========================================*/
+#row {
+    /*nowe*/
+    display: flex;
+    justify-content: space-around;
+}
+
+.dot {
+    height: var(--size);
+    width: var(--size);
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+#row2 {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+#row3 {
+    display: flex;
+    justify-content: space-around;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+#row4 {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+#last {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+/*.bluedot {
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    animation-name: test;
+    animation-delay: 0.7s;
+    animation-duration: 3s;
+    background-color: var(--color);
+}
+
+/*#bluedots{}*/
+#canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+#d1 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+/*do 20%, 40%, ... for steps?
+to do multiple times*/
+@keyframes test1 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left1);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left9);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d2 {
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    position: absolute;
+}
+
+@keyframes test2 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left1);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left9);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d3 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+@keyframes test3 {
+     0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left2);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left9);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d4 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+@keyframes test4 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left2);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left9);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d5 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test5 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left3);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left10);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d6 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test6 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left3);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left10);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+#d7 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+@keyframes test7 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left4);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left10);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d8 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test8 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left4);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left10);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left13);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d9 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test9 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left5);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left11);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+
+#d10 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test10 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left5);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left11);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d11 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test11 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left6);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left11);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d12 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test12 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left6);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left11);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d13 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+@keyframes test13 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left7);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left12);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d14 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+@keyframes test14 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left7);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left12);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+
+#d15 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+@keyframes test15 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left8);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left12);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
+
+#d16 {
+    position: absolute;
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+}
+
+@keyframes test16 {
+    0%{}
+
+    25% {
+        top: var(--top2);
+        left: var(--left8);
+    }
+    50%{
+        top: var(--top3);
+        left: var(--left12);
+    }
+    75%{
+        top: var(--top4);
+        left: var(--left14);
+    }
+    100%{
+        top: var(--top5);
+        left: var(--left15);
+    }
+}
