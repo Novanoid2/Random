@@ -13,7 +13,6 @@ let sqArr = [];
 let shown = false;
 let mouse = "up";
 let started = false;
-//please leave me alone-
 
 class Sqs {
     constructor(x, y, color) {
@@ -87,7 +86,6 @@ function start() {
             sqArr[toBlack[i]].info.color = "black";
         }
 
-        //console.log("v/", started);
         reloadCanvas();
         //checks to repeat
         if (toWhite.length === 0) {
@@ -107,16 +105,13 @@ function toggleUpdate() {
         }
         shown = false;
         document.getElementById("poly").style.cssText += "transform: rotate(0deg);"
-
     } else {
         for (let i = 0; i < document.getElementById("rows").childElementCount; i++) {
             document.getElementById(`row${i + 1}`).style = "color: white";
         }
         shown = true;
-        //document.getElementById("poly").removeChild(document.getElementById("tri"));
         document.getElementById("poly").style.cssText += "transform: rotate(180deg);"
         alignPolyToButton();
-        //setTimeout(alignPolyToButton, 50);
     }
 }
 
@@ -146,7 +141,6 @@ function setSizes() {
     canvGlobal = canv; //make canv a global value
     document.documentElement.style.setProperty(`--x1`, `${canv.right + 40 - canv.left}px`);
     document.documentElement.style.setProperty(`--x2`, `${canv.right + 65 - canv.left}px`);
-    //document.documentElement.style.setProperty(`--x3`, `${canv.right + 43 - canv.left}px`);
     document.documentElement.style.setProperty(`--ul`, `${canv.right - canv.left - 2}px`);
     if (window.innerWidth <= canv.right + 520) {
         document.documentElement.style.setProperty(`--h1`, `${canv.right + canv.left * 2}px`);
