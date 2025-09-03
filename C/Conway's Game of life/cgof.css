@@ -1,0 +1,86 @@
+#canvas {
+    border: 3px solid rgb(117, 79, 255);
+    border-radius: 8px;
+    box-shadow: 0px 0px 25px rgb(150, 80, 255);
+    background-color: rgb(0, 0, 0);
+    position: absolute;
+    left: 1%;
+    transform: translate(0%, 0.5%);
+    top: 1%;
+    height: var(--wh);
+    width: var(--wh);
+}
+
+#h1 {
+    position: absolute;
+    left: var(--h1);
+    color: white;
+    font-family: Garamond;
+    font-size: 3em;
+}
+
+#poly {
+    position: absolute;
+    transform: translateY(-8%);
+}
+
+#button {
+    position: absolute;
+    left: var(--x2);
+    top: 380px;
+    color: white;
+    background-color: black;
+    border-radius: 8px;
+    border: white solid 1px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+#hiddenButton {
+    position: absolute;
+    width: 30px;
+    left: var(--x1);
+    top: 380px;
+    color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 8px;
+    border: rgba(0, 0, 0, 0);
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+#button:hover {
+    border: turquoise solid 1px;
+}
+
+#rows {
+    position: relative;
+    color: black;
+    top: 390px;
+    left: var(--ul);
+    width: 140px;
+}
+
+#start {
+    position: absolute;
+    top: 297px;
+    left: calc(var(--x1) + 3px);
+    color: white;
+    background-color: black;
+    border-radius: 8px;
+    border: rgb(117, 79, 255) solid 2px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+#stop {
+    position: absolute;
+    top: 337px;
+    left: calc(var(--x1) + 3px);
+    color: rgb(255, 0, 0);
+    background-color: black;
+    border-radius: 8px;
+    border: rgb(117, 79, 255) solid 2px;
+    font-size: 1.5em;
+    cursor: pointer;
+}

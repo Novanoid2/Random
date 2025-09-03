@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document shit</title>
+</head>
+
+<body>
+    <div id="parent">
+        <button id="button">Click UwU</button>
+    </div>
+    <style>
+        #parent {
+            position: absolute;
+            /*display:flex;
+            justify-content: center;
+            align-items: center;*/
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #button {
+            color: black;
+            font-size: 1em;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            border-radius: 8px;
+            background-color: red;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let text = "testlol";
+        document.getElementById("button").onclick = function () {
+            document.getElementById("button").textContent == "Changed >:3" ?
+                document.getElementById("button").textContent = "meow~~"
+                :
+                document.getElementById("button").textContent = "Changed >:3"
+
+            if (!document.body.contains(document.getElementById("divtest"))) {
+                let alfa = document.createElement("div");
+                alfa.id = "divtest";
+                document.body.appendChild(alfa);
+            }
+            let a = document.createElement("p");
+            a.id = "test";
+            a.textContent = text;
+            document.getElementById("divtest").appendChild(a);
+            Math.random()*1.01 > 0.06 ? text += "lol" : text += " co ja robie ";
+        }
+    </script>
+</body>
+
+</html>

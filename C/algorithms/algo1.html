@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm 1</title>
+</head>
+
+<body style="background-color: #222222">
+    <style>
+        #canvas {
+            width: 70%;
+            height: 70%;
+            border: rgb(117, 79, 255) 2px solid;
+            box-shadow: 0px 0px 25px rgb(150, 80, 255);
+            background-color: rgb(0, 0, 0);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #b {
+            position: absolute;
+            left: 50%;
+            top: 3%;
+            width: 50%;
+            transform: translate(-50%);
+            font-size: 2em;
+            border-radius: 8px;
+            border: white 3px solid;
+            color: rgb(117, 79, 255);
+            background-color: black;
+            cursor: pointer;
+        }
+
+        #r {
+            position: absolute;
+            left: 93%;
+            top: 3%;
+            transform: translate(-50%);
+            font-size: 2em;
+            border-radius: 8px;
+            border: white 3px solid;
+            color: rgb(117, 79, 255);
+            background-color: black;
+            cursor: pointer;
+        }
+    </style>
+    <header style="color: white">wersja: 1.1</header>
+    <canvas id="canvas"></canvas>
+    <button id="b" onclick="startSorting();">Start</button>
+    <button id="r" onclick="location.reload();">Restart</button>
+    <script src="algo1.js"></script>
+</body>
+
+</html>

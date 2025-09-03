@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+    <link rel="icon" type="image/png" href="ico.png">
+    <!--<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">-->
+</head>
+
+<body style="background-color: #222222">
+    <style>
+        #restart {
+            color: white;
+            background-color: black;
+            font-size: 1.5em;
+            border-radius: 10px;
+            position: absolute;
+            left: 93%;
+            transform: translate(-50%);
+            top: 3%;
+            border: white solid 1px;
+        }
+
+        #canvas {
+            border: 5px solid rgb(131, 96, 255);
+            box-shadow: 0px 0px 60px rgb(116, 46, 230);
+            background-color: rgb(0, 0, 0);
+            border-radius: 15px;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            top: var(--t);
+            height: var(--h);
+            width: var(--w);
+        }
+
+        #h1 {
+            text-align-last: center;
+            transform: translate(0, -35%);
+            font-size: 3.2em;
+            color: rgb(131, 96, 255);
+            font-family: Garamond;
+            pointer-events: none;
+        }
+
+        #restart:hover {
+            color: red;
+            cursor: pointer;
+            border: turquoise solid 2px;
+        }
+    </style>
+    <button id="restart" onclick="location.reload();">Restart</button>
+    <h1 id="h1">~Snake~</h1>
+    <canvas id="canvas"></canvas>
+    <footer style="color: white; position:absolute; top:1%">wersja: 1.5.1</footer>
+    <div id="text"></div>
+    <script src="snake.js"></script>
+</body>
+
+</html>

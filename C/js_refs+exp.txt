@@ -1,0 +1,304 @@
+JavaScript Built-ins - przewodnik z krótkimi wyjaśnieniami (wersja rozszerzona)
+Opis: Pełniejsza lista popularnych wbudowanych obiektów, metod statycznych/instancyjnych oraz krótkie, praktyczne objaśnienia
+
+--- Array -------------------------------------------
+Konstruktor:
+  Array(length)
+Przykład: const a = Array(3); // [ <3 empty items> ]
+
+Metody statyczne:
+  Array.from(iterable)        // tworzy tablicę z iterable
+  Array.isArray(obj)
+  Array.of(...items)
+Przykład: Array.from('abc') // ['a','b','c']
+
+Metody instancyjne (wybór):
+  at(index)                   // a.at(0)
+  concat(...arrays)
+  copyWithin(target, start, end)
+  entries()                   // iterator [index, value]
+  every(fn)
+  fill(value, start, end)
+  filter(fn)
+  find(fn)
+  findIndex(fn)
+  flat(depth)
+  flatMap(fn)
+  forEach(fn)
+  includes(value)
+  indexOf(value)
+  join(sep)
+  keys()                      // iterator indexów
+  lastIndexOf(value)
+  map(fn)
+  pop(), push(...items)
+  reduce(fn, init), reduceRight(...)
+  reverse()
+  shift(), unshift(...)
+  slice(start, end)
+  some(fn)
+  sort(compareFn)
+  splice(start, deleteCount, ...items)
+  toString(), toLocaleString()
+  values()                    // iterator wartości
+
+Przykłady:
+  const arr = ['a','b','c'];
+  arr.map(x => x.toUpperCase()); // ['A','B','C']
+  for (const v of arr.values()) console.log(v); // a b c
+
+Wyjaśnienia - trudniejsze:
+  - at(index)
+    Co robi: Pobiera element z indeksu; akceptuje indeksy ujemne (np. -1 = ostatni).
+    Przykład: ['a','b','c'].at(-1) // 'c'
+  - copyWithin(target, start, end)
+    Co robi: Kopiuje fragment tablicy **w obrębie tej samej tablicy**, nadpisując cele. Działa in-place.
+    Przykład: [1,2,3,4].copyWithin(0,2) // [3,4,3,4]
+  - flatMap(fn)
+    Co robi: Mapuje każdy element, potem spłaszcza wynik o 1 poziom (skrót map(...).flat(1)).
+    Przykład: [1,2].flatMap(n => [n,n*2]) // [1,2,2,4]
+  - reduce((acc,v)=>..., init)
+    Co robi: Akumuluje wartość przechodząc po elementach; ważny jest początkowy akumulator (init).
+    Przykład: [1,2,3].reduce((s,x)=>s+x,0) // 6
+
+--- String ---------------------------------------
+Konstruktor: String(value)
+Właściwości: length
+Metody:
+  charAt(i), charCodeAt(i)
+  concat(...strings)
+  endsWith(substr), startsWith(substr)
+  includes(substr)
+  indexOf(substr), lastIndexOf(substr)
+  match(regexp), matchAll(regexp)
+  padEnd(len), padStart(len)
+  repeat(n)
+  replace(regexpOrStr, repl), replaceAll(...)
+  slice(start, end), substring(start,end)
+  split(sep, limit)
+  toLowerCase(), toUpperCase()
+  trim(), trimStart(), trimEnd()
+  valueOf()
+
+Przykład:
+  'Hello'.startsWith('He') // true
+  'a,b,c'.split(',') // ['a','b','c']
+
+Wyjaśnienia - trudniejsze:
+  - replace(..., function)
+    Co robi: Jeśli drugi argument to funkcja, dostaniesz dopasowanie && grupy i możesz dynamicznie zwrócić wynik.
+    Przykład: "x1".replace(/(\d)/, (m)=> +m+1) // "x2"
+  - match() vs matchAll() vs RegExp.exec()
+    Co robi: exec() zwraca szczegóły dopasowania i przy flagach global przesuwa lastIndex; match() zwraca różne rzeczy zależnie od flag; matchAll() zwraca iterator ze wszystkimi dopasowaniami (i grupami).
+    Przykład: [...'aba'.matchAll(/a/g)] // dwa dopasowania
+
+--- Number, Math, BigInt ------------------------------
+Number:
+  Number.isFinite(x), Number.isNaN(x), Number.parseFloat(), Number.parseInt()
+Math (statyczny obiekt):
+  Math.abs(x), Math.ceil(x), Math.floor(x), Math.round(x),
+  Math.max(...), Math.min(...), Math.random(), Math.sqrt(x), Math.pow(x,a)
+Przykład:
+  Math.random() // 0..1
+BigInt:
+  123n, BigInt('9007199254740991')
+Przykład:
+  const x = 10n + 5n; // 15n
+
+--- Date / Temporal -------------------------------------
+Date:
+  new Date(), Date.now(), Date.parse(str), date.toISOString()
+  getFullYear(), getMonth(), getDate(), getTime(), setTime(...)
+Przykład:
+  new Date().toISOString()
+
+Temporal (nowoczesne API, jeśli dostępne):
+  Temporal.Now.plainDateISO()
+
+--- RegExp ----------------------------------------------
+Konstruktor: /pattern/flags lub new RegExp('pattern','g')
+Metody:
+  test(str), exec(str), flags, source
+
+Wyjaśnienia - trudniejsze:
+  - exec() (g vs bez g)
+    Co robi: exec() na regexie z flagą /g będzie aktualizować internalny lastIndex i można wywoływać wielokrotnie by iterować dopasowania. Bez /g exec() zwykle zwraca pojedyncze dopasowanie.
+    Przykład: const r = /a/g; r.exec('aba'); r.exec('aba'); // różne wyniki
+
+--- Function / Generator / Async -------------------------
+Function:
+  function f(){}, const f = () => {}
+Generator:
+  function* gen(){ yield 1; yield 2; }
+  gen().next() // {value:1, done:false}
+Async function:
+  async function a(){ await Promise.resolve(1); }
+
+Wyjaśnienia - trudniejsze:
+  - Generator vs AsyncGenerator
+    Co robi: Generator zwraca iterator synchronizowany (yield), AsyncGenerator zwraca async iterator i możesz używać for await..of.
+
+--- Promise -----------------------------------------------
+Konstruktor: new Promise((res, rej) => {...})
+Statyczne:
+  Promise.resolve(value), Promise.reject(err),
+  Promise.all(iter), Promise.race(iter), Promise.allSettled(iter), Promise.any(iter)
+Instancyjne:
+  then(fn), catch(fn), finally(fn)
+
+Wyjaśnienia - trudniejsze:
+  - Promise.all vs allSettled vs any vs race
+    Co robi:
+      * all — czeka na wszystkie; jeśli choć jeden reject -> odrzuca.
+      * allSettled — czeka na wszystkie; zwraca tablicę statusów (fulfilled/rejected).
+      * any — zwraca pierwsze fulfilled; jeśli wszystkie reject -> odrzuca AggregateError.
+      * race — zwraca pierwszy resolved lub rejected.
+    Przykład: Promise.any([Promise.reject(1), Promise.resolve(2)]) // resolves 2
+
+  - async/await i obsługa błędów
+    Co robi: await musi być w async; błędy trzeba łapać try/catch.
+    Przykład:
+      async function f(){ try{ await Promise.reject('x') } catch(e){ console.log(e) } }
+
+--- Object ------------------------------------------------
+Konstruktor: Object()
+Metody statyczne:
+  Object.assign(target, ...sources)
+  Object.create(proto, properties)
+  Object.defineProperty(obj, prop, desc)
+  Object.defineProperties(obj, descs)
+  Object.freeze(obj), Object.seal(obj), Object.preventExtensions(obj)
+  Object.keys(obj), Object.values(obj), Object.entries(obj)
+  Object.getOwnPropertyDescriptor(obj, prop)
+  Object.getPrototypeOf(obj), Object.setPrototypeOf(obj, proto)
+
+Wyjaśnienia - trudniejsze:
+  - Object.defineProperty(descriptor: writable/enumerable/configurable)
+    Co robi: Pozwala precyzyjnie ustawić czy pole jest zapisywalne, enumerowalne (pokazuje się w pętli), czy da się zmienić jego descriptor później.
+    Przykład: Object.defineProperty(obj,'x',{value:1, writable:false})
+
+--- Map / Set / WeakMap / WeakSet --------------------------
+Map:
+  new Map(iterable)
+  map.set(k,v), map.get(k), map.has(k), map.delete(k), map.clear(), map.size
+  map.keys(), map.values(), map.entries(), map.forEach(...)
+Set:
+  new Set(iterable)
+  set.add(v), set.has(v), set.delete(v), set.size, set.clear()
+WeakMap / WeakSet:
+  brak enumeracji; klucze (WeakMap) muszą być obiektami i mogą być usuwane przez GC gdy nie ma innych referencji.
+
+Wyjaśnienia - trudniejsze:
+  - Map vs Object vs WeakMap
+    Co robi: Map pozwala na dowolny typ klucza i zachowuje kolejność wpisów; Object używa stringów/symboli jako kluczy i ma prototyp; WeakMap ma słabe odniesienia — wygodne do powiązania danych „prywatnych” z obiektami bez zapobiegania GC.
+    Przykład Map: const m = new Map([[{}, 1]]); // kluczem może być obiekt
+
+--- ArrayBuffer / Typed Arrays / DataView ------------------
+ArrayBuffer:
+  new ArrayBuffer(bytes)
+Typed arrays:
+  Int8Array, Uint8Array, Uint8ClampedArray, Int16Array, Uint16Array, Int32Array, Uint32Array,
+  Float32Array, Float64Array, BigInt64Array, BigUint64Array
+DataView:
+  new DataView(buffer)
+
+Wyjaśnienia - trudniejsze:
+  - ArrayBuffer vs TypedArray vs DataView
+    Co robi:
+      * ArrayBuffer to surowy blok pamięci.
+      * TypedArray (np. Uint8Array) to widok na buffer, z określonym typem i udostępnia indeksowanie.
+      * DataView daje elastyczny dostęp do danych (różne typy na różnych offsetach, kontrola endianness).
+    Przykład: const buf = new ArrayBuffer(4); new Uint32Array(buf)[0] = 42
+
+--- JSON ---------------------------------------------------
+  JSON.parse(str), JSON.stringify(obj)
+Przykład:
+  JSON.parse('{"a":1}').a // 1
+
+--- Reflect / Proxy ----------------------------------------
+Reflect:
+  Reflect.get(obj, prop), Reflect.set(obj, prop, value), Reflect.apply(fn, thisArg, args),
+  Reflect.construct(constructor, args)
+
+Proxy:
+  const p = new Proxy(target, handler)
+  handler może mieć: get, set, apply, construct, has, deleteProperty itp.
+
+Wyjaśnienia - trudniejsze:
+  - Proxy + Reflect wewnątrz handlerów
+    Co robi: Proxy przechwytuje operacje; Reflect pozwala wykonać "domyślną" operację (np. Reflect.get) i zwraca wartości zamiast throw w niektórych przypadkach. Użyteczne do walidacji, lazy-loading, logowania.
+    Przykład:
+      const proxy = new Proxy({}, {
+        get(target, prop, receiver){ 
+          console.log('get', prop); 
+          return Reflect.get(target, prop, receiver);
+        }
+      });
+      proxy.x = 1; proxy.x // wypisze 'get x' i zwróci 1
+
+--- WeakRef / FinalizationRegistry ------------------------
+  WeakRef pozwala trzymać słabe referencje; FinalizationRegistry do callbacków po GC.
+Wyjaśnienie:
+  - Są nie-deterministyczne: nie polegaj na nich dla krytycznego cleanupu, bo GC nie gwarantuje kiedy (lub czy) wywoła cleanup.
+  Przykład:
+    const wr = new WeakRef({}); 
+    const reg = new FinalizationRegistry(token => console.log('finalized', token));
+
+--- Intl (Internationalization) ---------------------------
+  Intl.NumberFormat, Intl.DateTimeFormat, Intl.Collator, Intl.ListFormat, Intl.Locale, itd.
+Przykład:
+  new Intl.NumberFormat('pl-PL', { style:'currency', currency:'PLN' }).format(1234.5) // "1 234,50 zł"
+
+--- Error objects -----------------------------------------
+  Error, AggregateError, EvalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError
+Przykład:
+  throw new TypeError('nieprawidłowy typ');
+
+--- Symbol i Symbol.* ------------------------------------
+  Symbol(), Symbol.iterator, Symbol.toStringTag, Symbol.asyncIterator, Symbol.species
+Wyjaśnienia - trudniejsze:
+  - Symbol.iterator
+    Co robi: Czyni obiekt iterowalnym (for..of). Zwraca iterator z .next().
+    Przykład: const it = ['a'][Symbol.iterator](); it.next().value // 'a'
+  - Symbol.toStringTag
+    Co robi: Pozwala kontrolować wynik Object.prototype.toString.call(obj) (np. "[object Foo]").
+    Przykład: obj[Symbol.toStringTag] = 'Foo'; Object.prototype.toString.call(obj) // "[object Foo]"
+  - Symbol.species
+    Co robi: Określa konstruktor używany przy tworzeniu obiektów potomnych przez metody (np. map, slice). Dzięki temu metoda może zwracać zwykłą Array zamiast custom klasy.
+    Przykład:
+      class MyA extends Array { static get [Symbol.species]() { return Array; } }
+      new MyA(1).map(x=>x).constructor === Array // true
+
+--- Function.prototype.bind / call / apply -----------------
+  - bind(thisArg, ...args) -> nowa funkcja z ustawionym this i początkowymi argumentami.
+    Przykład: const g = f.bind(obj);
+  - call(thisArg, a, b) // wywołanie z listą
+  - apply(thisArg, [a,b]) // wywołanie z tablicą
+
+--- Atomics (SharedArrayBuffer) -----------------------------
+  Atomics.load/store, Atomics.wait/notify — synchronizacja niskopoziomowa między workerami przy SharedArrayBuffer. Rzadko potrzebne w zwykłych aplikacjach.
+  Przykład: Atomics.store(ta, 0, 1); Atomics.notify(ta, 0, 1);
+
+--- Inne globalne funkcje -------------------------------------
+  eval(), isFinite(), isNaN(), parseFloat(), parseInt(), encodeURI(), decodeURI(), escape()/unescape() (deprecated)
+  Przykład: parseInt('42') // 42
+
+--- Przykłady zbiorcze krótkie --------------------------------
+1) Map + forEach:
+  const map = new Map([['a',1],['b',2]]);
+  map.forEach((v,k) => console.log(k, v));
+
+2) Promise + async/await:
+  async function f(){ const x = await Promise.resolve(5); return x; }
+
+3) Proxy (walidacja):
+  const validator = {
+    set(obj, prop, value) {
+      if (prop === 'age' && value < 0) throw new Error('age<0');
+      obj[prop] = value; return true;
+    }
+  };
+  const user = new Proxy({}, validator);
+  user.age = 10; // ok
+
+--- Koniec ---

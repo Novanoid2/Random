@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conways game of life</title>
+    <link rel="icon" type="image/png" href="ico.png">
+    <link rel="stylesheet" href="cgof.css">
+</head>
+
+<body style="background-color: black">
+    <canvas id="canvas"></canvas>
+    <header style="position:absolute; color: white; top:1; left: var(--h1)">v1.2.1</header>
+    <h1 id="h1">Conway's Game of Life</h1>
+
+    <button id="start" onclick="start(); document.getElementById('stop').textContent = `Stop`;">Start</button>
+    <!-- Im saving space in .js by using scripts in here lol -->
+    <button id="stop"
+        onclick="if (this.textContent === `Stop`) {clearTimeout(t_id); started = false; this.textContent = `Restart`;} else location.reload();">Restart</button>
+    <div id="update">
+        <div id="poly">
+            <svg width="14" height="12" id="tri">
+                <polygon points="7,12 0,0 14,0" fill="white" />
+            </svg>
+        </div>
+        <button id="button" onclick="toggleUpdate()">Updates</button>
+        <button id="hiddenButton" onclick="toggleUpdate()"> </button>
+        <ul id="rows">
+            <p id="row1">10/7: Start</p>
+            <p id="row2">28/7: First working version, testing for bugs</p>
+            <p id="row3">30/7: Fixed support for smaller tabs</p>
+            <p id="row4">31/7: new drawing feature + bug fixes</p>
+            <p id="row5">Added canvas html</p>
+        </ul>
+    </div>
+</body>
+
+<script src="cgof.js"></script>
+
+</html>

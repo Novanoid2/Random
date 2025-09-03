@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex ^-^</title>
+</head>
+<body>
+    <input id="nie_wiem">
+    <button onClick="regex1()">E-mail test</button>
+    <button onClick="regex2()">Password test</button>
+    <button onClick="regex3()">Zostawic środek linku</button>
+    <button onClick="showreg()">(Show regex's)</button>
+    <h5>*technically</h5>
+    <p id="nie_wiem2">- - - - - - - - - - - - - - - -</p>
+    <script>
+    function regex1(){
+        if(document.getElementById("nie_wiem").value !== ""){
+      if(/[a-zA-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}/.test(document.getElementById("nie_wiem").value)){
+        document.getElementById("nie_wiem2").innerHTML = "(technically) valid e-mail uwu"
+    } else {
+        document.getElementById("nie_wiem2").innerHTML = "invalid e-mail grr- >:( "
+    }
+}
+    }
+    function regex2(){
+        if(document.getElementById("nie_wiem").value !== ""){
+        if(/[a-zA-Z0-9!@#\$%\^\*\(\)_/]{5,}/.test(document.getElementById("nie_wiem").value)){
+          document.getElementById("nie_wiem2").innerHTML = "very strong password ^^"
+        } else if(/[a-zA-Z0-9!@#\$%\^\*\(\)_/]{3,4}/.test(document.getElementById("nie_wiem").value)){
+             document.getElementById("nie_wiem2").innerHTML = "a strong password :p"
+        } else{
+            document.getElementById("nie_wiem2").innerHTML= "a password-"
+        }
+      }
+    }
+    function regex3(){
+        //removes everything except the middle of a link
+        if(document.getElementById("nie_wiem").value !== ""){
+    var link = document.getElementById("nie_wiem").value;
+           if(/w+\./.test(link)){
+            //works if the given link is valid
+            link = link.slice(4);
+            }
+       if(/\.[a-zA-Z0-9]+/.test(link)){
+          while(link.includes(".")){            
+          link=link.slice(0,-1);
+        }   
+        }
+        document.getElementById("nie_wiem2").innerHTML = link;
+    } else {
+        document.getElementById("nie_wiem2").innerHTML = "daj link >:("
+    }
+      }
+    function showreg(){
+    document.getElementById("nie_wiem2").innerHTML = "1: /[a-zA-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}/   2: /[a-zA-Z0-9!@#\$%\^\*\(\)_/]{5,}/ => /[a-zA-Z0-9!@#\$%\^\*\(\)_/]{3,4}/   3: /w+\./ => /\.[a-zA-Z0-9]+/"
+    }
+    </script>
+</body>
+</html>
