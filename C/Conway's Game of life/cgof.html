@@ -14,7 +14,7 @@
     <header style="position:absolute; color: white; top:1; left: var(--h1)">v1.2.2</header>
     <h1 id="h1">Conway's Game of Life</h1>
 
-    <button id="start" onclick="start(); document.getElementById('stop').textContent = `Stop`;">Start</button>
+    <button id="start" onclick="document.getElementById('stop').textContent = `Stop`; start();">Start</button>
     <!-- Im saving space in .js by using scripts in here lol -->
     <button id="stop"
         onclick="if (this.textContent == `Stop`) {clearTimeout(t_id); started = false; this.textContent = `Restart`;} else location.reload()">Restart</button>
@@ -31,7 +31,7 @@
             <p id="row2">28/7: First working version, testing for bugs</p>
             <p id="row3">30/7: Fixed support for smaller tabs</p>
             <p id="row4">31/7: new drawing feature + bug fixes</p>
-            <p id="row5">Added canvas html</p>
+            <p id="row5">19/9: small code fixes</p>
         </ul>
     </div>
 </body>

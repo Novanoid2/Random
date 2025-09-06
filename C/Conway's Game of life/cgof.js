@@ -9,7 +9,7 @@ const sq = canvas.getContext("2d");
 const row = canvas.width / sqsize;
 let pos = { x: 0, y: 0 };
 let arrPos = 1;
-let sqArr = [];
+let sqArr = ["uwu"];
 let shown = false;
 let mouse = "up";
 let started = false;
@@ -53,7 +53,7 @@ function start() {
             /* future: stop using this method and use a 2d array (const neighbors = [x,-y], [-x,y],...) and put it in 2 for loops (x and y)
             or something so it can check each neighbor for each i;  (thanks chat); (just optimise this -_-)
             */
-            // newGrid[i] = structuredClone(sqArr[i]);
+            //newGrid[i] = structuredClone(sqArr[i]);
             if (sqArr[i].info.x === 0) {//left
                 check = [{ 1: i - row, 2: i - (row - 1), 3: i + 1, 4: i + row, 5: i + (row + 1) }];
             } else if (sqArr[i].info.x === wh - sqsize) {//right
@@ -65,7 +65,7 @@ function start() {
             //increments j (check values) and check color of each one
             //i really hope i wont have to reunderstand this later...
             for (let j = 0; j < Object.keys(check[0]).length; j++) {
-                if (sqArr[check[0][Object.keys(check[0])[j]]]?.info.color === "white") num++;
+                if (sqArr[check[0][Object.keys(check[0])[j]]]?.info?.color === "white") num++;
             }
 
             //saves info to make it alive/dead
@@ -74,6 +74,7 @@ function start() {
                 //newGrid[i].info.color = "white"
             } else {
                 toBlack.push(i);
+                //newGrid[i].info.color = "black";
             }
 
             num = 0;
@@ -91,9 +92,13 @@ function start() {
         if (toWhite.length === 0) {
             clearTimeout(t_id);
             started = false;
+            document.getElementById("stop").textContent = "Restart";
         } else {
+            //sqArr = structuredClone(newGrid);
+            //console.log(sqArr, newGrid);
             t_id = setTimeout(() => { started = false; start(); }, 200);
         };
+
     }
 }
 
