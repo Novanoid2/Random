@@ -17,7 +17,7 @@
     <button id="start" onclick="start(); document.getElementById('stop').textContent = `Stop`;">Start</button>
     <!-- Im saving space in .js by using scripts in here lol -->
     <button id="stop"
-        onclick="if (this.textContent === `Stop`) {clearTimeout(t_id); started = false; this.textContent = `Restart`;} else location.reload();">Restart</button>
+        onclick="if (this.textContent == `Stop`) {clearTimeout(t_id); started = false; this.textContent = `Restart`;} else location.reload()">Restart</button>
     <div id="update">
         <div id="poly">
             <svg width="14" height="12" id="tri">
