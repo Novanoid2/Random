@@ -91,11 +91,13 @@ window.addEventListener("keydown", function (event) {
             setTimeout(() => {
                 allowRepeatedMove = true;
             }, 200)
+
             copy0Before = { x: snakeBlocks[0].pos.x, y: snakeBlocks[0].pos.y };
             if (start && nextMove === "ArrowUp") {
                 nextMove = "ArrowDown";
                 start = false;
             }
+
             switch (nextMove) {
                 case "ArrowUp":
                     if (lastMove !== "ArrowDown") {
@@ -128,7 +130,6 @@ window.addEventListener("keydown", function (event) {
         }
     } else {
         if (lost === false) lostGame("Wyszedles poza granice. Ty ćmoku");
-
     }
 
 });
@@ -156,7 +157,6 @@ setInterval(() => {
             updateAndDraw();
         } else {
             if (lost === false) lostGame("Wyszedles poza granice...");
-
         }
     }
 }, 500);
@@ -190,6 +190,7 @@ function makeFood() {
             }
             yCopy += sqsize - (+y);
         }
+
         food[0] = (new snakeAndFood(xCopy, yCopy));
         foodExists = true;
         time = 25;
@@ -198,6 +199,7 @@ function makeFood() {
             clearTimeout(timeoutId);
             clearInterval(intervalId);
         }
+
         setText();
         let timeoutTime = time * 1000
         timeoutId = setTimeout(() => {
@@ -320,11 +322,10 @@ function changeAToB(key) {
 //check if snake is head still in bounds to let it move again in move "functions"
 function isInBounds() {
     if (lost === false && snakeBlocks[0].pos.x <= canvas.width - sqsize && snakeBlocks[0].pos.x >= 0
-        && snakeBlocks[0].pos.y < canvas.height && snakeBlocks[0].pos.y >= 0) {
+        && snakeBlocks[0].pos.y < canvas.height && snakeBlocks[0].pos.y >= 0)
         return true;
-    } else {
+    else
         return false;
-    }
 }
 //for some reason these two behave differently, idk why + too lazy to fix it cuz it works x3
 //detects if snake head goes past border and ends game if yes
@@ -346,7 +347,7 @@ function setSize() {
     if (window.innerHeight < 670) {
         h = window.innerHeight / 2;
         document.documentElement.style.setProperty(`--t`, `25%`);
-    } else { document.documentElement.style.setProperty(`--t`, `15%`); }
+    } else document.documentElement.style.setProperty(`--t`, `15%`);
     document.documentElement.style.setProperty(`--w`, `${w}px`);
     document.documentElement.style.setProperty(`--h`, `${h}px`);
 }

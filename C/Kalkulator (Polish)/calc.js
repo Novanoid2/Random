@@ -96,11 +96,11 @@ function showresult() {
     while (calc.value.includes("^")) {
       calc.value = calc.value.replace("^", "**");
     }
-    if (calc.value.includes("!")) {
+    //if (calc.value.includes("!")) {
       if (/[0-9]+\!/.test(calc.value)) {
         calc.value = calc.value.replace(/[0-9]+\!/, s);
       }
-    }
+    //}
     while (calc.value.includes("√(")) {
       calc.value = calc.value.replace("√(", "Math.sqrt(");
     }
