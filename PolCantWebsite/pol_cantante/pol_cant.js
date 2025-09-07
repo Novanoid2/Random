@@ -1,7 +1,20 @@
 const chosen_lang = "Pl";
 const default_lang = "Pl";
+document.documentElement.style.setProperty(`--dl`, `pl`);
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px; ');
 
+const fs = require('fs');
+const url = 'https://www';
+
+fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) throw err;
+    // Replace keys with any combination of quotes around results
+    const fixed = data.replace(/(['"]{1,2}results['"]{1,2})\s*:/g, 'results:');
+    fs.writeFile(filePath, fixed, 'utf8', (err) => {
+        if (err) throw err;
+        console.log('All quoted results keys replaced with results!');
+    });
+});
 
 document.getElementById("lang").onclick = function () {
     if (!document.body.contains((document.getElementById("langBox")))) {
