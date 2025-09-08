@@ -1,23 +1,23 @@
 const chosen_lang = "Pl";
 const default_lang = "Pl";
 document.documentElement.style.setProperty(`--dl`, `pl`);
-console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px; ');
-//todo: fix
-async function getData(){
-let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PolCantWebsite/pol_cantante/info.json`)
-    .then(d => d.json())
-    .then(d =>
-        fetch(
-            `https://api.github.com/repos/Novanoid2/random/git/blobs/${d.sha}`
+console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px;');
+
+async function getData() {
+    let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PolCantWebsite/pol_cantante/info.json`)
+        .then(d => d.json())
+        .then(d =>
+            fetch(
+                `https://api.github.com/repos/Novanoid2/random/git/blobs/${d.sha}`
+            )
         )
-    )
-    .then(d => d.json())
-    .then(d => JSON.parse(atob(d.content)));
-
-console.log(data);
-
+        .then(d => d.json())
+        .then(d => JSON.parse(atob(d.content)));
+    applyData(data);
 }
 
+function applyData(file) {}
+getData();
 /*
 (async () => {
     const res = await axios.get("url")
