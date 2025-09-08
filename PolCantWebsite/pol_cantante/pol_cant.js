@@ -15,6 +15,7 @@ let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/P
     .then(d => JSON.parse(atob(d.content)));
 
 console.log(data);
+
 }
 
 /*
