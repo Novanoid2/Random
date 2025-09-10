@@ -156,7 +156,7 @@ ol {
     margin: auto;
     margin-bottom: 40px;
     margin-left: -40px;
-    gap: 9vw;
+    gap: 5vw;
     list-style-type: none;
     line-height: 50px;
     margin-top: 50px;
@@ -165,11 +165,10 @@ ol {
 
 }
 
-.liprz {
+li {
     border: double 5px black;
     max-width: calc(99.9vw / 3);
 }
-
 
 /*#boxBilety-border {
     position: absolute;

@@ -1,7 +1,5 @@
 const chosen_lang = "Pl";
 const default_lang = "Pl";
-document.documentElement.style.setProperty(`--dl`, `pl`);
-console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px;');
 
 async function getData() {
     let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PolCantWebsite/pol_cantante/info.json`)
@@ -14,8 +12,9 @@ async function getData() {
         .then(d => d.json())
         .then(d => JSON.parse(atob(d.content)));
     applyData(data)
-
 }
+
+getData();
 
 function applyData(file) {
     for (let key in file) {
@@ -23,8 +22,6 @@ function applyData(file) {
         if (el) el.innerHTML = file[key]
     }
 }
-
-getData();
 
 document.getElementById("lang").onclick = function () {
     if (!document.body.contains((document.getElementById("langBox")))) {
@@ -46,7 +43,6 @@ document.getElementById("lang").onclick = function () {
         setTimeout(() => { div.style.opacity = 1; }, 10);
     } else document.body.removeChild(document.getElementById("langBox"));
 }
-
 
 document.getElementById('onas').onclick = () => {
     document.getElementById('boxONas-border').scrollIntoView({ behavior: 'smooth' });
@@ -72,4 +68,7 @@ document.getElementById('dolacz').onclick = () => {
     document.getElementById('boxDolacz-border').scrollIntoView({ behavior: 'smooth' });
 };
 
-window.addEventListener('resize', () => { location.reload(); });
+//window.addEventListener('resize', () => { location.reload(); });
+
+document.documentElement.style.setProperty(`--dl`, `${default_lang}`);
+console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px;');
