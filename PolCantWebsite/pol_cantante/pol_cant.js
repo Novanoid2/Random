@@ -18,10 +18,18 @@ async function getData() {
 }
 
 function applyData(file) {
-    document.getElementById("prz1").textContent = file.prz1;
     for (let key in file) {
-        document.documentElement.style.setProperty(`--${key}`, `${file[key]}`);
+        let el = document.getElementById(key)
+        if (el) el.innerHTML = file[key]
     }
+    /*not a very good way, i know, but respectfully shut up ^^
+    document.getElementById("prz1d").innerHTML = file.prz1d;
+    document.getElementById("prz2d").innerHTML = file.prz2d;
+    document.getElementById("prz3d").innerHTML = file.prz3d;
+    document.getElementById("prz1g").innerHTML = file.prz1g;
+    document.getElementById("prz2g").innerHTML = file.prz2g;
+    document.getElementById("prz3g").innerHTML = file.prz3g;
+*/
 }
 
 getData();
