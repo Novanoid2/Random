@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": ".Js",
+      "type": "shell",
+      "command": "echo -e \"\\033[36m|JS|>====<|JS|\\033[0m\" && node ${file} && echo -e \"\\033[36m\\n> ☆ ~ Novanoid ~\\033[0m\"",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    }
+  ]
+}

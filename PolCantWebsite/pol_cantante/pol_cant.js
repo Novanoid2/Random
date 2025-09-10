@@ -6,24 +6,23 @@ console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55
 async function getData() {
     let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PolCantWebsite/pol_cantante/info.json`)
         .then(d => d.json())
-        .then(d =>
-            fetch(
-                `https://api.github.com/repos/Novanoid2/random/git/blobs/${d.sha}`
-            )
+        .then(d => fetch(
+            `https://api.github.com/repos/Novanoid2/random/git/blobs/${d.sha}`
+        )
         )
         .then(d => d.json())
         .then(d => JSON.parse(atob(d.content)));
     applyData(data);
 }
 
-function applyData(file) {}
+function applyData(file) {
+    for (let key in file) {
+        document.documentElement.style.setProperty(`--${key}`, `${file[key]}`);
+    }
+}
+
 getData();
-/*
-(async () => {
-    const res = await axios.get("url")
-    console.log(res.data);
-})()
-*/
+
 document.getElementById("lang").onclick = function () {
     if (!document.body.contains((document.getElementById("langBox")))) {
         let lang = document.getElementById("lang").getBoundingClientRect();

@@ -233,4 +233,8 @@ footer {
     border-radius: 10px;
 }
 
-a {text-decoration: none;}
+a {
+    text-decoration: none;
+    color: black;
+    border: solid black 2px;
+}

@@ -1621,8 +1621,8 @@ function median(arr) {
 
 function addPastNumbers(arr1, arr2) {
     for (let i = 0; i < fetched.length; i++) {
-        const test = { results: '17,24,26,27,49,3,5' };
-        if (fetched[i].results.includes(",,") || fetched[i].results.includes(", ,")) console.log("error in" + i); //small fail safe
+        let errors = /, ,|,,|00|  | /;
+        if (errors.test(fetched[i].results)) { console.log("error at" + i); break; }//small fail safe
         let main = fetched[i].results.split(",").slice(0, 5);
         let star = fetched[i].results.split(",").slice(5)
         main.forEach(element => { if (element.charAt(0) === "0") element = element.replace("0", ""); arr1.push(+element); });
@@ -1929,21 +1929,30 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
         }
     }
 
-    ////here is a place where there could be a big bug if main[<5] has the numbers that stars checks and adds, and vice versa, so check once in a while
     //main nums//
 
+    function checkCleanview(num) {
+        if (cleanview.includes(num)) {
+            cleanview.forEach((el, idx) => {
+                if (el === "proponowana liczba (teoretycznie) za 1 losowań" || "proponowana liczba (teoretycznie) za 2 losowań" || "proponowana liczba (teoretycznie) za 3 losowań") {
+                    return --idx;
+                } else if (idx === cleanview.length) return false;
+            });
+        } else return false;
+    }
+
     if (Dupdist === 1 && main.length < 5) {
-        if (main[0] && cleanview.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
-        else if (main[1] && cleanview.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
+        if (main[0] && checkCleanview(main[0] + 1)) main.push(` (${main[0] + 1})`);
+        else if (main[1] && checkCleanview(main[1] + 1)) main.push(` (${main[1] + 1})`);
         else if (!main.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
-        else main.push(` (${main[1] + 1})`);
+        else if (!main.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
     }
 
     proponowane.forEach((el, idx) => {
         if (el === "proponowana liczba (teoretycznie) za 1 losowań" && !main[4]) {
-            for (let i = 0; i < 5; i++) {
+            //for (let i = 0; i < 5; i++) {
                 if (!main.includes(proponowane[idx - 1])) main.push(` /${proponowane[idx - 1]}/`);
-            }
+           // }
         }
     });
 
@@ -1970,7 +1979,7 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
 
     main = main.concat(mainStar).join();
 
-    allF = () => fs.writeFileSync('lotto/proponowane.txt', JSON.stringify(`(teoretycznie) proponowane liczby: ${main}`, null, 2), 'utf8');
+    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', JSON.stringify(`(teoretycznie) proponowane liczby: ${main}`, null, 2), 'utf8');
 }
 
 //this is very non-probable, most likely not true but i had to fill it in ok?😭
