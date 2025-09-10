@@ -41,7 +41,7 @@ document.getElementById("lang").onclick = function () {
         if (window.innerWidth - (lang.left + lang.width / 2 - 50) < 100) div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 90}px; background-color: white; height: 170px; width: 100px; z-index: 2; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
         else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 50}px; background-color: white; height: 170px; width: 100px; z-index: 2; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
         div.id = "langBox";
-        div.innerHTML = `<ul>
+        div.innerHTML = `<ul style="border:none;">
           <a href="" style="margin-left: -24px; font-family: Kepler; font-size: 1.8rem;"><strong>>PL<</strong></a>
           <br>
           <a href="" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">EN</a>

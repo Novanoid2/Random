@@ -165,6 +165,7 @@ ol {
 
 li {
     border: solid black 3px;
+    max-width: calc(99.9vw / 3);
 }
 
 /*#boxBilety-border {
