@@ -17,7 +17,7 @@ async function getData() {
 getData();
 
 function applyData(file) {
-    for (let key of file) {
+    for (let key in file) {
         let el = document.getElementById(key)
         if (el) el.innerHTML = file[key]
     }
