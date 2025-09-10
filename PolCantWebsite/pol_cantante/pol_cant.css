@@ -150,23 +150,6 @@ header {
     text-align: center;
 }
 
-ol {
-    display: flex;
-    justify-content: space-around;
-    margin-left: -40px;
-    gap: 9vw;
-    list-style-type: none;
-    line-height: 50px;
-    margin-top: 50px;
-    font-family: Garamond;
-    font-weight: bold;
-
-}
-
-li {
-    border: solid black 3px;
-    max-width: calc(99.9vw / 3);
-}
 
 /*#boxBilety-border {
     position: absolute;
