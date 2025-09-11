@@ -39,7 +39,8 @@ header {
     font-weight: bold;
     text-align-last: center;
     font-size: 2.3rem;
-    color: white;
+    /*color: white;*/
+    -webkit-text-fill-color: transparent;
 }
 
 .buts {
