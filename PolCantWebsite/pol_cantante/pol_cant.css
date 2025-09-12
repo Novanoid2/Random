@@ -34,13 +34,16 @@ header {
 #h2 {
     position: absolute;
     left: 130px;
-    top: -30px;
+    top: -20px;
     font-family: Palatino;
     font-weight: bold;
     text-align-last: center;
     font-size: 2.3rem;
     /*color: white;*/
+    background: url("pobrane.png") no-repeat center/cover;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 .buts {
@@ -115,6 +118,9 @@ header {
     /*width: 100vw;*/
     box-shadow: 0px 0px 125px rgb(124, 58, 0);
     border-radius: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
 }
 
 /*.boxes {}*/
@@ -155,13 +161,11 @@ ol {
     margin: auto;
     margin-bottom: 40px;
     margin-left: -40px;
-    gap: 5vw;
     list-style-type: none;
     line-height: 50px;
     margin-top: 50px;
     font-family: Garamond;
     font-weight: bold;
-
 }
 
 li {
