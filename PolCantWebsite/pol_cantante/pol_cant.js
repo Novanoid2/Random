@@ -16,7 +16,7 @@ async function getData() {
 
 getData();
 
-function applyData(file) {
+async function applyData(file) {
     for (let key in file) {
         let el = document.getElementById(key)
         if (el) {
@@ -72,25 +72,6 @@ document.getElementById('dolacz').onclick = () => {
 };
 
 //window.addEventListener('resize', () => { location.reload(); });
-
-function dropdown() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
 
 document.documentElement.style.setProperty(`--dl`, `${default_lang}`);
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px;');
