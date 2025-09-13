@@ -8,7 +8,7 @@
     "prz1g": "Holsbeek, ulica ulicowa, xyz",
     "prz2g": "Aarschot, ulica ulicowa, xyz",
     "prz3g": "Leuven, ulica ulicowa, zyx",
-    "prz1b": "Koszt biletu: 3",
-    "prz2b": "Koszt biletu: 60.000",
-    "prz3b": "Koszt biletu: -2*10^2"
+    "prz1b": "Koszt biletu: e3",
+    "prz2b": "Koszt biletu: e60.000",
+    "prz3b": "Koszt biletu: e-2*10^2"
 }
