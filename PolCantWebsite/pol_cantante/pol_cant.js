@@ -20,7 +20,7 @@ function applyData(file) {
     for (let key in file) {
         let el = document.getElementById(key)
         if (el) {
-            if (/prz[0-3]b/.test(key)) el.innerHTML = file[key].replace(": e", ": €");
+            if (/prz[0-3]b/.test(key)) el.innerHTML = (file[key].replace(" e", " €"));
             else el.innerHTML = file[key];
         }
     }
