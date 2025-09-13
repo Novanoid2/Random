@@ -2,13 +2,13 @@
     "prz1d": "2025-09-nie wiem",
     "prz2d": "2025-12-cos tam",
     "prz3d": "2026-xx-xx",
-    "prz1g": "Holsbeek, ulica ulicowa, xyz",
-    "prz2g": "Aarschot, ulica ulicowa, xyz",
-    "prz3g": "Leuven, ulica ulicowa, zyx",
     "prz1c": "12:00",
     "prz2c": "24:00",
     "prz3c": "15:32",
-    "prz1b": "12:00",
-    "prz2b": "24:00",
-    "prz3b": "15:32"
+    "prz1g": "Holsbeek, ulica ulicowa, xyz",
+    "prz2g": "Aarschot, ulica ulicowa, xyz",
+    "prz3g": "Leuven, ulica ulicowa, zyx",
+    "prz1b": "Koszt biletu: €3",
+    "prz2b": "Koszt biletu: €60.000",
+    "prz3b": "Koszt biletu: €-2*10^2"
 }

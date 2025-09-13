@@ -38,7 +38,7 @@ header {
     font-family: Palatino;
     font-weight: bold;
     text-align-last: center;
-    font-size: 2.3rem;
+    font-size: 2.5rem;
     /*color: white;*/
     background: url("pobrane.png") no-repeat center/cover;
     -webkit-background-clip: text;
@@ -169,8 +169,22 @@ ol {
 }
 
 li {
-    border: double 5px black;
     max-width: calc(99.9vw / 3);
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+#prz1d {
+    border: double 5px black;
+}
+
+#prz2d {
+    border: double 5px black;
+}
+
+#prz3d {
+    border: double 5px black;
 }
 
 /*#boxBilety-border {
@@ -261,6 +275,7 @@ a {
     color: black;
 }
 
-.a-s {
+li a {
     border: solid black 2px;
+    border-radius: 10px;
 }
