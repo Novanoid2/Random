@@ -19,7 +19,10 @@ getData();
 function applyData(file) {
     for (let key in file) {
         let el = document.getElementById(key)
-        if (el) el.innerHTML = file[key]
+        if (el) {
+            if (/prz[0-3]b/.test(file[key])) el.innerHTML = "€" + file[key]
+            else el.innerHTML = file[key]
+        }
     }
 }
 
