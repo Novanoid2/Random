@@ -1583,6 +1583,8 @@ const fetched = [
     { results: '06,09,10,13,37,01,07' },
     { results: '13,30,31,32,36,01,12' },
     { results: '27,30,31,41,43,5,8' },
+    { results: "3,13,24,39,40,2,8" },
+    { results: "5,10,23,31,37,3,11" },
 ];
 
 // © - 2025 by novanoid2 on discord
@@ -1635,8 +1637,6 @@ function addPastNumbers(arr1, arr2) {
 function calcBiggestProb(arr1, arr2) {
     const counts = {};
     const counts2 = {};
-    const diff = 100 / arr1.length;
-    const diff2 = 100 / arr2.length;
 
     //yes i know .map exists but i dont know how to use it yet
     //edit: i do now x3 too late tho
@@ -1644,64 +1644,75 @@ function calcBiggestProb(arr1, arr2) {
     arr1.forEach((element) => {
         counts[element] = (counts[element] || 0) + 1;
     });
-    let am = 0;
-    for (let element in counts) {
-        let amount = counts[element];
-        counts[element] = `${(amount * diff).toFixed(2)}% | lub ${amount} razy w ${arr1.length}`;
-        if (counts[element].charAt(2) >= 2 && counts[element].charAt(0) === "2" && counts[element].charAt(3) >= 1) {
-            cleanview.push(+element, counts[element]);
-        }
-        if (am < 2) {
-            if (counts[element].charAt(2) === "2" && counts[element].charAt(0) === "2" && counts[element].charAt(3) === "0") {
-                cleanview.push(+element, counts[element]);
-                am++;
-            }
-        }
-    }
-
+    cleanview = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat(5).map(x => +x);
+    cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1,) });
     //star//
     arr2.forEach((element) => {
         counts2[element] = (counts2[element] || 0) + 1;
     });
+    cleanview2 = (Object.entries(counts2).sort((a, b) => b[1] - a[1])).slice(0, 2).flat(5).map(x => +x);
+    cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1,) });
 
-    for (let element in counts2) {
-        let amount = counts2[element];
-        counts2[element] = (amount * diff2).toFixed(1) + `%` + ` | lub ${amount} razy w ${arr2.length}`;
-        if (/^9\.[5-9]% \| lub \d+ razy w \d+$/.test(counts2[element])) {
-            cleanview2.push(+element, counts2[element]);
-        }
-    }
-
-    f1 = () => console.log("f1: ", /*"wszystkie:", counts, "extra:", counts2,*/ "main:", cleanview, "star:", cleanview2);
+    f1 = () => console.log("f1: ", "wszystkie:", counts, /*"extra:", counts2,*/ "main:", cleanview, "star:", cleanview2);
 }
 
 async function minusAll() {
     //main//
+    // Initialize frequency objects
+    const frequencyMain = {};  // Frequency for main numbers
+    const frequencyStars = {}; // Frequency for star numbers
+
+    // Main number differences calculation
     for (let i = 0; i < fetched.length - 1; i++) {
         let roznicaDoPush = [];
         let main1 = fetched[i + 1].results.split(",").slice(0, 5);
         let main = fetched[i].results.split(",").slice(0, 5);
+
+        // Count frequencies for main numbers
+        main.forEach(num => {
+            frequencyMain[num] = (frequencyMain[num] || 0) + 1;
+        });
+
         for (let num in main1) {
             let diff = +main1[num] - +main[num];
             roznicaDoPush.push(diff);
         }
+
         roznice.push(roznicaDoPush);
     }
 
-    //stars//
+    // Star number differences calculation
     for (let i = 0; i < fetched.length - 1; i++) {
         let roznicaDoPushS = [];
         let main1S = fetched[i + 1].results.split(",").slice(5);
         let mainS = fetched[i].results.split(",").slice(5);
+
+        // Count frequencies for star numbers
+        mainS.forEach(num => {
+            frequencyStars[num] = (frequencyStars[num] || 0) + 1;
+        });
+
         for (let num in main1S) {
             let diffS = +main1S[num] - +mainS[num];
             roznicaDoPushS.push(diffS);
         }
+
         rozniceS.push(roznicaDoPushS);
     }
 
-    //f2. to do later to find *a* pattern maybe
-    f2 = () => console.log("f2: ", roznice, rozniceS);
+    // f2. to do later to find *a* pattern maybe
+    f2 = () => {
+        // Print out the frequency of main numbers and star numbers
+        console.log("Main Number Frequencies:", frequencyMain);
+        console.log("Star Number Frequencies:", frequencyStars);
+
+        // Sort by frequency and show the most common numbers
+        const sortedMain = Object.entries(frequencyMain).sort((a, b) => b[1] - a[1]);
+        const sortedStars = Object.entries(frequencyStars).sort((a, b) => b[1] - a[1]);
+
+        console.log("Sorted Main Numbers by Frequency:", sortedMain);
+        console.log("Sorted Star Numbers by Frequency:", sortedStars);
+    }
 }
 
 function coIleTakaSama() {
@@ -1739,7 +1750,7 @@ function coIleTakaSama() {
         numEvery.push(`liczba ${num} powtarza sie medianowo: ${median(numIntArr).toFixed()} razy. dokładnie: `, counts);
     }
 
-    //fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     //todo: suggests next numbers based off of past numbers z perspektywy numEvery (done btw)
     let numIn = new Array("nic");
@@ -1812,7 +1823,7 @@ function coIleTakaSama() {
         numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo: ${median(numIntArrStar).toFixed()} razy. dokładnie: `, countsStar);
     }
 
-    //fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
     let numInStar = new Array("nic");
 
     for (let numStar = 1; numStar <= 12; numStar++) {
@@ -1856,6 +1867,7 @@ function coIleTakaSama() {
 function podwojne(arr) {
     //main//
     let podwojne = new Array();
+    let podwojneAvg = new Array();
     let counts = new Array();
     let co = 0;
     for (let at = 0; at < arr.length; at++) {
@@ -1865,16 +1877,25 @@ function podwojne(arr) {
             if (numsArr[i + 1].charAt(0) === "0") numsArr[i + 1] = numsArr[i + 1].replace("0", "");
             if (+numsArr[i + 1] - +numsArr[i] === 1) {//druga jest wieksza
                 podwojne.push(at, +numsArr[i + 1] + ` i ` + +numsArr[i]);
+                podwojneAvg.push(`${numsArr[i + 1]}` + `${numsArr[i]}`);
                 counts.push(co);
                 co = 0;
             } else if (+numsArr[i + 1] - +numsArr[i] === -1) {//druga jest mniejsza
-                console.log("Blad w " + i + " druga nie moze byc mniejsza");
+                console.log("Blad w " + i + " druga nie moze byc mniejsza");//small fail log
             } else {
                 co++;
             }
         }
     }
-
+    let counts2 = {};
+    podwojneAvg.forEach((element) => {
+        counts2[element] = (counts2[element] || 0) + 1;
+    });
+    const counts3 = {};
+    for (let key in counts2) {
+        if (counts2[key] > 15) counts3[key] = counts2[key];
+    }
+    console.log(counts3, 1890);
     if (arr.length > podwojne[podwojne.length - 2]) {
         Dupdist = arr.length - podwojne[podwojne.length - 2];
     } else {
@@ -1930,20 +1951,22 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     }
 
     //main nums//
-
-    function checkCleanview(num) {
-        if (cleanview.includes(num)) {
-            cleanview.forEach((el, idx) => {
-                if (el === "proponowana liczba (teoretycznie) za 1 losowań" || "proponowana liczba (teoretycznie) za 2 losowań" || "proponowana liczba (teoretycznie) za 3 losowań") {
-                    return --idx;
-                } else if (idx === cleanview.length) return false;
-            });
-        } else return false;
+    function checkproponowane(num) {
+        if (!proponowane.includes(num)) return false;
+        for (let idx = 0; idx < proponowane.length; idx++) {
+            const el = proponowane[idx];
+            if (el === "proponowana liczba (teoretycznie) za 1 losowań" || el === "proponowana liczba (teoretycznie) za 2 losowań" || el === "proponowana liczba (teoretycznie) za 3 losowań") {
+                return true;
+            }
+        }
+        return false;
     }
 
     if (Dupdist === 1 && main.length < 5) {
-        if (main[0] && checkCleanview(main[0] + 1)) main.push(` (${main[0] + 1})`);
-        else if (main[1] && checkCleanview(main[1] + 1)) main.push(` (${main[1] + 1})`);
+        if (main[0] && checkproponowane(main[0] + 1)) main.push(` (${main[0] + 1})`);
+        else if (main[1] && checkproponowane(main[1] + 1)) main.push(` (${main[1] + 1})`);
+        else if (main[0] && cleanview.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
+        else if (main[1] && cleanview.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
         else if (!main.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
         else if (!main.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
     }
@@ -1951,39 +1974,38 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     proponowane.forEach((el, idx) => {
         if (el === "proponowana liczba (teoretycznie) za 1 losowań" && !main[4]) {
             //for (let i = 0; i < 5; i++) {
-                if (!main.includes(proponowane[idx - 1])) main.push(` /${proponowane[idx - 1]}/`);
-           // }
+            if (!main.includes(proponowane[idx - 1])) main.push(` /${proponowane[idx - 1]}/`);
+            // }
         }
     });
 
     cleanview.forEach((el) => {
-        if (typeof el === "number" && !main.includes(el) && !main[4]) main.push(` {${el}} lub sam`);
+        if (typeof el === "number" && !main.includes(el) && !main[4]) main.push(` %${el}% lub sam`);
     });
 
-    while (!main[4]) main.push("wybierz sam niestety"); //if nothing else worked
+    while (main.length < 5) main.push("wybierz sam niestety"); //if nothing else worked
 
     //star nums//
     if (mainStar.length < 2) {
         if (DupdistStar === 1) {
             if (mainStar[0]) {
-                main.push(` (${mainStar[0] + 1})`);
+                mainStar.push(` (${mainStar[0] + 1})`);
             }
         } else {
             if (mainStar[0] != (proponowaneStar[0]) && proponowaneStar[1] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[0]}/`);
             if (!mainStar[1] && mainStar[0] != (proponowaneStar[2]) && proponowaneStar[3] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[2]}/`);
         }
         if (!main[7]) {
-            cleanview2.forEach((el) => { if (typeof el === "number" && !mainStar.includes(el) && mainStar.length < 2) mainStar.push(` {${el}} lub sam`); });
+            cleanview2.forEach((el) => { if (typeof el === "number" && !mainStar.includes(el) && mainStar.length < 2) mainStar.push(` %${el}% lub sam`); });
         }
     }
 
     main = main.concat(mainStar).join();
 
-    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', JSON.stringify(`(teoretycznie) proponowane liczby: ${main}`, null, 2), 'utf8');
+    allF = () => fs.writeFileSync('lotto/proponowane.txt', JSON.stringify(`(teoretycznie) proponowane liczby: ${main}`, null, 2), 'utf8');
 }
 
 //this is very non-probable, most likely not true but i had to fill it in ok?😭
-//f2: sprawdz ile razy jest roznica z >= 3 razy + przed roznica z >=3 razy -
 
 addPastNumbers(pastNumsMain, pastNumsStar);
 calcBiggestProb(pastNumsMain, pastNumsStar);
@@ -1998,4 +2020,4 @@ f4();
 //f5();
 allF();
 
-console.log("~ Analiza liczb loterii; v0.9.3 © ~");
+console.log("~ Analiza liczb loterii; v0.9.6 © ~");
