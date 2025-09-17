@@ -6,7 +6,7 @@ const bars = [];
 let barsWidth = 10;
 let x = canv.width - barsWidth;
 let rectHeight = 500; //500 is default but you can change it.
-document.getElementById("v").textContent += `; 1-20&10&5`
+document.getElementById("v").textContent += `; 1-for`
 
 //make and show all the rectangles
 for (let i = 0; i < (canv.width / barsWidth) - 5; i++) {
@@ -32,47 +32,22 @@ async function startSorting() {
     let num = 0;
     let completed = 0;
     interval = setInterval(() => {
-
-        for (let i = 20; i >= 5; i /= 2) {
-            //checks 20 bars to the left
-            if (num < bars.length - 20) { //secure that num + 10 has a value
-                if (bars[num].h < bars[num + 20].h) {//compares h values
-                    //reapply h & r values from num + 10 to num so it "moves" to the left
-                    const h0 = bars[num].h;
-                    const r0 = bars[num].r;
-                    bars[num].h = bars[num + 20].h;
-                    bars[num].r = bars[num + 20].r;
-                    bars[num + 20].h = h0;
-                    bars[num + 20].r = r0;
+        //checks 20 bars to the left
+        function addNewSort() {
+            for (let i = 20; i >= 1; i -=3) {
+                if (num < bars.length - i) { //secure that num + 10 has a value
+                    if (bars[num].h < bars[num + i].h) {//compares h values
+                        //reapply h & r values from num + 10 to num so it "moves" to the left
+                        const h0 = bars[num].h;
+                        const r0 = bars[num].r;
+                        bars[num].h = bars[num + i].h;
+                        bars[num].r = bars[num + i].r;
+                        bars[num + i].h = h0;
+                        bars[num + i].r = r0;
+                    }
                 }
             }
         }
-        /*//checks 10 bars to the left
-        if (num < bars.length - 10) { //secure that num + 10 has a value
-            if (bars[num].h < bars[num + 10].h) {//compares h values
-                //reapply h & r values from num + 10 to num so it "moves" to the left
-                const h0 = bars[num].h;
-                const r0 = bars[num].r;
-                bars[num].h = bars[num + 10].h;
-                bars[num].r = bars[num + 10].r;
-                bars[num + 10].h = h0;
-                bars[num + 10].r = r0;
-            }
-        }
-
-        //checks 5 bars to the left
-        if (num < bars.length - 5) { //secure that num + 5 has a value
-            if (bars[num].h < bars[num + 5].h) {//compares h values
-                //reapply h & r values from num + 5 to num so it "moves" to the left
-                const h0 = bars[num].h;
-                const r0 = bars[num].r;
-                bars[num].h = bars[num + 5].h;
-                bars[num].r = bars[num + 5].r;
-                bars[num + 5].h = h0;
-                bars[num + 5].r = r0;
-            }
-        }
-*/
         //checks 1 bar to the left
         if (num < bars.length - 1) { //secure that num + 1 has a value
             if (bars[num].h < bars[num + 1].h) {//compares h values
@@ -83,6 +58,7 @@ async function startSorting() {
                 bars[num].r = bars[num + 1].r;
                 bars[num + 1].h = h0;
                 bars[num + 1].r = r0;
+                addNewSort();
             } else completed++;
             num++;
 
