@@ -1585,7 +1585,9 @@ const fetched = [
     { results: '27,30,31,41,43,5,8' },
     { results: "3,13,24,39,40,2,8" },
     { results: "5,10,23,31,37,3,11" },
-];
+    { results: "1,9,13,35,40,5,6" },
+    { results: "8,10,26,32,42,9,12" },
+]; 1
 
 // © - 2025 by novanoid2 on discord
 //const url = `https://www.magayo.com/api/results.php?api_key=viY8ez6UG3mKxMpK5T&game=euromillions&draw=2010-07-09`;
@@ -1599,6 +1601,7 @@ let numDist = new Array();
 let globalDist = ["stop"];
 let proponowane = new Array();
 let Dupdist;
+let groupOrder = [];
 
 let pastNumsStar = new Array();
 let cleanview2 = new Array();
@@ -1653,7 +1656,7 @@ function calcBiggestProb(arr1, arr2) {
     cleanview2 = (Object.entries(counts2).sort((a, b) => b[1] - a[1])).slice(0, 2).flat(5).map(x => +x);
     cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1,) });
 
-    f1 = () => console.log("f1: ", "wszystkie:", counts, /*"extra:", counts2,*/ "main:", cleanview, "star:", cleanview2);
+    f1 = () => console.log("f1: ", /*"wszystkie:", counts, "extra:", counts2,*/ "main:", cleanview, "star:", cleanview2);
 }
 
 async function minusAll() {
@@ -1895,7 +1898,7 @@ function podwojne(arr) {
     for (let key in counts2) {
         if (counts2[key] > 15) counts3[key] = counts2[key];
     }
-    console.log(counts3, 1890);
+    // console.log(counts3, 1899);
     if (arr.length > podwojne[podwojne.length - 2]) {
         Dupdist = arr.length - podwojne[podwojne.length - 2];
     } else {
@@ -1923,7 +1926,43 @@ function podwojne(arr) {
         DupdistStar = podwojneStar[podwojneStar.length - 2] - (arr.length - podwojneStar[podwojneStar.length - 2]);
     }
 
-    f4 = () => console.log("f4: ", /*podwojne, total / counts.length*/ `nastepny podwojny (teo): ${Dupdist}, nastepny podwojny Star (teo): ${DupdistStar}`);
+    f4 = () => console.log("f4: ", `nastepny podwojny (teo): ${Dupdist}, nastepny podwojny Star (teo): ${DupdistStar}`, `czeste podwojne:`, counts3);
+}
+
+function splitIntoGroups(list, total = 0) {
+    const groups = [["group1: ", 0], ["group2: ", 0], ["group3: ", 0], ["group4: ", 0], ["group5: ", 0], ["group6: ", 0]];
+    for (let at = 1; at < list.length; at++) {
+        let numsArr = list[at].results.split(",").slice(0, 5)
+        for (let i = 0; i < numsArr.length; i++) {
+            if (numsArr[i].charAt(0) === "0") numsArr[i] = numsArr[i].replace("0", "");
+            numsArr[i] = parseFloat(numsArr[i]);
+            switch (true) {
+                case /^0?[0-9]$/.test(numsArr[i]):
+                    groups[0][1]++;
+                    break;
+                case /^1[0-9]$/.test(numsArr[i]):
+                    groups[1][1]++;
+                    break;
+                case /^2[0-9]$/.test(numsArr[i]):
+                    groups[2][1]++;
+                    break;
+                case /^3[0-9]$/.test(numsArr[i]):
+                    groups[3][1]++;
+                    break;
+                case /^4[0-9]$/.test(numsArr[i]):
+                    groups[4][1]++;
+                    break;
+                default:
+                    groups[5][1]++;
+            }
+        }
+    }
+    //check every once in a while
+    //console.log(groups);
+    //groupOrder = [/^2[0-9]$/, /^1[0-9]$/, /^3[0-9]$/, /^4[0-9]$/, /^0?[0-9]$/];
+    groupOrder = ["20-29", " 10-19", " 30-39", " 40-49", " 1-9"];
+    f5 = () => console.log("f5: grouporder:", groupOrder);
+
 }
 
 function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
@@ -1980,7 +2019,7 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     });
 
     cleanview.forEach((el) => {
-        if (typeof el === "number" && !main.includes(el) && !main[4]) main.push(` %${el}% lub sam`);
+        if (typeof el === "number" && !main.includes(el) && !main[4]) main.push(` ${el} lub sam`);
     });
 
     while (main.length < 5) main.push("wybierz sam niestety"); //if nothing else worked
@@ -1996,13 +2035,16 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
             if (!mainStar[1] && mainStar[0] != (proponowaneStar[2]) && proponowaneStar[3] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[2]}/`);
         }
         if (!main[7]) {
-            cleanview2.forEach((el) => { if (typeof el === "number" && !mainStar.includes(el) && mainStar.length < 2) mainStar.push(` %${el}% lub sam`); });
+            cleanview2.forEach((el) => { if (typeof el === "number" && !mainStar.includes(el) && mainStar.length < 2) mainStar.push(` ${el} lub sam`); });
         }
     }
 
     main = main.concat(mainStar).join();
-
-    allF = () => fs.writeFileSync('lotto/proponowane.txt', JSON.stringify(`(teoretycznie) proponowane liczby: ${main}`, null, 2), 'utf8');
+    allF = () => fs.writeFileSync('lotto/proponowane.txt', JSON.stringify(`nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}`, null, 2), 'utf8');
+    console.log(`zastosuj te sztuczki na koncu:
+- najlepiej miec 3 nie/przyste liczby i 2 nie/parzyste
+- jedne z kazdej grupy: ${groupOrder}
+- najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`);
 }
 
 //this is very non-probable, most likely not true but i had to fill it in ok?😭
@@ -2012,12 +2054,13 @@ calcBiggestProb(pastNumsMain, pastNumsStar);
 //minusAll();
 coIleTakaSama();
 podwojne(fetched);
+splitIntoGroups(fetched);
 porownywanie(cleanview, cleanview2, proponowane, proponowaneStar);
 f1();
 //f2();
 f3();
 f4();
-//f5();
+f5();
 allF();
 
-console.log("~ Analiza liczb loterii; v0.9.6 © ~");
+console.log("~ Analiza liczb loterii; v0.9.7.2 © ~");
