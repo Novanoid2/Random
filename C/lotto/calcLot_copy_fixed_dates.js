@@ -1587,7 +1587,7 @@ const fetched = [
     { results: "5,10,23,31,37,3,11" },
     { results: "1,9,13,35,40,5,6" },
     { results: "8,10,26,32,42,9,12" },
-]; 1
+];
 
 // © - 2025 by novanoid2 on discord
 //const url = `https://www.magayo.com/api/results.php?api_key=viY8ez6UG3mKxMpK5T&game=euromillions&draw=2010-07-09`;
@@ -1602,6 +1602,7 @@ let globalDist = ["stop"];
 let proponowane = new Array();
 let Dupdist;
 let groupOrder = [];
+let czestePodwojne = [];
 
 let pastNumsStar = new Array();
 let cleanview2 = new Array();
@@ -1648,13 +1649,14 @@ function calcBiggestProb(arr1, arr2) {
         counts[element] = (counts[element] || 0) + 1;
     });
     cleanview = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat(5).map(x => +x);
-    cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1,) });
+
+    cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1,); });
     //star//
     arr2.forEach((element) => {
         counts2[element] = (counts2[element] || 0) + 1;
     });
     cleanview2 = (Object.entries(counts2).sort((a, b) => b[1] - a[1])).slice(0, 2).flat(5).map(x => +x);
-    cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1,) });
+    cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1,); });
 
     f1 = () => console.log("f1: ", /*"wszystkie:", counts, "extra:", counts2,*/ "main:", cleanview, "star:", cleanview2);
 }
@@ -1732,9 +1734,7 @@ function coIleTakaSama() {
                 if (+numsArr[i] === num) {
                     if (every !== 0) numIntArr.push(every);
                     every = 0;
-                } else {
-                    every++;
-                }
+                } else every++;
             }
         }
         //get median of numIntArr with a loop or whatev and then push it into numEvery;
@@ -1746,9 +1746,7 @@ function coIleTakaSama() {
             return acc;
         }, {});
 
-        for (let key in counts) {
-            counts[key] = (+counts[key] / numIntArr.length * 100).toFixed(1) + "%";
-        };
+        for (let key in counts) counts[key] = (+counts[key] / numIntArr.length * 100).toFixed(1) + "%";
 
         numEvery.push(`liczba ${num} powtarza sie medianowo: ${median(numIntArr).toFixed()} razy. dokładnie: `, counts);
     }
@@ -1767,7 +1765,9 @@ function coIleTakaSama() {
             }
             return false;
         }
+
         let dist = fetched.length - (fetched.findLastIndex(findNum));
+
         globalDist.push(dist);
 
         if (dist > globalMed[num]) {
@@ -1789,9 +1789,7 @@ function coIleTakaSama() {
                 proponowane.push(place, `proponowana liczba (teoretycznie) za ${wanted} losowań`);
                 chosen++;
                 numIn.splice(place, 1, "Zamieniono");
-            } else {
-                break;
-            }
+            } else break;
         }
     }
     //////////////////////////////////////////////////////////////////////////////////////////
@@ -1806,9 +1804,7 @@ function coIleTakaSama() {
                 if (+numsArrStar[iStar] === numStar) {
                     if (everyStar !== 0) numIntArrStar.push(everyStar);
                     everyStar = 0;
-                } else {
-                    everyStar++;
-                }
+                } else everyStar++;
             }
         }
 
@@ -1819,14 +1815,12 @@ function coIleTakaSama() {
             return accStar;
         }, {});
 
-        for (let key in countsStar) {
-            countsStar[key] = (+countsStar[key] / numIntArrStar.length * 100).toFixed(1) + "%";
-        };
+        for (let key in countsStar) countsStar[key] = (+countsStar[key] / numIntArrStar.length * 100).toFixed(1) + "%";
 
         numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo: ${median(numIntArrStar).toFixed()} razy. dokładnie: `, countsStar);
     }
 
-   // fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    // fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
     let numInStar = new Array("nic");
 
     for (let numStar = 1; numStar <= 12; numStar++) {
@@ -1838,7 +1832,9 @@ function coIleTakaSama() {
             }
             return false;
         }
+
         let distStar = fetched.length - (fetched.findLastIndex(findNumStar));
+
         globalDistStar.push(distStar);
 
         if (distStar > globalMedStar[numStar]) {
@@ -1858,9 +1854,7 @@ function coIleTakaSama() {
                 proponowaneStar.push(placeStar, `proponowana liczba Star (teoretycznie) za ${wantedStar} losowań`);
                 chosenStar++;
                 numInStar.splice(placeStar, 1, "Zamieniono");
-            } else {
-                break;
-            }
+            } else break;
         }
     }
 
@@ -1885,20 +1879,19 @@ function podwojne(arr) {
                 co = 0;
             } else if (+numsArr[i + 1] - +numsArr[i] === -1) {//druga jest mniejsza
                 console.log("Blad w " + i + " druga nie moze byc mniejsza");//small fail log
-            } else {
-                co++;
-            }
+            } else co++;
         }
     }
+
     let counts2 = {};
     podwojneAvg.forEach((element) => {
         counts2[element] = (counts2[element] || 0) + 1;
     });
-    const counts3 = {};
-    for (let key in counts2) {
-        if (counts2[key] > 15) counts3[key] = counts2[key];
-    }
-    // console.log(counts3, 1899);
+
+    czestePodwojne = (Object.entries(counts2).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat(2).map(x => x.toString());
+
+    for (let j = 1; j < czestePodwojne.length; j += 2) czestePodwojne.splice(j, 1, "usunieto");
+
     if (arr.length > podwojne[podwojne.length - 2]) {
         Dupdist = arr.length - podwojne[podwojne.length - 2];
     } else {
@@ -1917,7 +1910,7 @@ function podwojne(arr) {
             podwojneStar.push(atStar, +numsArrStar[1] + ` i ` + +numsArrStar[0]);
             countsStar.push(coStar);
             coStar = 0;
-        } else { coStar++; }
+        } else coStar++;
     }
 
     if (arr.length > podwojneStar[podwojneStar.length - 2]) {
@@ -1926,7 +1919,7 @@ function podwojne(arr) {
         DupdistStar = podwojneStar[podwojneStar.length - 2] - (arr.length - podwojneStar[podwojneStar.length - 2]);
     }
 
-    f4 = () => console.log("f4: ", `nastepny podwojny (teo): ${Dupdist}, nastepny podwojny Star (teo): ${DupdistStar}`, `czeste podwojne:`, counts3);
+    f4 = () => console.log("f4: ", `nastepny podwojny (teo): ${Dupdist}, nastepny podwojny Star (teo): ${DupdistStar}`, "\n", `czeste podwojne:`, czestePodwojne);
 }
 
 function splitIntoGroups(list, total = 0) {
@@ -1970,23 +1963,23 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     let mainStar = [];
 
     for (let wybrany = 1; wybrany <= 50; wybrany++) {
-        let ilosc = 0;
-        if (item1.includes(wybrany)) ilosc++;
-        if (item3.includes(wybrany)) ilosc++;
+        //let ilosc = 0;
+        if (item1.includes(wybrany) && item3.includes(wybrany)) main.push(wybrany);
+        /*if (item3.includes(wybrany)) ilosc++;
         //if (!item5.includes(wybrany)) ilosc++;
         if (ilosc === 2) {
             main.push(wybrany);
-        }
+        }*/
     }
 
     for (let wybranyStar = 1; wybranyStar <= 12; wybranyStar++) {
-        let iloscStar = 0;
-        if (item2.includes(wybranyStar)) iloscStar++;
-        if (item4.includes(wybranyStar)) iloscStar++;
+        //let iloscStar = 0;
+        if (item2.includes(wybranyStar) && item4.includes(wybranyStar)) main.push(wybranyStar);
+        /*if (item4.includes(wybranyStar)) iloscStar++;
         //if (!item6.incldues(wybranyStar)) iloscStar++;
         if (iloscStar === 2) {
             mainStar.push(wybranyStar);
-        }
+        }*/
     }
 
     //main nums//
@@ -1994,7 +1987,7 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
         if (!proponowane.includes(num)) return false;
         for (let idx = 0; idx < proponowane.length; idx++) {
             const el = proponowane[idx];
-            if (el === "proponowana liczba (teoretycznie) za 1 losowań" || el === "proponowana liczba (teoretycznie) za 2 losowań" || el === "proponowana liczba (teoretycznie) za 3 losowań") {
+            if (el === "proponowana liczba (teoretycznie) za 1 losowań" || el === "proponowana liczba (teoretycznie) za 2 losowań") {
                 return true;
             }
         }
@@ -2002,27 +1995,42 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     }
 
     if (Dupdist === 1 && main.length < 5) {
-        if (main[0] && checkproponowane(main[0] + 1)) main.push(` (${main[0] + 1})`);
-        else if (main[1] && checkproponowane(main[1] + 1)) main.push(` (${main[1] + 1})`);
-        else if (main[0] && cleanview.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
-        else if (main[1] && cleanview.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
-        else if (!main.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
-        else if (!main.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
+        if (main[1]) {
+            if (checkproponowane(main[1] + 1)) main.push(` (${main[1] + 1})`);
+            else if (cleanview.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
+            else if (czestePodwojne.includes(`${main[1] + 1}${main[1]}`)) main.push(` (${main[1] + 1})`);
+            else if (czestePodwojne.includes(`${main[1]}${main[1] - 1}`)) main.push(` (${main[1] - 1})`);
+        }
+        if (main[0]) {
+            if (checkproponowane(main[0] + 1)) main.push(` (${main[0] + 1})`);
+            else if (cleanview.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
+            else if (czestePodwojne.includes(`${main[0] + 1}${main[0]}`)) main.push(` (${main[0] + 1})`);
+            else if (czestePodwojne.includes(`${main[0]}${main[0] - 1}`)) main.push(` (${main[0] - 1})`);
+        }
+        if (main[1] && !main.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
+        if (main[0] && !main.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
     }
 
     proponowane.forEach((el, idx) => {
         if (el === "proponowana liczba (teoretycznie) za 1 losowań" && !main[4]) {
-            //for (let i = 0; i < 5; i++) {
             if (!main.includes(proponowane[idx - 1])) main.push(` /${proponowane[idx - 1]}/`);
-            // }
         }
     });
 
     cleanview.forEach((el) => {
-        if (typeof el === "number" && !main.includes(el) && !main[4]) main.push(` ${el} lub sam`);
+        if (main.length < 5) {
+            if (!main.includes(el)) {
+                main.push(` ${el} lub sam`);
+                if (Dupdist === 1) {
+                    if (czestePodwojne.includes(el + 1)) main.push(` (${el + 1})`);
+                    else if (czestePodwojne.includes(el - 1)) main.push(` (${el - 1})`);
+                }
+            }
+
+        }
     });
 
-    while (main.length < 5) main.push("wybierz sam niestety"); //if nothing else worked
+    while (main.length < 5) main.push("wybierz sam niestety/lub sztuczki zeby uzupelnic"); //if nothing else worked
 
     //star nums//
     if (mainStar.length < 2) {
@@ -2031,22 +2039,23 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
                 mainStar.push(` (${mainStar[0] + 1})`);
             }
         } else {
-            if (mainStar[0] != (proponowaneStar[0]) && proponowaneStar[1] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[0]}/`);
-            if (!mainStar[1] && mainStar[0] != (proponowaneStar[2]) && proponowaneStar[3] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[2]}/`);
+            if (mainStar[0] !== (proponowaneStar[0]) && proponowaneStar[1] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[0]}/`);
+            if (!mainStar[1] && mainStar[0] !== (proponowaneStar[2]) && proponowaneStar[3] === "proponowana liczba Star (teoretycznie) za 1 losowań") mainStar.push(` /${proponowaneStar[2]}/`);
         }
-        if (!main[7]) {
-            cleanview2.forEach((el) => { if (typeof el === "number" && !mainStar.includes(el) && mainStar.length < 2) mainStar.push(` ${el} lub sam`); });
+        if (mainStar.length < 2) {
+            cleanview2.forEach((el) => { if (!mainStar.includes(el)) mainStar.push(` ${el} lub sam`); });
         }
     }
 
     main = main.concat(mainStar).join();
-    allF = () => fs.writeFileSync('lotto/proponowane.txt', JSON.stringify(`nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}`, null, 2), 'utf8');
+    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', JSON.stringify(`nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}`, null, 2), 'utf8');
     console.log(`zastosuj te sztuczki na koncu:
 - najlepiej miec 3 nie/przyste liczby i 2 nie/parzyste
 - jedne z kazdej grupy: ${groupOrder}
 - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`);
 }
 
+//to do later: sprawdz ile razy jest nie/+parzytych i zmien kazdy z "lub sam" zeby bylo 3/2 lub 2/3
 //this is very non-probable, most likely not true but i had to fill it in ok?😭
 
 addPastNumbers(pastNumsMain, pastNumsStar);
@@ -2063,4 +2072,4 @@ f4();
 f5();
 allF();
 
-console.log("~ Analiza liczb loterii; v0.9.7.2 © ~");
+console.log("~ Analiza liczb loterii; v0.9.7.5 © ~");
