@@ -1753,7 +1753,7 @@ function coIleTakaSama() {
         numEvery.push(`liczba ${num} powtarza sie medianowo: ${median(numIntArr).toFixed()} razy. dokładnie: `, counts);
     }
 
-    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    //fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     //todo: suggests next numbers based off of past numbers z perspektywy numEvery (done btw)
     let numIn = new Array("nic");
@@ -1826,7 +1826,7 @@ function coIleTakaSama() {
         numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo: ${median(numIntArrStar).toFixed()} razy. dokładnie: `, countsStar);
     }
 
-    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+   // fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
     let numInStar = new Array("nic");
 
     for (let numStar = 1; numStar <= 12; numStar++) {
