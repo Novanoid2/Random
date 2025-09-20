@@ -1,5 +1,60 @@
 "use strict";
 const fetched = [
+    /*//2009 dec -> jan
+    { "results": "04,05,14,17,34,03,05" },
+{ "results": "14,30,32,35,49,03,08" },
+{ "results": "20,41,43,44,46,02,09" },
+{ "results": "18,19,25,30,44,01,03" },
+{ "results": "05,08,13,15,33,08,09" },
+{ "results": "05,09,28,43,47,02,09" },
+{ "results": "13,15,25,26,32,03,04" },
+{ "results": "11,19,34,43,45,05,09" },
+{ "results": "09,33,35,38,40,02,06" },
+{ "results": "06,18,20,29,31,02,08" },
+{ "results": "12,23,30,31,47,03,04" },
+{ "results": "07,11,29,46,50,04,07" },
+{ "results": "22,23,24,29,44,01,05" },
+{ "results": "06,17,18,21,34,03,09" },
+{ "results": "06,16,30,38,41,02,04" },
+{ "results": "12,15,35,42,43,04,06" },
+{ "results": "06,09,20,38,39,03,09" },
+{ "results": "08,36,37,41,49,05,07" },
+{ "results": "04,07,16,31,42,03,05" },
+{ "results": "05,08,24,30,49,03,09" },
+{ "results": "10,20,22,24,31,02,07" },
+{ "results": "05,09,20,21,26,03,06" },
+{ "results": "14,15,25,35,47,05,09" },
+{ "results": "02,08,17,32,50,03,07" },
+{ "results": "06,16,20,42,46,01,06" },
+{ "results": "21,29,34,46,47,06,08" },
+{ "results": "06,11,21,30,39,02,08" },
+{ "results": "04,16,17,20,29,05,07" },
+{ "results": "06,14,16,34,50,04,06" },
+{ "results": "11,19,26,35,40,02,05" },
+{ "results": "02,05,30,37,47,03,06" },
+{ "results": "04,13,14,33,43,01,06" },
+{ "results": "08,18,19,20,42,05,09" },
+{ "results": "04,23,24,29,31,08,09" },
+{ "results": "05,19,31,38,47,03,05" },
+ { "results": "04,14,21,24,41,05,08" },
+{ "results": "04,07,21,44,47,01,05" },
+{ "results": "09,14,16,37,46,02,04" },
+{ "results": "02,20,24,32,46,01,09" },
+{ "results": "25,33,36,38,42,06,07" },
+{ "results": "12,16,23,31,35,04,06" },
+{ "results": "12,24,26,36,42,01,04" },
+{ "results": "13,17,19,25,35,05,06" },
+{ "results": "05,09,37,44,45,06,09" },
+{ "results": "09,12,13,14,48,01,02" },
+{ "results": "22,33,36,40,42,01,02" },
+{ "results": "10,20,30,36,40,03,05" },
+{ "results": "04,29,34,35,46,05,08" },
+{ "results": "32,33,36,40,49,02,08" },
+{ "results": "03,17,22,49,50,03,06" },
+{ "results": "07,15,22,28,48,01,04" },
+{ "results": "29,30,36,37,48,01,06" }
+
+*/
     //2010 jan -> dec
     { results: '9,22,24,27,36,5,7' },
     { results: '4,5,14,44,46,8,9' },
@@ -1663,20 +1718,12 @@ function calcBiggestProb(arr1, arr2) {
 
 async function minusAll() {
     //main//
-    // Initialize frequency objects
-    const frequencyMain = {};  // Frequency for main numbers
-    const frequencyStars = {}; // Frequency for star numbers
+    const counts = {};
 
-    // Main number differences calculation
     for (let i = 0; i < fetched.length - 1; i++) {
         let roznicaDoPush = [];
         let main1 = fetched[i + 1].results.split(",").slice(0, 5);
         let main = fetched[i].results.split(",").slice(0, 5);
-
-        // Count frequencies for main numbers
-        main.forEach(num => {
-            frequencyMain[num] = (frequencyMain[num] || 0) + 1;
-        });
 
         for (let num in main1) {
             let diff = +main1[num] - +main[num];
@@ -1686,16 +1733,18 @@ async function minusAll() {
         roznice.push(roznicaDoPush);
     }
 
-    // Star number differences calculation
+    for (let i = 0; i < roznice.length; i++) {
+        const arr = roznice[i];
+        arr.forEach((element) => {
+            counts[element] = (counts[element] || 0) + 1;
+        });
+    }
+
+    // Star number differences calculationb
     for (let i = 0; i < fetched.length - 1; i++) {
         let roznicaDoPushS = [];
         let main1S = fetched[i + 1].results.split(",").slice(5);
         let mainS = fetched[i].results.split(",").slice(5);
-
-        // Count frequencies for star numbers
-        mainS.forEach(num => {
-            frequencyStars[num] = (frequencyStars[num] || 0) + 1;
-        });
 
         for (let num in main1S) {
             let diffS = +main1S[num] - +mainS[num];
@@ -1706,18 +1755,7 @@ async function minusAll() {
     }
 
     // f2. to do later to find *a* pattern maybe
-    f2 = () => {
-        // Print out the frequency of main numbers and star numbers
-        console.log("Main Number Frequencies:", frequencyMain);
-        console.log("Star Number Frequencies:", frequencyStars);
-
-        // Sort by frequency and show the most common numbers
-        const sortedMain = Object.entries(frequencyMain).sort((a, b) => b[1] - a[1]);
-        const sortedStars = Object.entries(frequencyStars).sort((a, b) => b[1] - a[1]);
-
-        console.log("Sorted Main Numbers by Frequency:", sortedMain);
-        console.log("Sorted Star Numbers by Frequency:", sortedStars);
-    }
+    f2 = () => { console.log(`ostatnie roznice: ${roznice[roznice.length - 3]}|${roznice[roznice.length - 2]}|${roznice[roznice.length - 1]}|`, counts); }
 }
 
 function coIleTakaSama() {
@@ -2060,13 +2098,13 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
 
 addPastNumbers(pastNumsMain, pastNumsStar);
 calcBiggestProb(pastNumsMain, pastNumsStar);
-//minusAll();
+minusAll();
 coIleTakaSama();
 podwojne(fetched);
 splitIntoGroups(fetched);
 porownywanie(cleanview, cleanview2, proponowane, proponowaneStar);
 f1();
-//f2();
+f2();
 f3();
 f4();
 f5();
