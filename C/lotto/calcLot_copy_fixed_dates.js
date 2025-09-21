@@ -1997,7 +1997,11 @@ function splitIntoGroups(list, total = 0) {
 function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     let main = [];
     let mainStar = [];
-
+    let parzyste = 0;
+    let nieparzyste = 0;
+    const reg = /\(|\//;
+    const reg2 = /lub sam/;
+    let count = 0;
     for (let wybrany = 1; wybrany <= 50; wybrany++) {
         //let ilosc = 0;
         if (item1.includes(wybrany) && item3.includes(wybrany)) main.push(wybrany);
@@ -2066,7 +2070,72 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
         }
     });
 
-    while (main.length < 5) main.push("wybierz sam niestety/lub sztuczki zeby uzupelnic"); //if nothing else worked
+    /////////////////nowe
+    const dupl = structuredClone(main);
+    console.log(dupl);
+    for (let el of dupl) {
+        if (!/[0-9]/.test(String(el).charAt(0))) el = String(el).slice(1);
+
+        if (parseFloat(el) % 2 === 0) parzyste++;
+        else nieparzyste++;
+    }
+
+
+    console.log(nieparzyste, parzyste);
+    if (!((parzyste === 3 && nieparzyste === 2) || (parzyste === 2 && nieparzyste === 3))) {
+        if (parzyste > 3) {
+            while (parzyste > 3) {
+                if (count > 2) break;
+                count++;
+                const place = dupl.findLastIndex((el) => reg2.test(el) && parseFloat(el) % 2 === 0);
+                if (place !== -1) {
+                    if ((!main.includes(`${(parseFloat(dupl[place])) - 1}`) && cleanview.includes((parseFloat(dupl[place])) - 1))) {
+                        dupl[place] = (parseFloat(dupl[place])) - 1 + "-+";
+                        parzyste--;
+                        nieparzyste++;
+                        if (parzyste === 3) break;
+                    } else if (!main.includes(`${(parseFloat(dupl[place])) + 1}`) && cleanview.includes((parseFloat(dupl[place])) + 1)) {
+                        dupl[place] = (parseFloat(dupl[place])) + 1 + "-+";
+                        parzyste--;
+                        nieparzyste++;
+                        if (parzyste === 3) break;
+                    } else {
+                        dupl[place] = (parseFloat(dupl[place])) - 3 + "-+";
+                        parzyste--;
+                        nieparzyste++;
+                        if (parzyste === 3) break;
+                    }
+                }
+            }
+        } else {
+            while (parzyste < 3) {
+                if (count > 2) break;
+                count++;
+                const place = dupl.findLastIndex((el) => reg2.test(el) && parseFloat(el) % 2 !== 0);
+                if (place !== -1) {
+                    if ((!main.includes(`${(parseFloat(dupl[place])) + 1}`) && cleanview.includes((parseFloat(dupl[place])) + 1))) {
+                        dupl[place] = (parseFloat(dupl[place])) + 1 + "-+";
+                        parzyste++;
+                        nieparzyste--;
+                        if (parzyste === 3) break;
+                    } else if (!main.includes(`${(parseFloat(dupl[place])) - 1}`) && cleanview.includes((parseFloat(dupl[place])) - 1)) {
+                        dupl[place] = (parseFloat(dupl[place])) - 1 + "-+";
+                        parzyste++;
+                        nieparzyste--;
+                        if (parzyste === 3) break;
+                    } else {
+                        dupl[place] = (parseFloat(dupl[place])) + 3 + "-+";
+                        parzyste++;
+                        nieparzyste--;
+                        if (parzyste === 3) break;
+                    }
+                }
+            }
+        }
+    }
+    ///////////////////
+
+    //while (main.length < 5) main.push("wybierz sam niestety/lub sztuczki zeby uzupelnic"); //if nothing else worked
 
     //star nums//
     if (mainStar.length < 2) {
