@@ -1999,7 +1999,7 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
     let mainStar = [];
     let parzyste = 0;
     let nieparzyste = 0;
-    const reg = /\(|\//;
+    //const reg = /\(|\//;
     const reg2 = /lub sam/;
     let count = 0;
     for (let wybrany = 1; wybrany <= 50; wybrany++) {
@@ -2134,7 +2134,7 @@ function porownywanie(item1, item2, item3, item4, item5, item6, item7) {
         }
     }
     ///////////////////
-
+    main = dupl;
     //while (main.length < 5) main.push("wybierz sam niestety/lub sztuczki zeby uzupelnic"); //if nothing else worked
 
     //star nums//
@@ -2177,4 +2177,4 @@ f4();
 f5();
 allF();
 
-console.log("~ Analiza liczb loterii; v0.9.7.5 © ~");
+console.log("~ Analiza liczb loterii; v0.9.7.6 © ~");
