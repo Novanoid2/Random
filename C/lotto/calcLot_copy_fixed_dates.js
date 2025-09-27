@@ -1752,13 +1752,13 @@ function calcBiggestProb(arr1, arr2) {
 
     cleanview = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat(5).map(x => +x);
 
-    cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1,); });
+    cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1); });
     //star//
     arr2.forEach((element) => {
         counts2[element] = (counts2[element] || 0) + 1;
     });
     cleanview2 = (Object.entries(counts2).sort((a, b) => b[1] - a[1])).slice(0, 2).flat(5).map(x => +x);
-    cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1,); });
+    cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1); });
 
     f1 = () => console.log("f1: ", /*"wszystkie:", counts, "extra:", counts2,*/ "main:", cleanview, "star:", cleanview2);
 }
@@ -1948,9 +1948,9 @@ function coIleTakaSama() {
 
 function podwojne(arr) {
     //main//
-    let podwojne = new Array();
-    let podwojneAvg = new Array();
-    let counts = new Array();
+    let podwojne = [];
+    let podwojneAvg = [];
+    let counts = [];
     let co = 0;
     for (let at = 0; at < arr.length; at++) {
         let numsArr = arr[at].results.split(",").slice(0, 5);
@@ -1967,39 +1967,60 @@ function podwojne(arr) {
     }
 
     let counts2 = {};
+
     podwojneAvg.forEach((element) => {
         counts2[element] = (counts2[element] || 0) + 1;
     });
 
     czestePodwojne = (Object.entries(counts2).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat(2).map(x => x.toString());
 
-    for (let j = 1; j < czestePodwojne.length; j++) czestePodwojne.splice(j, 1,);
+    for (let j = 1; j < czestePodwojne.length; j++) czestePodwojne.splice(j, 1);
 
-    if (arr.length > podwojne[podwojne.length - 2]) {
-        Dupdist = arr.length - podwojne[podwojne.length - 2];
+    const medRaw = median(counts);           // może być float
+    const med = Math.max(1, Math.ceil(medRaw)); // zaokrąglamy w górę, min 1
+
+    // ostatni indeks wystąpienia (zakładamy że podwojne zapisane jako [idx, "b i a", ...])
+    const lastIdx = podwojne[podwojne.length - 2];
+
+    const drawsSince = arr.length - 1 - lastIdx; // 0 => było w ostatnim losowaniu
+
+    if (drawsSince < med) {
+        Dupdist = med - drawsSince; // jeszcze nie minęła mediana
     } else {
-        Dupdist = podwojne[podwojne.length - 2] - (arr.length - podwojne[podwojne.length - 2]);
+        const overdue = drawsSince - med;
+        const rem = overdue % med;
+        Dupdist = (rem === 0) ? med : (med - rem); // zawsze >=1
     }
 
     //star//
-    let podwojneStar = new Array();
-    let countsStar = new Array();
+    let podwojneStar = [];
+    let countsStar = [];
     let coStar = 0;
     for (let atStar = 0; atStar < arr.length; atStar++) {
         let numsArrStar = arr[atStar].results.split(",").slice(5);
         if (numsArrStar[0].charAt(0) === "0") numsArrStar[0] = numsArrStar[0].replace("0", "");
         if (numsArrStar[1].charAt(0) === "0") numsArrStar[1] = numsArrStar[1].replace("0", "");
-        if (+numsArrStar[1] - +numsArrStar[0] === 1 || +numsArrStar[1] - +numsArrStar[0] === -1) {
+        if (+numsArrStar[1] - +numsArrStar[0] === 1) {
             podwojneStar.push(atStar, +numsArrStar[1] + ` i ` + +numsArrStar[0]);
             countsStar.push(coStar);
             coStar = 0;
         } else coStar++;
     }
 
-    if (arr.length > podwojneStar[podwojneStar.length - 2]) {
-        DupdistStar = arr.length - podwojneStar[podwojneStar.length - 2];
+    const medRawS = median(countsStar);           // może być float
+    const medS = Math.max(1, Math.ceil(medRawS)); // zaokrąglamy w górę, min 1
+
+    // ostatni indeks wystąpienia (zakładamy że podwojne zapisane jako [idx, "b i a", ...])
+    const lastIdxS = podwojneStar[podwojneStar.length - 2];
+
+    const drawsSinceS = arr.length - 1 - lastIdxS; // 0 => było w ostatnim losowaniu
+
+    if (drawsSinceS < medS) {
+        DupdistStar = medS - drawsSinceS; // jeszcze nie minęła mediana
     } else {
-        DupdistStar = podwojneStar[podwojneStar.length - 2] - (arr.length - podwojneStar[podwojneStar.length - 2]);
+        const overdueS = drawsSinceS - medS;
+        const remS = overdueS % medS;
+        DupdistStar = (remS === 0) ? medS : (medS - remS); // zawsze >=1
     }
 
     f4 = () => console.log("f4: ", `nastepny podwojny (teo): ${Dupdist}, nastepny podwojny Star (teo): ${DupdistStar}`, "\n", `czeste podwojne:`, czestePodwojne);
@@ -2042,6 +2063,7 @@ function splitIntoGroups(list) {
 function rodzajPar(arr) {
     //pierwsza liczba to parzyste a druga to nie parzyste!
     const counts = { "5/0": 0, "4/1": 0, "3/2": 0, "2/3": 0, "1/4": 0, "0/5": 0 };
+    const types = { "2/3": 0, "3/2": 0 };
 
     arr.forEach((el) => {
         const part = el.results.split(",").map(x => parseInt(x, 10)).slice(0, 5);
@@ -2076,19 +2098,16 @@ function rodzajPar(arr) {
             if (j === ((i + 1) * 100) - 1 || !arr[j]) {
                 let countsOrgTemp = Object.entries(countsTemp).sort((a, b) => b[1] - a[1]);
                 const total = 100;
-                for (let i = 0; i < countsOrgTemp.length; i++) {
-                    console.log(countsOrgTemp[i][1]);
-                    countsOrgTemp[i][1] = (countsOrgTemp[i][1] / total * 100).toFixed(2) + "%";
-                }
+                for (let i = 0; i < countsOrgTemp.length; i++) countsOrgTemp[i][1] = (countsOrgTemp[i][1] / total * 100).toFixed(2) + "%";
 
                 countsOrgTemp = countsOrgTemp.flat(2);
-                console.log(`${i * 100}-${j}:`, countsOrgTemp);
+                types[countsOrgTemp[0]]++;
                 if (!arr[j]) break;
             }
         }
     }
 
-    f6 = () => console.log(`f6: rodzaje par (parz/nieparz):`, countsOrg);
+    f6 = () => console.log(`f6: rodzaje par (parz/nieparz):`, countsOrg, "ilosc co 100:", types);
 }
 
 function porownywanie(item1, item2, item3, item4, parz, nieparz) {
@@ -2104,7 +2123,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
     }
 
     for (let wybranyStar = 1; wybranyStar <= 12; wybranyStar++) {
-        if (item2.includes(wybranyStar) && item4.includes(wybranyStar)) main.push(wybranyStar);
+        if (item2.includes(wybranyStar) && item4.includes(wybranyStar)) mainStar.push(wybranyStar);
     }
 
     //main nums//
@@ -2171,9 +2190,9 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
         }
     }
 
-    if (!(parzyste === parz && nieparzyste === nieparz)) {
-        console.log("dodatkowa funkcja wlaczona, linia: 2175");
-        while (!(parzyste === parz && nieparzyste === nieparz)) {
+    if (!(parzyste === +parz && nieparzyste === +nieparz)) {
+        console.log("dodatkowa funkcja wlaczona, linia: 2194");
+        while (!(parzyste === +parz && nieparzyste === +nieparz)) {
             if (count > 3) break;
             count++;
 
@@ -2200,7 +2219,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
                     plusMin(1);
                     if (parzyste === parz) break;
                 } else {
-                    dupl[place] = parseFInt(dupl[place]) - 3 + "+-3";
+                    dupl[place] = parseInt(dupl[place]) - 3 + "+-3";
                     plusMin(1);
                     if (parzyste === parz) break;
                 }
@@ -2209,7 +2228,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
             const place2 = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 !== 0);
             if (place2 !== -1) {
                 if (!main.includes(`${(parseInt(dupl[place2])) + 1}`) && cleanview.includes((parseInt(dupl[place2])) + 1)) {
-                    dupl[place2] = parseFloat(dupl[place2]) + 1 + "-+w/c";
+                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+w/c";
                     plusMin();
                     if (parzyste === parz) break;
                 } else if (!main.includes(`${(parseInt(dupl[place2])) - 1}`) && cleanview.includes((parseInt(dupl[place2])) - 1)) {
@@ -2217,7 +2236,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
                     plusMin();
                     if (parzyste === parz) break;
                 } else if (!main.includes(`${(parseInt(dupl[place2])) + 1}`)) {
-                    dupl[place2] = parseFloat(dupl[place2]) + 1 + "-+";
+                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+";
                     plusMin();
                     if (parzyste === parz) break;
                 } else if (!main.includes(`${(parseInt(dupl[place2])) - 1}`)) {
@@ -2231,7 +2250,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
                 }
             }
         }
-    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2234");
+    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2253");
 
     main = dupl;
 
@@ -2251,13 +2270,13 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
     }
 
     main = main.concat(mainStar).join();
-    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', JSON.stringify(`nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}`, null, 2), 'utf8');
-    console.log(`komentarze na /override: - star nie bedzie 5 teraz
-                - do pierwszego dodaj +1 i moze do ostatniego tez
-                - ostatnio jest duzo nie parzystych, wiec moze pozmienial troche
-                Normalne komentarze:
-                - jedne z kazdej grupy, ale bardziej na ~~srodek
-                - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`);
+    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}\n
+    komentarze na /override: - star nie bedzie 5 teraz
+                             - do pierwszego dodaj +1 i moze do ostatniego tez
+                             - ostatnio jest duzo nie parzystych, wiec moze pozmienial troche
+                             - dodaj jedna liczbe < 10
+    Normalne komentarze: - jedne z kazdej grupy, ale bardziej na ~~srodek
+                         - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
 
 }
 
@@ -2279,4 +2298,4 @@ f5();
 f6();
 allF();
 
-console.log("~ Analiza liczb loterii; v0.9.9.4 © ~");
+console.log("~ Analiza liczb loterii; v0.9.9.7.3 © ~");
