@@ -1,5 +1,58 @@
 "use strict";
 const fetched = [
+    //2008 jan -> dec
+    { results: '10,12,24,25,41,03,05' },
+    { results: '08,24,36,49,50,04,08' },
+    { results: '14,16,23,40,46,04,08' },
+    { results: '02,06,09,19,45,07,08' },
+    { results: '22,30,45,47,49,04,09' },
+    { results: '17,28,30,38,44,01,04' },
+    { results: '12,27,29,45,46,04,07' },
+    { results: '04,27,32,46,50,08,09' },
+    { results: '12,37,40,47,49,02,09' },
+    { results: '02,07,14,17,35,01,06' },
+    { results: '13,21,25,35,48,04,08' },
+    { results: '02,10,18,22,36,04,06' },
+    { results: '05,09,17,29,39,03,06' },
+    { results: '11,13,18,37,47,01,06' },
+    { results: '06,25,30,45,50,05,07' },
+    { results: '03,06,07,27,50,05,09' },
+    { results: '04,19,26,27,30,03,08' },
+    { results: '02,26,37,45,48,04,08' },
+    { results: '08,09,40,42,45,06,07' },
+    { results: '06,09,15,25,38,04,09' },
+    { results: '05,09,19,21,38,01,07' },
+    { results: '05,07,14,20,49,02,08' },
+    { results: '07,19,21,40,50,02,09' },
+    { results: '13,16,37,44,50,01,09' },
+    { results: '08,11,36,37,45,03,05' },
+    { results: '05,20,26,44,50,05,07' },
+    { results: '07,19,22,27,48,05,07' },
+    { results: '09,11,13,19,37,03,04' },
+    { results: '10,14,16,29,44,05,06' },
+    { results: '07,11,15,24,29,02,07' },
+    { results: '01,22,25,40,50,01,08' },
+    { results: '04,05,15,16,45,04,07' },
+    { results: '11,17,18,26,31,05,06' },
+    { results: '07,27,29,39,50,05,07' },
+    { results: '02,20,25,37,39,05,08' },
+    { results: '07,12,16,17,39,03,08' },
+    { results: '19,23,33,37,50,03,07' },
+    { results: '14,16,19,20,31,06,09' },
+    { results: '14,29,31,33,37,01,02' },
+    { results: '04,13,19,23,38,02,03' },
+    { results: '04,15,22,31,41,01,06' },
+    { results: '03,10,12,42,50,01,05' },
+    { results: '07,15,16,17,45,06,09' },
+    { results: '03,18,25,34,41,02,05' },
+    { results: '01,09,12,17,18,03,04' },
+    { results: '08,10,14,21,26,03,04' },
+    { results: '09,14,21,49,50,03,08' },
+    { results: '08,11,16,25,41,02,04' },
+    { results: '04,08,21,35,45,05,08' },
+    { results: '02,19,28,42,49,02,07' },
+    { results: '28,29,40,46,50,05,07' },
+    { results: '01,02,26,44,50,01,07' },
     //2009 jan -> dec
     { results: '29,30,36,37,48,01,06' },
     { results: '07,15,22,28,48,01,04' },
@@ -1641,29 +1694,30 @@ const fetched = [
     { results: "1,9,13,35,40,5,6" },
     { results: "8,10,26,32,42,9,12" },
     { results: "11,13,24,29,33,2,5" },
+    { results: "4,17,25,28,44,5,11" },
 ];
 
 // © - 2025 by novanoid2 on discord
 //const url = `https://www.magayo.com/api/results.php?api_key=viY8ez6UG3mKxMpK5T&game=euromillions&draw=2010-07-09`;
 
-let pastNumsMain = new Array();
-let cleanview = new Array();
-let roznice = new Array();
-let numEvery = new Array();
+let pastNumsMain = [];
+let cleanview = [];
+let roznice = [];
+let numEvery = [];
 let globalMed = ["whatamidoing"];
-let numDist = new Array();
+let numDist = [];
 let globalDist = ["stop"];
-let proponowane = new Array();
+let proponowane = [];
 let Dupdist, groupsOrg, czestePodwojne, parz, nieparz;
 
-let pastNumsStar = new Array();
-let cleanview2 = new Array();
-let rozniceS = new Array();
-let numEveryStar = new Array();
+let pastNumsStar = [];
+let cleanview2 = [];
+let rozniceS = [];
+let numEveryStar = [];
 let globalMedStar = ["whatamidoingStar"];
-let numDistStar = new Array();
+let numDistStar = [];
 let globalDistStar = ["stopStar"];
-let proponowaneStar = new Array();
+let proponowaneStar = [];
 let DupdistStar;
 
 const fs = require('fs');
@@ -1680,25 +1734,22 @@ function median(arr) {
 function addPastNumbers(arr1, arr2) {
     for (let i = 0; i < fetched.length; i++) {
         let errors = /, ,|,,|00|  | /;
-        if (errors.test(fetched[i].results)) { console.log("error at" + i); break; }//small fail safe
+        if (errors.test(fetched[i].results)) { console.log("error at" + i); break; } //small fail safe
         let main = fetched[i].results.split(",").slice(0, 5);
         let star = fetched[i].results.split(",").slice(5)
         main.forEach(element => { if (element.charAt(0) === "0") element = element.replace("0", ""); arr1.push(+element); });
         star.forEach(element => { if (element.charAt(0) === "0") element = element.replace("0", ""); arr2.push(+element); });
-        //couldve used parse or something like that;
     }
 }
 
 function calcBiggestProb(arr1, arr2) {
     const counts = {};
     const counts2 = {};
-
-    //yes i know .map exists but i dont know how to use it yet
-    //edit: i do now x3 too late tho
     //main//
     arr1.forEach((element) => {
         counts[element] = (counts[element] || 0) + 1;
     });
+
     cleanview = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat(5).map(x => +x);
 
     cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1,); });
@@ -1771,8 +1822,8 @@ function coIleTakaSama() {
                 } else every++;
             }
         }
+
         //get median of numIntArr with a loop or whatev and then push it into numEvery;
-        //new: .reduce (for me)
         globalMed[num] = Number((median(numIntArr)).toFixed());
 
         const counts = numIntArr.reduce((acc, curr) => {
@@ -1787,7 +1838,6 @@ function coIleTakaSama() {
 
     //fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
-    //todo: suggests next numbers based off of past numbers z perspektywy numEvery (done btw)
     let numIn = new Array("nic");
 
     for (let num = 1; num <= 50; num++) {
@@ -1826,7 +1876,7 @@ function coIleTakaSama() {
             } else break;
         }
     }
-    //////////////////////////////////////////////////////////////////////////////////////////
+
     //star//
     for (let numStar = 1; numStar <= 12; numStar++) {
         let numIntArrStar = [];
@@ -1855,6 +1905,7 @@ function coIleTakaSama() {
     }
 
     // fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+
     let numInStar = new Array("nic");
 
     for (let numStar = 1; numStar <= 12; numStar++) {
@@ -1906,13 +1957,11 @@ function podwojne(arr) {
         for (let i = 0; i < numsArr.length - 1; i++) {
             if (numsArr[i].charAt(0) === "0") numsArr[i] = numsArr[i].replace("0", "");
             if (numsArr[i + 1].charAt(0) === "0") numsArr[i + 1] = numsArr[i + 1].replace("0", "");
-            if (+numsArr[i + 1] - +numsArr[i] === 1) {//druga jest wieksza
+            if (+numsArr[i + 1] - +numsArr[i] === 1) {
                 podwojne.push(at, +numsArr[i + 1] + ` i ` + +numsArr[i]);
                 podwojneAvg.push(`${numsArr[i + 1]}` + `${numsArr[i]}`);
                 counts.push(co);
                 co = 0;
-            } else if (+numsArr[i + 1] - +numsArr[i] === -1) {//druga jest mniejsza
-                console.log("Blad w " + i + " druga nie moze byc mniejsza");//small fail log
             } else co++;
         }
     }
@@ -1986,7 +2035,6 @@ function splitIntoGroups(list) {
     }
     //check every once in a while
     const groupsOrg = Object.entries(groups).sort((a, b) => b[1] - a[1]).flat(2);
-    //groupOrder = ["20-29", " 10-19", " 30-39", " 40-49", " 1-9"];
     f5 = () => console.log("f5: grouporder:", groupsOrg);
 
 }
@@ -2014,36 +2062,49 @@ function rodzajPar(arr) {
     parz = countsOrg[0].charAt(0);
     nieparz = countsOrg[0].charAt(2);
 
-    f6 = () => console.log(`f6: rodzaje par (parz/nieparz): `, countsOrg);
-}
+    for (let i = 0; i < Math.ceil(fetched.length / 100); i++) {
+        const countsTemp = { "5/0": 0, "4/1": 0, "3/2": 0, "2/3": 0, "1/4": 0, "0/5": 0 };
+        for (let j = i * 100; j <= ((i + 1) * 100) - 1; j++) {
+            if (arr[j]) {
+                const partTemp = arr[j].results.split(",").map(x => parseInt(x, 10)).slice(0, 5);
 
+                let even = 0, odd = 0;
+                partTemp.forEach((num) => { num % 2 === 0 ? even++ : odd++; });
+                countsTemp[`${even}/${odd}`]++;
+            }
+
+            if (j === ((i + 1) * 100) - 1 || !arr[j]) {
+                let countsOrgTemp = Object.entries(countsTemp).sort((a, b) => b[1] - a[1]);
+                const total = 100;
+                for (let i = 0; i < countsOrgTemp.length; i++) {
+                    console.log(countsOrgTemp[i][1]);
+                    countsOrgTemp[i][1] = (countsOrgTemp[i][1] / total * 100).toFixed(2) + "%";
+                }
+
+                countsOrgTemp = countsOrgTemp.flat(2);
+                console.log(`${i * 100}-${j}:`, countsOrgTemp);
+                if (!arr[j]) break;
+            }
+        }
+    }
+
+    f6 = () => console.log(`f6: rodzaje par (parz/nieparz):`, countsOrg);
+}
 
 function porownywanie(item1, item2, item3, item4, parz, nieparz) {
     let main = [];
     let mainStar = [];
     let parzyste = 0;
     let nieparzyste = 0;
-    const reg2 = /lub sam/;
     let count = 0;
+    let override = false;
 
     for (let wybrany = 1; wybrany <= 50; wybrany++) {
-        //let ilosc = 0;
         if (item1.includes(wybrany) && item3.includes(wybrany)) main.push(wybrany);
-        /*if (item3.includes(wybrany)) ilosc++;
-        //if (!item5.includes(wybrany)) ilosc++;
-        if (ilosc === 2) {
-            main.push(wybrany);
-        }*/
     }
 
     for (let wybranyStar = 1; wybranyStar <= 12; wybranyStar++) {
-        //let iloscStar = 0;
         if (item2.includes(wybranyStar) && item4.includes(wybranyStar)) main.push(wybranyStar);
-        /*if (item4.includes(wybranyStar)) iloscStar++;
-        //if (!item6.incldues(wybranyStar)) iloscStar++;
-        if (iloscStar === 2) {
-            mainStar.push(wybranyStar);
-        }*/
     }
 
     //main nums//
@@ -2064,15 +2125,14 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
             else if (cleanview.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
             else if (czestePodwojne.includes(`${main[1] + 1}${main[1]}`)) main.push(` (${main[1] + 1})`);
             else if (czestePodwojne.includes(`${main[1]}${main[1] - 1}`)) main.push(` (${main[1] - 1})`);
-        }
-        if (main[0]) {
+        } else if (main[0]) {
             if (checkproponowane(main[0] + 1)) main.push(` (${main[0] + 1})`);
             else if (cleanview.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
             else if (czestePodwojne.includes(`${main[0] + 1}${main[0]}`)) main.push(` (${main[0] + 1})`);
             else if (czestePodwojne.includes(`${main[0]}${main[0] - 1}`)) main.push(` (${main[0] - 1})`);
         }
         if (main[1] && !main.includes(main[1] + 1)) main.push(` (${main[1] + 1})`);
-        if (main[0] && !main.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
+        else if (main[0] && !main.includes(main[0] + 1)) main.push(` (${main[0] + 1})`);
     }
 
     proponowane.forEach((el, idx) => {
@@ -2094,7 +2154,6 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
         }
     });
 
-    /////////////////nowe//////////////////
     const dupl = structuredClone(main);
 
     for (let el of dupl) {
@@ -2112,15 +2171,18 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
         }
     }
 
-    //console.log(nieparzyste, parzyste);
     if (!(parzyste === parz && nieparzyste === nieparz)) {
-        console.log("dodatkowa funkcja wlaczona, linia: 2109");
+        console.log("dodatkowa funkcja wlaczona, linia: 2175");
         while (!(parzyste === parz && nieparzyste === nieparz)) {
             if (count > 3) break;
             count++;
 
-            const place = dupl.findLastIndex((el) => reg2.test(el) && parseInt(el) % 2 === 0);
-            if (place !== -1) {
+            let place = 0;
+            if (dupl.includes(String(cleanview[cleanview.length - 1]) + " lub sam")) override = true;
+            else place = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 === 0);
+
+            if (place !== -1 || override) {
+                override = false;
                 if (!main.includes(`${(parseInt(dupl[place])) - 1}`) && cleanview.includes((parseInt(dupl[place])) - 1)) {
                     dupl[place] = parseInt(dupl[place]) - 1 + "+-w/c";
                     plusMin(1);
@@ -2144,36 +2206,34 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
                 }
             }
 
-            const place2 = dupl.findLastIndex((el) => reg2.test(el) && parseInt(el) % 2 !== 0);
+            const place2 = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 !== 0);
             if (place2 !== -1) {
                 if (!main.includes(`${(parseInt(dupl[place2])) + 1}`) && cleanview.includes((parseInt(dupl[place2])) + 1)) {
                     dupl[place2] = parseFloat(dupl[place2]) + 1 + "-+w/c";
-                    plusMin(2);
+                    plusMin();
                     if (parzyste === parz) break;
                 } else if (!main.includes(`${(parseInt(dupl[place2])) - 1}`) && cleanview.includes((parseInt(dupl[place2])) - 1)) {
                     dupl[place2] = parseInt(dupl[place2]) - 1 + "--/c";
-                    plusMin(2);
+                    plusMin();
                     if (parzyste === parz) break;
                 } else if (!main.includes(`${(parseInt(dupl[place2])) + 1}`)) {
                     dupl[place2] = parseFloat(dupl[place2]) + 1 + "-+";
-                    plusMin(2);
+                    plusMin();
                     if (parzyste === parz) break;
                 } else if (!main.includes(`${(parseInt(dupl[place2])) - 1}`)) {
                     dupl[place2] = parseInt(dupl[place2]) - 1 + "--";
-                    plusMin(2);
+                    plusMin();
                     if (parzyste === parz) break;
                 } else {
                     dupl[place2] = parseInt(dupl[place2]) + 3 + "-+3";
-                    plusMin(2);
+                    plusMin();
                     if (parzyste === parz) break;
                 }
             }
         }
-    }
+    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2234");
 
     main = dupl;
-    ///////////////////
-    //while (main.length < 5) main.push("wybierz sam niestety/lub sztuczki zeby uzupelnic"); //if nothing else worked
 
     //star nums//
     if (mainStar.length < 2) {
@@ -2192,12 +2252,16 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
 
     main = main.concat(mainStar).join();
     allF = () => fs.writeFileSync('C/lotto/proponowane.txt', JSON.stringify(`nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}`, null, 2), 'utf8');
-    console.log(`zastosuj te sztuczki na koncu:
-- jedne z kazdej grupy: ${groupsOrg}
-- najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`);
+    console.log(`komentarze na /override: - star nie bedzie 5 teraz
+                - do pierwszego dodaj +1 i moze do ostatniego tez
+                - ostatnio jest duzo nie parzystych, wiec moze pozmienial troche
+                Normalne komentarze:
+                - jedne z kazdej grupy, ale bardziej na ~~srodek
+                - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`);
+
 }
 
-//this is very non-probable, most likely not true but i had to fill it in ok?😭
+//Triplet Analysis: Find most common pairs or triplets of numbers drawn together.
 
 addPastNumbers(pastNumsMain, pastNumsStar); //nie ma f
 calcBiggestProb(pastNumsMain, pastNumsStar); //f1
@@ -2215,4 +2279,4 @@ f5();
 f6();
 allF();
 
-console.log("~ Analiza liczb loterii; v0.9.8.3 © ~");
+console.log("~ Analiza liczb loterii; v0.9.9.4 © ~");
