@@ -2147,7 +2147,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
         }
         return false;
     }
-
+//change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
     function addDups() {
         if (dupdist === 1 && main.length < 5) {
             if (main[1]) {
