@@ -1695,12 +1695,14 @@ const fetched = [
     { results: "8,10,26,32,42,9,12" },
     { results: "11,13,24,29,33,2,5" },
     { results: "4,17,25,28,44,5,11" },
+    { results: "3,8,15,17,48,2,8" },
 ];
 
 // © - 2025 by novanoid2 on discord
 //const url = `https://www.magayo.com/api/results.php?api_key=viY8ez6UG3mKxMpK5T&game=euromillions&draw=2010-07-09`;
 let globalStop = false;
 
+//main//
 let pastNumsMain = [];
 let cleanview = [];
 let roznice = [];
@@ -1711,6 +1713,7 @@ let globalDist = ["stop"];
 let proponowane = [];
 let Dupdist, groupsOrg, czestePodwojne, parz, nieparz;
 
+//star//
 let pastNumsStar = [];
 let cleanview2 = [];
 let rozniceS = [];
@@ -2147,7 +2150,12 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
         }
         return false;
     }
-//change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
+    //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
+    //i feel like they do the same thing😭
+    /* ok chill out, najpierw zrob plan jak checsz logike, zapamietaj lub zapisz, potem zaczni powoli od main i stars, sprawdz
+    czy sa bugi i potem nie wiem ciesz sie?
+    luuuuub oczywiescie pi prostu usun to... x3
+    */
     function addDups() {
         if (dupdist === 1 && main.length < 5) {
             if (main[1]) {
@@ -2299,16 +2307,15 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
     }
 
     main = main.concat(mainStar).join();
-    allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby: ${main}\n
-    komentarze na /override: - star nie bedzie 5 teraz
-                             - do pierwszego dodaj +1 i moze do ostatniego tez
-                             - ostatnio jest duzo nie parzystych, wiec moze pozmienial troche
-                             - dodaj jedna liczbe < 10
-    Normalne komentarze: - jedne z kazdej grupy, ale bardziej na ~~srodek
-                         - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
-
+    allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
+    komentarze na /override: -/
+    Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
 }
 
+//COOOO KURWAAAAA?????? jezu
+//you really need to work on porownanie, either remove it entirely because its too much work and too unreliable 
+//or fix the logic, in thats case fix the dup dist thing and STOP recommending stuff from cleanview😭
+//but like at that point how am i supposed to fill the gaps? cuz if i cant use cleanview i dont have anything else to use...
 //Triplet Analysis: Find most common pairs or triplets of numbers drawn together.
 
 addPastNumbers(pastNumsMain, pastNumsStar); //nie ma f
