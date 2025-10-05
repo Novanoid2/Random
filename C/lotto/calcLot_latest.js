@@ -1696,6 +1696,7 @@ const fetched = [
     { results: "11,13,24,29,33,2,5" },
     { results: "4,17,25,28,44,5,11" },
     { results: "3,8,15,17,48,2,8" },
+    { results: "6,12,18,25,41,2,6" }
 ];
 
 // © - 2025 by novanoid2 on discord
@@ -1704,18 +1705,19 @@ let globalStop = false;
 
 //main//
 let pastNumsMain = [];
-let cleanview = [];
+let cleanviewBiggest = [];
+let cleanviewSmallest = [];
 let roznice = [];
 let numEvery = [];
 let globalMed = ["whatamidoing"];
 let numDist = [];
 let globalDist = ["stop"];
 let proponowane = [];
-let Dupdist, groupsOrg, czestePodwojne, parz, nieparz;
+let Dupdist, tripDist, groupsOrg, czestePodwojne, czestePotrojne, parz, nieparz;
 
 //star//
 let pastNumsStar = [];
-let cleanview2 = [];
+let cleanviewS = [];
 let rozniceS = [];
 let numEveryStar = [];
 let globalMedStar = ["whatamidoingStar"];
@@ -1725,8 +1727,7 @@ let proponowaneStar = [];
 let DupdistStar;
 
 const fs = require('fs');
-let f1, f2, f3, f4, f5, f6, allF;
-
+let f1, f2, f3, f4, f5, f6, f7, f8, allF;
 
 function median(arr) {
     if (arr.length === 0) return 0;
@@ -1735,37 +1736,41 @@ function median(arr) {
     return arr.length % 2 !== 0 ? arr[mid] : ((arr[mid - 1] + arr[mid]) / 2);
 }
 
-function addPastNumbers(arr1, arr2) {//sprawdzone
+function addPastNumbers(arr1, arr2) {//sprawdzone & polepszone
     for (let i = 0; i < fetched.length; i++) {
         let errors = /,  ,|, ,|,,|00|  | /;
-        if (errors.test(fetched[i].results)) { console.log("error at" + i); globalStop = true; break; } //small fail safe
-        let main = fetched[i].results.split(",").slice(0, 5).map(x => parseInt(x));
-        let star = fetched[i].results.split(",").slice(5).map(x => parseInt(x));
-        main.forEach(element => arr1.push(element));
-        star.forEach(element => arr2.push(element));
+        if (errors.test(fetched[i].results)) { //small fail safe
+            console.warn("error at" + i, 1742); //variable line marker
+            globalStop = true;
+            break;
+        }
+
+        fetched[i].results.split(",").slice(0, 5).map(x => parseInt(x)).forEach(element => arr1.push(element));
+        fetched[i].results.split(",").slice(5).map(x => parseInt(x)).forEach(element => arr2.push(element));
     }
 }
 
-function calcBiggestProb(arr1, arr2) {//sprawdzone
+function calcBiggestProb(arr1, arr2) {//sprawdzone & polepszone
     if (globalStop) return;
-    const counts = {};
-    const countsS = {};
+
     ////main////
-    arr1.forEach((element) => {
-        counts[element] = (counts[element] || 0) + 1;
-    });
+    const counts = arr1.reduce((acc, curr) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+    }, {});
 
-    cleanview = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).flat().map(x => +x);
-    cleanview.forEach((el, idx) => { if (el > 50) cleanview.splice(idx, 1); });
+    cleanviewBiggest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).map(entry => +entry[0]);
+    cleanviewSmallest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(Object.keys(counts).length - 5).map(entry => +entry[0]);
+
     ////star////
-    arr2.forEach((element) => {
-        countsS[element] = (countsS[element] || 0) + 1;
-    });
+    const countsS = arr2.reduce((acc, curr) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+    }, {});
 
-    cleanview2 = (Object.entries(countsS).sort((a, b) => b[1] - a[1])).slice(0, 2).flat().map(x => +x);
-    cleanview2.forEach((el, idx) => { if (el > 50) cleanview2.splice(idx, 1); });
+    cleanviewS = (Object.entries(countsS).sort((a, b) => b[1] - a[1])).slice(0, 2).map(entry => +entry[0]);
 
-    f1 = () => console.log("f1: ", "main:", cleanview, "star:", cleanview2);
+    f1 = () => console.log("f1: ", "main najwieksze:", cleanviewBiggest, " main najmniejsze:", cleanviewSmallest, "star:", cleanviewS);
 }
 
 async function minusAll() {
@@ -1788,9 +1793,7 @@ async function minusAll() {
 
     for (let i = 0; i < roznice.length; i++) {
         const arr = roznice[i];
-        arr.forEach((element) => {
-            counts[element] = (counts[element] || 0) + 1;
-        });
+        arr.forEach((element) => counts[element] = (counts[element] || 0) + 1);
     }
 
     ////star////
@@ -1811,7 +1814,7 @@ async function minusAll() {
     f2 = () => { console.log(`ostatnie roznice: ${roznice[roznice.length - 3]}|${roznice[roznice.length - 2]}|${roznice[roznice.length - 1]}|`, counts); }
 }
 
-function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
+function coIleTakaSama() {//NIEsprawdzone ale polepszone
     if (globalStop) return;
     ////main////
     //sprawdz co ile jest liczba w calym ${fetched}
@@ -1829,7 +1832,8 @@ function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
         }
 
         //get median of numIntArr with a loop or whatev and then push it into numEvery;
-        if (numIntArr.length > 0) globalMed[num] = Math.round(median(numIntArr)); else { globalStop = true; console.log("bład 1829"); }
+        if (numIntArr.length > 0) globalMed[num] = Math.round(median(numIntArr));
+        else { globalStop = true; console.warn("bład 1835"); } //variable line marker
 
         const counts = numIntArr.reduce((acc, curr) => {
             acc[curr] = (acc[curr] || 0) + 1;
@@ -1838,31 +1842,34 @@ function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
 
         for (let key in counts) counts[key] = (counts[key] / numIntArr.length * 100).toFixed(1) + "%";
 
-        numEvery.push(`liczba ${num} powtarza sie medianowo: ${globalMed[num]} razy. dokładnie: `, counts);
+        numEvery.push(`liczba ${num} powtarza sie medianowo co ${globalMed[num]} liczb. dokładnie: `, counts);
     }
 
-    //fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     let numIn = new Array("nic");
 
     for (let num = 1; num <= 50; num++) {
         const findNum = (element) => {
             let numsArr = element.results.split(",").slice(0, 5).map(x => parseInt(x));
-            if (numsArr.includes(num)) return true;
-            return false;
+            return numsArr.includes(num);
         }
 
-        let dist = fetched.length - 1 - fetched.findLastIndex(findNum);
+        const drawsSince = fetched.length - 1 - fetched.findLastIndex(findNum);
+        const med = globalMed[num];
+        let theoretical = 0;
 
-        globalDist.push(dist);
-
-        if (dist > globalMed[num]) {
-            numDist.push(`${num} była ${dist} losowań temu i będzie (teoretycznie) za ${globalMed[num] - (dist - globalMed[num])} losowań`);
-            numIn.push(globalMed[num] - (dist - globalMed[num]));
+        if (drawsSince < med) {
+            theoretical = med - drawsSince;
         } else {
-            numDist.push(`${num} była ${dist} losowań temu i będzie (teoretycznie) za ${globalMed[num] - dist} losowań`);
-            numIn.push(globalMed[num] - dist);
+            const overdue = drawsSince - med;
+            const rem = overdue % med;
+            theoretical = (rem === 0) ? med : (med - rem);
         }
+
+        numDist.push(`${num} była ${drawsSince} losowań temu, będzie za ${theoretical} cyfr`);
+        numIn.push(theoretical);
+        globalDist.push(drawsSince);
     }
 
     let chosen = 0;
@@ -1870,8 +1877,8 @@ function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
     for (let wanted = 1; wanted <= 50; wanted++) {
         while (numIn.includes(wanted)) {
             if (chosen < 5) {
-                let place = numIn.findIndex((element) => { if (element === wanted) return true; });
-                proponowane.push(place, `proponowana za ${wanted} losowań`);
+                let place = numIn.findIndex((element) => { return element === wanted; });
+                proponowane.push(place, `proponowana za ${wanted} cyfr`);
                 chosen++;
                 numIn.splice(place, 1, "Zamieniono");
             } else break;
@@ -1892,7 +1899,8 @@ function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
             }
         }
 
-        if (numIntArrStar.length > 0) globalMedStar[numStar] = Math.round(median(numIntArrStar)); else { globalStop = true; console.log("błąd 1892"); }
+        if (numIntArrStar.length > 0) globalMedStar[numStar] = Math.round(median(numIntArrStar));
+        else { globalStop = true; console.warn("błąd 1902"); } //variable line marker
 
         const countsStar = numIntArrStar.reduce((accStar, currStar) => {
             accStar[currStar] = (accStar[currStar] || 0) + 1;
@@ -1901,39 +1909,42 @@ function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
 
         for (let key in countsStar) countsStar[key] = (countsStar[key] / numIntArrStar.length * 100).toFixed(1) + "%";
 
-        numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo: ${globalMedStar[numStar]} razy. dokładnie: `, countsStar);
+        numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo cy: ${globalMedStar[numStar]} liczb. dokładnie: `, countsStar);
     }
 
-    // fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
 
     let numInStar = new Array("nic");
 
     for (let numStar = 1; numStar <= 12; numStar++) {
         const findNumStar = (elementStar) => {
             let numsArrStar = elementStar.results.split(",").slice(5).map(x => parseInt(x));;
-            if (numsArrStar.includes(numStar)) return true;
-            return false;
+            return numsArrStar.includes(numStar);
         }
 
-        let distStar = fetched.length - 1 - fetched.findLastIndex(findNumStar);
+        const drawsSinceS = fetched.length - 1 - fetched.findLastIndex(findNumStar);
+        const medS = globalMedStar[numStar];
+        let theoreticalS = 0;
 
-        globalDistStar.push(distStar);
-
-        if (distStar > globalMedStar[numStar]) {
-            numDistStar.push(`${numStar} była ${distStar} losowań temu i będzie (teoretycznie) za ${globalMedStar[numStar] - (distStar - globalMedStar[numStar])} losowań`);
-            numInStar.push(globalMedStar[numStar] - (distStar - globalMedStar[numStar]));
+        if (drawsSinceS < medS) {
+            theoreticalS = medS - drawsSinceS;
         } else {
-            numDistStar.push(`${numStar} była ${distStar} losowań temu i będzie (teoretycznie) za ${globalMedStar[numStar] - distStar} losowań`);
-            numInStar.push(globalMedStar[numStar] - distStar);
+            const overdueS = drawsSinceS - medS;
+            const remS = overdueS % medS;
+            theoreticalS = (remS === 0) ? medS : (medS - remS);
         }
+
+        numDistStar.push(`${numStar} była ${drawsSinceS} losowań temu i, będzie za ${theoreticalS} losowań`);
+        numInStar.push(theoreticalS);
+        globalDistStar.push(drawsSinceS);
     };
 
     let chosenStar = 0;
     for (let wantedStar = 1; wantedStar <= 12; wantedStar++) {
         while (numInStar.includes(wantedStar)) {
             if (chosenStar < 2) {
-                let placeStar = numInStar.findIndex((elementStar) => { if (elementStar === wantedStar) return true; });
-                proponowaneStar.push(placeStar, `proponowana star za ${wantedStar} losowań`);
+                let placeStar = numInStar.findIndex((elementStar) => { return elementStar === wantedStar; });
+                proponowaneStar.push(placeStar, `proponowana star za ${wantedStar} cyfr`);
                 chosenStar++;
                 numInStar.splice(placeStar, 1, "Zamieniono");
             } else break;
@@ -1943,19 +1954,18 @@ function coIleTakaSama() {//sprawdzone ale z jedną małą rożnicą
     f3 = () => console.log("f3: ", proponowane, proponowaneStar, "!TO NIE SĄ ZA ILE LOSOWAŃ, TYLKO ZA ILE CYFR! (podobno)");
 }
 
-function podwojne(arr) {
+function podwojne(arr) {//NIEsprawdzone ale polepszone
     if (globalStop) return;
     ////main////
     let podwojne = [];
     let podwojneAvg = [];
     let counts = [];
     let co = 0;
+
     const allDoubles = (arr) => {
         const doubles = [];
         for (let i = 0; i < arr.length - 1; i++) {
-            if (arr[i + 1] - arr[i] === 1) {
-                doubles.push([arr[i], arr[i + 1]]);
-            }
+            if (arr[i + 1] - arr[i] === 1) doubles.push([arr[i], arr[i + 1]]);
         }
         return doubles;
     }
@@ -1967,7 +1977,7 @@ function podwojne(arr) {
             doubles.forEach(double => {
                 if (co !== 0) counts.push(co);
                 podwojne.push(at, `${double[0]} i ${double[1]}`);
-                podwojneAvg.push(`${double[0]}${double[1]}`);
+                podwojneAvg.push(`${double[0]}${double[1]}`); //first number is smaller than the second one
                 co = 0;
             });
         } else co++;
@@ -1975,7 +1985,7 @@ function podwojne(arr) {
 
     let med = 1;
     if (counts.length > 1) med = Math.round(median(counts));
-    else { globalStop = true; console.log("błąd 1975"); }
+    else { globalStop = true; console.warn("błąd 1987"); } //variable line marker
 
     const counts2 = podwojneAvg.reduce((acc, curr) => {
         acc[curr] = (acc[curr] || 0) + 1;
@@ -1991,7 +2001,7 @@ function podwojne(arr) {
 
     if (lastIdx === 0) {
         globalStop = true;
-        console.log("błąd 1991");
+        console.warn("błąd 2003"); //variable line marker
     } else if (drawsSince < med) {
         Dupdist = med - drawsSince; // jeszcze nie minęła mediana
     } else {
@@ -2008,14 +2018,14 @@ function podwojne(arr) {
         let numsArrStar = arr[atStar].results.split(",").slice(5).map(x => parseInt(x));
         if (numsArrStar[1] - numsArrStar[0] === 1) {
             podwojneStar.push(atStar, numsArrStar[1] + ` i ` + numsArrStar[0]);
-            countsStar.push(coStar);
+            if (coStar !== 0) countsStar.push(coStar);
             coStar = 0;
         } else coStar++;
     }
 
     let medS = 1;
     if (countsStar.length > 1) medS = Math.round(median(countsStar));
-    else { globalStop = true; console.log("błąd 2015"); }
+    else { globalStop = true; console.log("błąd 2027"); } //variable line marker
 
     // ostatni indeks wystąpienia (zakładamy że podwojne zapisane jako [idx, "b i a", ...])
     const lastIdxS = (podwojneStar.length >= 2) ? podwojneStar[podwojneStar.length - 2] : 0;
@@ -2024,7 +2034,7 @@ function podwojne(arr) {
 
     if (lastIdxS === 0) {
         globalStop = true;
-        console.log("błąd 2024");
+        console.log("błąd 2036");  //variable line marker
     } else if (drawsSinceS < medS) {
         DupdistStar = medS - drawsSinceS; // jeszcze nie minęła mediana
     } else {
@@ -2033,7 +2043,7 @@ function podwojne(arr) {
         DupdistStar = (remS === 0) ? medS : (medS - remS); // zawsze >=1
     }
 
-    f4 = () => console.log("f4:", `nastepny podwojny (teo): ${Dupdist}, nastepny podwojny Star (teo): ${DupdistStar}`, "\n", `czeste podwojne:`, czestePodwojne);
+    f4 = () => console.log("f4:", `(teo:) nastepny podwojny: ${Dupdist}, nastepny podwojny Star: ${DupdistStar}`, "\n", `czeste podwojne:`, czestePodwojne);
 }
 
 function splitIntoGroups(list) {
@@ -2065,7 +2075,7 @@ function splitIntoGroups(list) {
         }
     }
     //check every once in a while
-    groupsOrg = Object.entries(groups).sort((a, b) => b[1] - a[1]).flat(2);
+    groupsOrg = Object.entries(groups).sort((a, b) => b[1] - a[1]).flat();
     f5 = () => console.log("f5: grouporder:", groupsOrg);
 }
 
@@ -2086,11 +2096,9 @@ function rodzajPar(arr) {
     let countsOrg = Object.entries(counts).sort((a, b) => b[1] - a[1]);
     const total = arr.length;
 
-    for (let i = 0; i < countsOrg.length; i++) {
-        countsOrg[i][1] = (countsOrg[i][1] / total * 100).toFixed(2) + "%";
-    }
+    for (let i = 0; i < countsOrg.length; i++) countsOrg[i][1] = (countsOrg[i][1] / total * 100).toFixed(2) + "%";
 
-    countsOrg = countsOrg.flat(2);
+    countsOrg = countsOrg.flat();
     parz = Number(countsOrg[0].charAt(0));
     nieparz = Number(countsOrg[0].charAt(2));
 
@@ -2111,7 +2119,7 @@ function rodzajPar(arr) {
                 const total = 100;
                 for (let i = 0; i < countsOrgTemp.length; i++) countsOrgTemp[i][1] = (countsOrgTemp[i][1] / total * 100).toFixed(2) + "%";
 
-                countsOrgTemp = countsOrgTemp.flat(2);
+                countsOrgTemp = countsOrgTemp.flat();
                 const key = countsOrgTemp[0];
                 types[key] = (types[key] || 0) + 1;
 
@@ -2123,7 +2131,64 @@ function rodzajPar(arr) {
     f6 = () => console.log(`f6: rodzaje par (parz/nieparz):`, countsOrg, "ilosc co 100:", types);
 }
 
-function porownywanie(item1, item2, item3, item4, parz, nieparz) {
+function potrojne(arr) {//NIEsprawdzone
+    if (globalStop) return;
+    ////main////
+    let potrojne = [];
+    let potrojneAvg = [];
+    let counts = [];
+    let co = 0;
+
+    const allTriples = (arr) => {
+        const triples = [];
+        for (let i = 0; i < arr.length - 2; i++) {
+            if (arr[i + 1] - arr[i] === 1 && arr[i + 2] - arr[i + 1] === 1) triples.push([arr[i], arr[i + 1], arr[i + 2]]);
+        }
+        return triples;
+    }
+
+    for (let at = 0; at < arr.length; at++) {
+        let numsArr = arr[at].results.split(",").slice(0, 5).map(x => parseInt(x, 10));
+        const triples = allTriples(numsArr);
+        if (triples.length > 0) {
+            triples.forEach(triple => {
+                if (co !== 0) counts.push(co);
+                potrojne.push(at, `${triple[0]} i ${triple[1]} i ${triple[2]}`);
+                potrojneAvg.push(`${triple[0]}${triple[1]}${triple[2]}`);
+                co = 0;
+            });
+        } else co++;
+    }
+
+    let med = 1;
+    if (counts.length > 1) med = Math.round(median(counts));
+    else { globalStop = true; console.warn("błąd 2165"); } //variable line marker
+
+    const counts2 = potrojneAvg.reduce((acc, curr) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+    }, {});
+
+    czestePotrojne = (Object.entries(counts2).sort((a, b) => +b[1] - +a[1])).slice(0, 3).map(entry => entry[0]);
+
+    // ostatni indeks wystąpienia (zakładamy że podwojne zapisane jako [idx, "b i a", ...])
+    const lastIdx = (potrojne.length >= 2) ? potrojne[potrojne.length - 2] : 0;
+
+    const drawsSince = arr.length - 1 - lastIdx;
+
+    if (lastIdx === 0) {
+        globalStop = true;
+        console.warn("błąd 2181"); //variable line marker
+    } else if (drawsSince < med) {
+        tripDist = med - drawsSince; // jeszcze nie minęła mediana
+    } else {
+        const overdue = drawsSince - med;
+        const rem = overdue % med;
+        tripDist = (rem === 0) ? med : (med - rem);
+    }
+}
+
+function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     if (globalStop) return;
     let main = [];
     let mainStar = [];
@@ -2131,30 +2196,120 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
     let nieparzyste = 0;
     let count = 0;
     let override = false;
-    let dupdist = structuredClone(Dupdist);
+    let dupDistLocal = structuredClone(Dupdist);
+    let tripDistLocal = structuredClone(tripDist);
 
     for (let wybrany = 1; wybrany <= 50; wybrany++) {
-        if (item1.includes(wybrany) && item3.includes(wybrany)) main.push(wybrany);
+        if (cb.includes(wybrany) && pr.includes(wybrany)) main.push(wybrany);
     }
 
     for (let wybranyStar = 1; wybranyStar <= 12; wybranyStar++) {
-        if (item2.includes(wybranyStar) && item4.includes(wybranyStar)) mainStar.push(wybranyStar);
+        if (cS.includes(wybranyStar) && prS.includes(wybranyStar)) mainStar.push(wybranyStar);
+    }
+
+    function x(num) {//checks if main DOESNT have the number we want to push
+        return (!main.includes(num) && !main.includes(String(num)));
     }
 
     ////main nums////
-    function checkproponowane(num) {
-        if (!proponowane.includes(num)) return false;
-        for (let idx = 0; idx < proponowane.length; idx++) {
-            const el = proponowane[idx];
-            if (el === "proponowana za 1 losowań" || el === "proponowana za 2 losowań" || el === "proponowana za 3 losowań" || el === "proponowana za 4 losowań" || el === "proponowana za 5 losowań") return true;
+    //step1: add nums from checkproponowane() on top of if there are already nums inside
+    for (let idx = 1; idx < proponowane.length; idx += 2) {
+        const el = proponowane[idx];
+        if ((el === "proponowana za 1 losowań" || el === "proponowana za 2 losowań" || el === "proponowana za 3 losowań"
+            || el === "proponowana za 4 losowań" || el === "proponowana za 5 losowań") && x(proponowane[idx - 1])) main.push(proponowane[idx - 1]);
+    }
+
+    function tripAndDupl() {
+        if (tripDistLocal === 1) {
+            //step 3.1: if |main| already has one of the three in tripdist in czestePotrojne && tripdist === 1, then add the rest 2 (if not already inside), this should skip 3.2
+            outer:
+            for (let num in main) {
+                for (let i = 0; i < czestePotrojne.length; i++) {
+                    if (czestePotrojne[i].includes(String(num)) && main.length < 5) {
+                        if (czestePotrojne[i].slice(0, 2) === String(num)) {
+                            if (x(czestePotrojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                            if (x(czestePotrojne[i].slice(4, 6))) main.push(Number(czestePotrojne[i].slice(4, 6)));
+                            tripDistLocal = 0;
+                            console.log("dodano trip; funckja na 2232"); //variable line marker
+                            break outer;
+                        } else if (czestePotrojne[i].slice(2, 4) === String(num)) {
+                            if (x(czestePotrojne[i].slice(0, 2))) main.push(Number(czestePotrojne[i].slice(0, 2)));
+                            if (x(czestePotrojne[i].slice(4, 6))) main.push(Number(czestePotrojne[i].slice(4, 6)));
+                            tripDistLocal = 0;
+                            console.log("dodano trip; funckja na 2238"); //variable line marker
+                            break outer;
+                        } else {
+                            if (x(czestePotrojne[i].slice(0, 2))) main.push(Number(czestePotrojne[i].slice(0, 2)));
+                            if (x(czestePotrojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                            tripDistLocal = 0;
+                            console.log("dodano trip; funckja na 2244"); //variable line marker
+                            break outer;
+                        }
+                    }
+                }
+            }
+            if (tripDistLocal === 1) console.log("dodanie trip sie nie udalo, proba dalsza pozniej");
+            else console.log("dodanie trip sie udalo, nie bedzie proby dalszej");
+
+        } else if (dupDistLocal === 1) {
+            //step 3.2: if |main| already has one of the two in czestePodwojne && dupdist === 1, then add the other one (but make sure its not already inside, otherwise break; ig)
+            outer:
+            for (let num in main) {
+                for (let i = 0; i < czestePodwojne.length; i++) {
+                    if (czestePodwojne[i].includes(String(num)) && main.length < 5) {
+                        if (czestePodwojne[i].slice(0, 2) === String(num)) {
+                            if (x(czestePodwojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                            dupDistLocal = 0;
+                            console.log("dodano dupl; funckja na 2263"); //variable line marker
+                            break outer;
+                        } else {
+                            if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                            dupDistLocal = 0;
+                            console.log("dodano dupl; funckja na 2268"); //variable line marker
+                            break outer;
+                        }
+                    }
+                }
+            }
+            if (dupDistLocal === 1) console.log("dodanie dupl sie nie udalo, proba dalsza pozniej");
+            else console.log("dodanie dupl sie udalo, nie bedzie proby dalszej");
         }
-        return false;
+    }
+
+    //step2: first check that |main| isnt empty, if no then check tripdist(3.1), else dupdist(3.2), else 3.3 (so if its empty duhhh)
+    if (main.length !== 0) {
+        tripAndDupl();
+    } else {
+        //step 3.3: add one from |cleanview| but make sure the last draw DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
+        const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
+        if (!last.includes(cleanview[0]) && x(cleanview[0])) main.push(cleanview[0]);
+        else if (!last.includes(cleanview[1]) && x(cleanview[1])) main.push(cleanview[1]);
+        else if (!last.includes(cleanview[2]) && x(cleanview[2])) main.push(cleanview[2]);
+        tripAndDupl();
     }
     //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
     //i feel like they do the same thing😭
     /* ok chill out, najpierw zrob plan jak checsz logike, zapamietaj lub zapisz, potem zaczni powoli od main i stars, sprawdz
     czy sa bugi i potem nie wiem ciesz sie?
-    luuuuub oczywiescie pi prostu usun to... x3
+    luuuuub oczywiescie po prostu usun to... x3
+    */
+    /*ok so logic fromm start to finish:
+    1: done
+    2:  done
+    3.1: done
+    3.2: done
+    3.3:  done
+    4: add one from each group (make a sub-fn to get an array from counts with the highest repeating single digit num...), but also one from the cs if cb is used completely
+    while checking that the next num isnt already inside.
+    5: check again is tripDist and dupdist === 0, if not go back to 3.1 and 3.2, so i think i have to make it a fn
+    6: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt:
+    6.1 doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
+    6.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+    7: push into proponowane
+    8: (w glowie): sprawdz /override
+
+    oh wait shit i just realised another pattern, when the first num is <10, then almost always theres >=1 bigger ones that are divisable by that first number, am i cooking? 
+    /\ MAKE THIS A FUNCTION PLEASEEEAE
     */
     function addDups() {
         if (dupdist === 1 && main.length < 5) {
@@ -2182,7 +2337,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
     });
     addDups();
 
-    cleanview.forEach((el) => {
+    cb.forEach((el) => {
         if ((main.length < 5 && !main.includes(el)) || (main.length < 5 && !main.includes(String(el)))) {
             main.push(`${el} lub sam`);
             if (dupdist === 1) {
@@ -2212,7 +2367,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
 
     if (typeof parz !== "number" || typeof nieparz !== "number") return;
     if (!(parzyste === parz && nieparzyste === nieparz)) {
-        console.log("dodatkowa funkcja wlaczona, linia: 2202");
+        console.log("dodatkowa funkcja wlaczona, linia: 2202"); //variable line marker
         while (!(parzyste === parz && nieparzyste === nieparz)) {
             if (count > 3) break;
             count++;
@@ -2271,7 +2426,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
                 }
             }
         }
-    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261");
+    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261"); //variable line marker
 
     main = dupl;
 
@@ -2299,7 +2454,7 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
                 mainStar.push(parseInt(mainStar[0]) + 1);
                 DupdistStar = 0;
             }
-            cleanview2.forEach((el) => {
+            cleanviewS.forEach((el) => {
                 if (mainStar.length < 2) if (!mainStar.includes(el)) mainStar.push(` ${el} lub sam`); else null;
                 else return;
             });
@@ -2308,15 +2463,35 @@ function porownywanie(item1, item2, item3, item4, parz, nieparz) {
 
     main = main.concat(mainStar).join();
     allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
-    komentarze na /override: -/
-    Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
+komentarze na /override: -natspeny star nie bedzie 2
+Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
 }
 
 //WHAAAAAT i actualy want to fucking pass out please kill me i hate this
 //you really need to work on porownanie, either remove it entirely because its too much work and too unreliable 
 //or fix the logic, in thats case fix the dup dist thing and STOP recommending stuff from cleanview😭
 //but like at that point how am i supposed to fill the gaps? cuz if i cant use cleanview i dont have anything else to use...
+//here:
+/*
+Option 3: Hybrid logic (recommended)
+
+Use a fallback priority like this:
+
+Try proponowane.
+
+Try “distance logic” (Dupdist).
+
+Try “nearby to existing main”.
+
+Try “most frequent/least recently drawn”.
+
+As a last resort, cleanview.
+
+That way, cleanview becomes a final fallback, not your main filler.*/
+
 //Triplet Analysis: Find most common pairs or triplets of numbers drawn together.
+//check how often, per DRAW this time, one of the bigger nums is divisable by the first one, if the first one <10, and also check if the med is
+// 1 or 2 divisions per draw but prob 1
 
 addPastNumbers(pastNumsMain, pastNumsStar); //nie ma f
 calcBiggestProb(pastNumsMain, pastNumsStar); //f1
@@ -2325,13 +2500,17 @@ coIleTakaSama(); //f3
 podwojne(fetched); //f4
 splitIntoGroups(fetched); //f5
 rodzajPar(fetched); //f6
-porownywanie(cleanview, cleanview2, proponowane, proponowaneStar, parz, nieparz); //allF
+potrojne(fetched); //f7
+checkDivision(fetched); //f8
+//porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne,czestePotrojne, medDivision, parz, nieparz); //allF
 f1();
 //f2();
 f3();
 f4();
 f5();
 f6();
-allF();
+f7();
+//f8();
+//allF();
 
-console.log("~ Analiza liczb loterii; v1 ~ \n  ©"); //looks crazy, i know lol
+console.log("~ Analiza liczb loterii; v1.0.2 ~  ©");
