@@ -1707,6 +1707,7 @@ let globalStop = false;
 let pastNumsMain = [];
 let cleanviewBiggest = [];
 let cleanviewSmallest = [];
+let biggestSingleDigit = [];
 let roznice = [];
 let numEvery = [];
 let globalMed = ["whatamidoing"];
@@ -1761,6 +1762,7 @@ function calcBiggestProb(arr1, arr2) {//sprawdzone & polepszone
 
     cleanviewBiggest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).map(entry => +entry[0]);
     cleanviewSmallest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(Object.keys(counts).length - 5).map(entry => +entry[0]);
+    biggestSingleDigit = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).map(entry => +entry[0]).filter((num) => num < 10).slice(0, 3);
 
     ////star////
     const countsS = arr2.reduce((acc, curr) => {
@@ -1770,7 +1772,7 @@ function calcBiggestProb(arr1, arr2) {//sprawdzone & polepszone
 
     cleanviewS = (Object.entries(countsS).sort((a, b) => b[1] - a[1])).slice(0, 2).map(entry => +entry[0]);
 
-    f1 = () => console.log("f1: ", "main najwieksze:", cleanviewBiggest, " main najmniejsze:", cleanviewSmallest, "star:", cleanviewS);
+    f1 = () => console.log("f1: ", "main najwieksze:", cleanviewBiggest, " main najmniejsze:", cleanviewSmallest, "najczestsze pojedyncze", biggestSingleDigit, "star:", cleanviewS);
 }
 
 async function minusAll() {
@@ -1845,7 +1847,7 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
         numEvery.push(`liczba ${num} powtarza sie medianowo co ${globalMed[num]} liczb. dokładnie: `, counts);
     }
 
-    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    fs.writeFileSync('C/lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     let numIn = new Array("nic");
 
@@ -1912,7 +1914,7 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
         numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo cy: ${globalMedStar[numStar]} liczb. dokładnie: `, countsStar);
     }
 
-    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    fs.writeFileSync('C/lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
 
     let numInStar = new Array("nic");
 
@@ -2162,7 +2164,7 @@ function potrojne(arr) {//NIEsprawdzone
 
     let med = 1;
     if (counts.length > 1) med = Math.round(median(counts));
-    else { globalStop = true; console.warn("błąd 2165"); } //variable line marker
+    else { globalStop = true; console.warn("błąd 2167"); } //variable line marker
 
     const counts2 = potrojneAvg.reduce((acc, curr) => {
         acc[curr] = (acc[curr] || 0) + 1;
@@ -2178,7 +2180,7 @@ function potrojne(arr) {//NIEsprawdzone
 
     if (lastIdx === 0) {
         globalStop = true;
-        console.warn("błąd 2181"); //variable line marker
+        console.warn("błąd 2183"); //variable line marker
     } else if (drawsSince < med) {
         tripDist = med - drawsSince; // jeszcze nie minęła mediana
     } else {
@@ -2186,6 +2188,8 @@ function potrojne(arr) {//NIEsprawdzone
         const rem = overdue % med;
         tripDist = (rem === 0) ? med : (med - rem);
     }
+
+    f7 = () => console.log("f7:", "czeste potrojne:", czestePotrojne, "za ile:", tripDist);
 }
 
 function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
@@ -2253,7 +2257,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
 
         } else if (dupDistLocal === 1) {
             //step 3.2: if |main| already has one of the two in czestePodwojne && dupdist === 1, then add the other one (but make sure its not already inside, otherwise break; ig)
-            outer:
+            outerfor:
             for (let num in main) {
                 for (let i = 0; i < czestePodwojne.length; i++) {
                     if (czestePodwojne[i].includes(String(num)) && main.length < 5) {
@@ -2261,12 +2265,12 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
                             if (x(czestePodwojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
                             dupDistLocal = 0;
                             console.log("dodano dupl; funckja na 2263"); //variable line marker
-                            break outer;
+                            break outerfor;
                         } else {
                             if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePodwojne[i].slice(0, 2)));
                             dupDistLocal = 0;
                             console.log("dodano dupl; funckja na 2268"); //variable line marker
-                            break outer;
+                            break outerfor;
                         }
                     }
                 }
@@ -2287,6 +2291,11 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         else if (!last.includes(cleanview[2]) && x(cleanview[2])) main.push(cleanview[2]);
         tripAndDupl();
     }
+
+    //step 4: add one from each group (make a sub-fn to get an array from counts with the highest repeating single digit num...), but also one from the cs if cb is used completely
+
+
+
     //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
     //i feel like they do the same thing😭
     /* ok chill out, najpierw zrob plan jak checsz logike, zapamietaj lub zapisz, potem zaczni powoli od main i stars, sprawdz
@@ -2299,7 +2308,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     3.1: done
     3.2: done
     3.3:  done
-    4: add one from each group (make a sub-fn to get an array from counts with the highest repeating single digit num...), but also one from the cs if cb is used completely
+    4: 
     while checking that the next num isnt already inside.
     5: check again is tripDist and dupdist === 0, if not go back to 3.1 and 3.2, so i think i have to make it a fn
     6: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt:
@@ -2462,7 +2471,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     }
 
     main = main.concat(mainStar).join();
-    allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
+    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
 komentarze na /override: -natspeny star nie bedzie 2
 Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
 }
@@ -2489,7 +2498,7 @@ As a last resort, cleanview.
 
 That way, cleanview becomes a final fallback, not your main filler.*/
 
-//Triplet Analysis: Find most common pairs or triplets of numbers drawn together.
+//variable line marker
 //check how often, per DRAW this time, one of the bigger nums is divisable by the first one, if the first one <10, and also check if the med is
 // 1 or 2 divisions per draw but prob 1
 
@@ -2501,7 +2510,7 @@ podwojne(fetched); //f4
 splitIntoGroups(fetched); //f5
 rodzajPar(fetched); //f6
 potrojne(fetched); //f7
-checkDivision(fetched); //f8
+//checkDivision(fetched); //f8
 //porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne,czestePotrojne, medDivision, parz, nieparz); //allF
 f1();
 //f2();
