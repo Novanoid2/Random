@@ -2285,14 +2285,19 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         tripAndDupl();
     } else {
         //step 3.3: add one from |cleanview| but make sure the last draw DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
-        const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
-        if (!last.includes(cleanview[0]) && x(cleanview[0])) main.push(cleanview[0]);
-        else if (!last.includes(cleanview[1]) && x(cleanview[1])) main.push(cleanview[1]);
-        else if (!last.includes(cleanview[2]) && x(cleanview[2])) main.push(cleanview[2]);
+        function last2X(num) {
+            const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
+            const last2 = fetched.at(-2).results.split(",").slice(0, 5).map(x => parseInt(x));
+            return (last.includes(num) && last2.includes(num));
+        }
+
+        if (!last2X(cleanviewBiggest[0]) && x(cleanviewBiggest[0])) main.push(cleanviewBiggest[0]);
+        else if (!last2X(cleanviewBiggest[1]) && x(cleanviewBiggest[1])) main.push(cleanviewBiggest[1]);
+        else if (!last2X(cleanviewBiggest[2]) && x(cleanviewBiggest[2])) main.push(cleanviewBiggest[2]);
         tripAndDupl();
     }
 
-    //step 4: add one from each group (make a sub-fn to get an array from counts with the highest repeating single digit num...), but also one from the cs if cb is used completely
+    //step 4: add one from each group (get an array from counts with the highest freq single digit num...), but also one from the cs if cb is used completely
 
 
 
@@ -2320,125 +2325,6 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     oh wait shit i just realised another pattern, when the first num is <10, then almost always theres >=1 bigger ones that are divisable by that first number, am i cooking? 
     /\ MAKE THIS A FUNCTION PLEASEEEAE
     */
-    function addDups() {
-        if (dupdist === 1 && main.length < 5) {
-            if (main[1]) {
-                if (checkproponowane(parseInt(main[1]) + 1)) { main.push(` ${parseInt(main[1]) + 1})`); dupdist = 0; return; }
-                else if (cleanview.includes(parseInt(main[1]) + 1)) { main.push(` ${parseInt(main[1]) + 1})`); dupdist = 0; return; }
-                else if (czestePodwojne.includes(`${parseInt(main[1])}${parseInt(main[1]) + 1}`)) { main.push(` ${parseInt(main[1]) + 1})`); dupdist = 0; return; }
-                else if (czestePodwojne.includes(`${parseInt(main[1]) - 1}${parseInt(main[1])}`)) { main.push(` ${parseInt(main[1]) - 1})`); dupdist = 0; return; }
-            } else if (main[0]) {
-                if (checkproponowane(parseInt(main[0]) + 1)) { main.push(` ${parseInt(main[0]) + 1})`); dupdist = 0; return; }
-                else if (cleanview.includes(parseInt(main[0]) + 1)) { main.push(` ${parseInt(main[0]) + 1})`); dupdist = 0; }
-                else if (czestePodwojne.includes(`${parseInt(main[0])}${parseInt(main[0]) + 1}`)) { main.push(` ${parseInt(main[0]) + 1})`); dupdist = 0; return; }
-                else if (czestePodwojne.includes(`${parseInt(main[0]) - 1}${parseInt(main[0])}`)) { main.push(` ${parseInt(main[0]) - 1})`); dupdist = 0; return; }
-            }
-            if (main[1] && !main.includes(main[1] + 1)) { main.push(` (${parseInt(main[1]) + 1})`); dupdist = 0; return; }
-            else if (main[0] && !main.includes(main[0] + 1)) { main.push(` (${parseInt(main[0]) + 1})`); dupdist = 0; return; }
-        }
-    }
-    addDups();
-
-    proponowane.forEach((el, idx) => {
-        if (el === "proponowana za 1 losowań" || el === "proponowana za 2 losowań" || el === "proponowana za 3 losowań" || el === "proponowana za 4 losowań" || el === "proponowana za 5 losowań" && main.length < 5) {
-            if (!main.includes(proponowane[idx - 1])) main.push(` ${proponowane[idx - 1]}/`);
-        }
-    });
-    addDups();
-
-    cb.forEach((el) => {
-        if ((main.length < 5 && !main.includes(el)) || (main.length < 5 && !main.includes(String(el)))) {
-            main.push(`${el} lub sam`);
-            if (dupdist === 1) {
-                if (czestePodwojne.includes(String(el + 1))) { main.push(` (${el + 1})`); dupdist = 0; }
-                else if (czestePodwojne.includes(String(el - 1))) { main.push(` (${el - 1})`); dupdist = 0; }
-            }
-        }
-    });
-
-    const dupl = structuredClone(main);
-
-    for (let el of dupl) {
-        if (/\/|\(|\{| /.test(String(el).charAt(0))) el = String(el).slice(1);
-        if (/ \/| \(| \{|  /.test(String(el).charAt(0))) el = String(el).slice(2);
-        if (parseInt(el) % 2 === 0) parzyste++; else nieparzyste++;
-    }
-
-    function plusMin(code) {
-        if (code === 1) {
-            parzyste--;
-            nieparzyste++;
-        } else {
-            parzyste++;
-            nieparzyste--;
-        }
-    }
-
-    if (typeof parz !== "number" || typeof nieparz !== "number") return;
-    if (!(parzyste === parz && nieparzyste === nieparz)) {
-        console.log("dodatkowa funkcja wlaczona, linia: 2202"); //variable line marker
-        while (!(parzyste === parz && nieparzyste === nieparz)) {
-            if (count > 3) break;
-            count++;
-
-            let place = 0;
-            if (dupl.includes(String(cleanview[cleanview.length - 1]) + " lub sam")) override = true;
-            else place = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 === 0);
-
-            if (place !== -1 || override) {
-                override = false;
-                if (!main.includes(`${parseInt(dupl[place]) - 1}`) && cleanview.includes(parseInt(dupl[place]) - 1)) {
-                    dupl[place] = parseInt(dupl[place]) - 1 + "+-w/c";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place]) + 1}`) && cleanview.includes(parseInt(dupl[place]) + 1)) {
-                    dupl[place] = parseInt(dupl[place]) + 1 + "++w/c";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place]) - 1}`)) {
-                    dupl[place] = parseInt(dupl[place]) - 1 + "+-";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place]) + 1}`)) {
-                    dupl[place] = parseInt(dupl[place]) + 1 + "++";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                } else {
-                    dupl[place] = parseInt(dupl[place]) - 3 + "+-3";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                }
-            }
-
-            const place2 = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 !== 0);
-            if (place2 !== -1) {
-                if (!main.includes(`${parseInt(dupl[place2]) + 1}`) && cleanview.includes(parseInt(dupl[place2]) + 1)) {
-                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+w/c";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`) && cleanview.includes(parseInt(dupl[place2]) - 1)) {
-                    dupl[place2] = parseInt(dupl[place2]) - 1 + "--/c";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place2]) + 1}`)) {
-                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`)) {
-                    dupl[place2] = parseInt(dupl[place2]) - 1 + "--";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else {
-                    dupl[place2] = parseInt(dupl[place2]) + 3 + "-+3";
-                    plusMin();
-                    if (parzyste === parz) break;
-                }
-            }
-        }
-    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261"); //variable line marker
-
-    main = dupl;
-
     ////star nums////
     if (mainStar.length < 2) {
         if (DupdistStar === 1) {
@@ -2511,7 +2397,7 @@ splitIntoGroups(fetched); //f5
 rodzajPar(fetched); //f6
 potrojne(fetched); //f7
 //checkDivision(fetched); //f8
-//porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne,czestePotrojne, medDivision, parz, nieparz); //allF
+//porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne, czestePotrojne, medDivision, parz, nieparz); //allF
 f1();
 //f2();
 f3();
@@ -2522,4 +2408,4 @@ f7();
 //f8();
 //allF();
 
-console.log("~ Analiza liczb loterii; v1.0.2 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.3 ~  ©");
