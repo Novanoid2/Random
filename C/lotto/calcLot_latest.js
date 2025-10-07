@@ -2192,6 +2192,12 @@ function potrojne(arr) {//NIEsprawdzone
     f7 = () => console.log("f7:", "czeste potrojne:", czestePotrojne, "za ile:", tripDist);
 }
 
+function checkDivision(arr) {
+    for (let idx = 0; i < arr.length; i++) {
+        const numsArr = fetched.at(idx).results.split(",").slice(0, 5).map(x => parseInt(x));
+    }
+}
+
 function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     if (globalStop) return;
     let main = [];
@@ -2203,16 +2209,18 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     let dupDistLocal = structuredClone(Dupdist);
     let tripDistLocal = structuredClone(tripDist);
 
-    for (let wybrany = 1; wybrany <= 50; wybrany++) {
-        if (cb.includes(wybrany) && pr.includes(wybrany)) main.push(wybrany);
-    }
+    for (let wybrany = 1; wybrany <= 50; wybrany++) if (cb.includes(wybrany) && pr.includes(wybrany)) main.push(wybrany);
 
-    for (let wybranyStar = 1; wybranyStar <= 12; wybranyStar++) {
-        if (cS.includes(wybranyStar) && prS.includes(wybranyStar)) mainStar.push(wybranyStar);
-    }
+    for (let wybranyStar = 1; wybranyStar <= 12; wybranyStar++) if (cS.includes(wybranyStar) && prS.includes(wybranyStar)) mainStar.push(wybranyStar);
 
     function x(num) {//checks if main DOESNT have the number we want to push
         return (!main.includes(num) && !main.includes(String(num)));
+    }
+
+    function inLast2(num) {//check the last two draws in fetched and returns true if both contained specified number
+        const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
+        const last2 = fetched.at(-2).results.split(",").slice(0, 5).map(x => parseInt(x));
+        return (last.includes(num) && last2.includes(num));
     }
 
     ////main nums////
@@ -2230,6 +2238,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             for (let num in main) {
                 for (let i = 0; i < czestePotrojne.length; i++) {
                     if (czestePotrojne[i].includes(String(num)) && main.length < 5) {
+                        if (czestePotrojne[i].length !== 6) console.warn("czestePotrojne nie jest 6 dlugie, sprawdz recznie, 2235", i); //variable line marker
                         if (czestePotrojne[i].slice(0, 2) === String(num)) {
                             if (x(czestePotrojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
                             if (x(czestePotrojne[i].slice(4, 6))) main.push(Number(czestePotrojne[i].slice(4, 6)));
@@ -2261,23 +2270,59 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             for (let num in main) {
                 for (let i = 0; i < czestePodwojne.length; i++) {
                     if (czestePodwojne[i].includes(String(num)) && main.length < 5) {
-                        if (czestePodwojne[i].slice(0, 2) === String(num)) {
-                            if (x(czestePodwojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
-                            dupDistLocal = 0;
-                            console.log("dodano dupl; funckja na 2263"); //variable line marker
-                            break outerfor;
+                        if (czestePodwojne[i].length === 4) {
+                            if (czestePodwojne[i].slice(0, 2) === String(num)) {
+                                if (x(czestePodwojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2263"); //variable line marker
+                                break outerfor;
+                            } else {
+                                if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2268"); //variable line marker
+                                break outerfor;
+                            }
+                        } else if (czestePodwojne[i].length === 3) {
+                            if (czestePodwojne[i].slice(0, 1) === String(num)) {
+                                if (x(czestePodwojne[i].slice(1, 3))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2263"); //variable line marker
+                                break outerfor;
+                            } else if (czestePodwojne[i].slice(0, 2) === String(num)) {
+                                if (x(czestePodwojne[i].slice(2, 3))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2268"); //variable line marker
+                                break outerfor;
+                            } else if (czestePodwojne[i].slice(2, 3) === String(num)) {
+                                if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2263"); //variable line marker
+                                break outerfor;
+                            } else if (czestePodwojne[i].slice(1, 3) === String(num)) {
+                                if (x(czestePodwojne[i].slice(0, 1))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2268"); //variable line marker
+                                break outerfor;
+                            }
                         } else {
-                            if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePodwojne[i].slice(0, 2)));
-                            dupDistLocal = 0;
-                            console.log("dodano dupl; funckja na 2268"); //variable line marker
-                            break outerfor;
+                            if (czestePodwojne[i].charAt(0) === String(num)) {
+                                if (x(czestePodwojne[i].charAt(0))) main.push(Number(czestePotrojne[i].charAt(0)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2263"); //variable line marker
+                                break outerfor;
+                            } else {
+                                if (x(czestePodwojne[i].charAt(1))) main.push(Number(czestePodwojne[i].charAt(1)));
+                                dupDistLocal = 0;
+                                console.log("dodano dupl; funckja na 2268"); //variable line marker
+                                break outerfor;
+                            }
                         }
                     }
                 }
+                if (dupDistLocal === 1) console.log("dodanie dupl sie nie udalo, proba dalsza pozniej");
+                else console.log("dodanie dupl sie udalo, nie bedzie proby dalszej");
             }
-            if (dupDistLocal === 1) console.log("dodanie dupl sie nie udalo, proba dalsza pozniej");
-            else console.log("dodanie dupl sie udalo, nie bedzie proby dalszej");
-        }
+        } else console.log("nothing done in triple and dupl function, 2319"); //variable line marker
     }
 
     //step2: first check that |main| isnt empty, if no then check tripdist(3.1), else dupdist(3.2), else 3.3 (so if its empty duhhh)
@@ -2285,20 +2330,33 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         tripAndDupl();
     } else {
         //step 3.3: add one from |cleanview| but make sure the last draw DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
-        function last2X(num) {
-            const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
-            const last2 = fetched.at(-2).results.split(",").slice(0, 5).map(x => parseInt(x));
-            return (last.includes(num) && last2.includes(num));
+        for (let idx in cleanviewBiggest) {
+            if (!inLast2(cleanviewBiggest[idx]) && x(cleanviewBiggest[idx])) {
+                main.push(cleanviewBiggest[idx]);
+                break;
+            }
         }
 
-        if (!last2X(cleanviewBiggest[0]) && x(cleanviewBiggest[0])) main.push(cleanviewBiggest[0]);
-        else if (!last2X(cleanviewBiggest[1]) && x(cleanviewBiggest[1])) main.push(cleanviewBiggest[1]);
-        else if (!last2X(cleanviewBiggest[2]) && x(cleanviewBiggest[2])) main.push(cleanviewBiggest[2]);
         tripAndDupl();
     }
 
     //step 4: add one from each group (get an array from counts with the highest freq single digit num...), but also one from the cs if cb is used completely
+    for (let num in biggestSingleDigit) {
+        if (!inLast2(biggestSingleDigit[num]) && x(biggestSingleDigit[num]) && main.length < 5) {
+            main.push(biggestSingleDigit[num]);
+            break;
+        }
+    }
 
+    //step 5: check again is tripDist and dupdist === 1, if yes, go back to 3.1 and 3.2
+    tripAndDupl();
+
+    //step 6: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt but checks the divisions thing
+    let dupl = structuredClone(main);
+    //6.1: doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
+
+
+    //6.2 does: use the basis of my already exising func but modify the content cuz its prob shit
 
 
     //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
@@ -2313,15 +2371,14 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     3.1: done
     3.2: done
     3.3:  done
-    4: 
-    while checking that the next num isnt already inside.
-    5: check again is tripDist and dupdist === 0, if not go back to 3.1 and 3.2, so i think i have to make it a fn
-    6: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt:
+    4: done
+    5: done
+    6: done
     6.1 doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
     6.2 does: use the basis of my already exising func but modify the content cuz its prob shit
     7: push into proponowane
     8: (w glowie): sprawdz /override
-
+    
     oh wait shit i just realised another pattern, when the first num is <10, then almost always theres >=1 bigger ones that are divisable by that first number, am i cooking? 
     /\ MAKE THIS A FUNCTION PLEASEEEAE
     */
@@ -2358,7 +2415,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
 
     main = main.concat(mainStar).join();
     allF = () => fs.writeFileSync('C/lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
-komentarze na /override: -natspeny star nie bedzie 2
+komentarze na /override: -/
 Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
 }
 
@@ -2369,19 +2426,19 @@ Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'ut
 //here:
 /*
 Option 3: Hybrid logic (recommended)
-
+ 
 Use a fallback priority like this:
-
+ 
 Try proponowane.
-
+ 
 Try “distance logic” (Dupdist).
-
+ 
 Try “nearby to existing main”.
-
+ 
 Try “most frequent/least recently drawn”.
-
+ 
 As a last resort, cleanview.
-
+ 
 That way, cleanview becomes a final fallback, not your main filler.*/
 
 //variable line marker
@@ -2408,4 +2465,4 @@ f7();
 //f8();
 //allF();
 
-console.log("~ Analiza liczb loterii; v1.0.3 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.4 ~  ©");
