@@ -2192,15 +2192,20 @@ function potrojne(arr) {//NIEsprawdzone
     f7 = () => console.log("f7:", "czeste potrojne:", czestePotrojne, "za ile:", tripDist);
 }
 
-function checkDivision(arr) {
+function checkDivision(arr) {//NIEsprawdzone
     let gaps = 0;
     let counts = [];
     for (let idx = 0; i < arr.length; i++) {
         const numsArr = fetched.at(idx).results.split(",").slice(0, 5).map(x => parseInt(x));
         if (numsArr[0] < 10) {
             for (let i = 1; i < numsArr.length; i++) {
+                if (!(String(numsArr[i] / numsArr[0])).includes(".")) {
+                    if (gaps !== 0) counts.push(gaps);
+                    gaps = 0;
+                    break;
+                } else gaps++;
             }
-        }
+        } else gaps++;
     }
 }
 
