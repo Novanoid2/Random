@@ -2193,8 +2193,14 @@ function potrojne(arr) {//NIEsprawdzone
 }
 
 function checkDivision(arr) {
+    let gaps = 0;
+    let counts = [];
     for (let idx = 0; i < arr.length; i++) {
         const numsArr = fetched.at(idx).results.split(",").slice(0, 5).map(x => parseInt(x));
+        if (numsArr[0] < 10) {
+            for (let i = 1; i < numsArr.length; i++) {
+            }
+        }
     }
 }
 
