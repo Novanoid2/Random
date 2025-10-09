@@ -2195,18 +2195,27 @@ function potrojne(arr) {//NIEsprawdzone
 function checkDivision(arr) {//NIEsprawdzone
     let gaps = 0;
     let counts = [];
-    for (let idx = 0; i < arr.length; i++) {
-        const numsArr = fetched.at(idx).results.split(",").slice(0, 5).map(x => parseInt(x));
+    for (let idx = 0; idx < arr.length; idx++) {
+        const numsArr = fetched[idx].results.split(",").slice(0, 5).map(x => parseInt(x));
         if (numsArr[0] < 10) {
             for (let i = 1; i < numsArr.length; i++) {
                 if (!(String(numsArr[i] / numsArr[0])).includes(".")) {
                     if (gaps !== 0) counts.push(gaps);
                     gaps = 0;
                     break;
-                } else gaps++;
+                }
             }
         } else gaps++;
     }
+
+    const counts2 = counts.reduce((acc, curr) => {
+        acc[curr] = (acc[curr] || 0) + 1;
+        return acc;
+    }, {});
+
+    const med = median(counts);
+
+    f8 = () => console.log("f8:", counts2, med);
 }
 
 function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
@@ -2464,7 +2473,7 @@ podwojne(fetched); //f4
 splitIntoGroups(fetched); //f5
 rodzajPar(fetched); //f6
 potrojne(fetched); //f7
-//checkDivision(fetched); //f8
+checkDivision(fetched); //f8
 //porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne, czestePotrojne, medDivision, parz, nieparz); //allF
 f1();
 //f2();
@@ -2473,7 +2482,7 @@ f4();
 f5();
 f6();
 f7();
-//f8();
+f8();
 //allF();
 
 console.log("~ Analiza liczb loterii; v1.0.4 ~  ©");
