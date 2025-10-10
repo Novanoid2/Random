@@ -2197,16 +2197,19 @@ function checkDivision(arr) {//NIEsprawdzone
     let counts = [];
     for (let idx = 0; idx < arr.length; idx++) {
         const numsArr = fetched[idx].results.split(",").slice(0, 5).map(x => parseInt(x));
-        if (numsArr[0] < 10) {
-            for (let i = 1; i < numsArr.length; i++) {
-                if (numsArr[i] % numsArr[0] === 0) {
-                    if (gaps !== 0) counts.push(gaps);
-                    gaps = 0;
-                    break;
+        if (numsArr[0] !== 1) {
+            if (numsArr[0] < 10) {
+                for (let i = 1; i < numsArr.length; i++) {
+                    if (numsArr[i] % numsArr[0] === 0) {
+                        if (gaps !== 0) counts.push(gaps);
+                        gaps = 0;
+                        division = true;
+                        break;
+                    }
                 }
-            }
-            if (gaps !== 0) gaps++;
-        } else gaps++;
+                if (gaps !== 0) gaps++;
+            } else gaps++;
+        }
     }
 
     const counts2 = counts.reduce((acc, curr) => {
@@ -2370,15 +2373,58 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         }
     }
 
-    //step 5: check again is tripDist and dupdist === 1, if yes, go back to 3.1 and 3.2
+    //step 5: add one from fetched.at(-1) but - 1;
+    let hasMinusOne = false;
+    const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
+
+    for (let idx = 0; idx < last.length; idx++) {
+        if (main.includes(last[idx] - 1)) {
+            hasMinusOne = true;
+            break;
+        }
+    }
+
+    if (!hasMinusOne) {
+        for (let idx = 2; idx < last.length; idx++) {//i chose 2 because i feel like that the least likely for main to already have that number
+            if (x(last[idx]) && main.length < 5) {
+                main.push(last[idx]);
+                break;
+            }
+        }
+    }
+
+    //step 6: check again is tripDist and dupdist === 1, if yes, go back to 3.1 and 3.2
     tripAndDupl();
+    //maybe use cleanview here?
+    //quick check:
+    console.log(main);
 
-    //step 6: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt but checks the divisions thing
-    let dupl = structuredClone(main);
-    //6.1: doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
+    //step 7: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt but checks the divisions thing
+    let duplDiv = structuredClone(main);
+    let duplParz = structuredClone(main);
 
+    //7.1: doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
+    let hasDivision = false;
+    for (let idx = 1; idx < duplDiv.length; idx++) {
+        if (duplDiv[idx] % duplDiv[0] === 0) hasDivision = true;
+    }
 
-    //6.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+    if (!hasDivision) {
+        if (duplDiv.length < 5) {
+            let toAdd = 0;
+            while (toAdd <= duplDiv.at(-1)) {
+                toAdd += duplDiv[0];
+                if (x(toAdd)) {
+                    duplDiv.push(toAdd);
+                    break;
+                }
+            }
+        } else {
+            console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2423); //variable line marker
+        }
+    }
+
+    //7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
 
 
     //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
@@ -2395,14 +2441,11 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     3.3:  done
     4: done
     5: done
-    6: done
-    6.1 doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
-    6.2 does: use the basis of my already exising func but modify the content cuz its prob shit
-    7: push into proponowane
-    8: (w glowie): sprawdz /override
-    
-    oh wait shit i just realised another pattern, when the first num is <10, then almost always theres >=1 bigger ones that are divisable by that first number, am i cooking? 
-    /\ MAKE THIS A FUNCTION PLEASEEEAE
+    7: done
+    7.1 doesnt: done
+    7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+    8: push into proponowane
+    9: (w glowie): sprawdz /override
     */
     ////star nums////
     if (mainStar.length < 2) {
@@ -2464,8 +2507,8 @@ As a last resort, cleanview.
 That way, cleanview becomes a final fallback, not your main filler.*/
 
 //variable line marker
-//check how often, per DRAW this time, one of the bigger nums is divisable by the first one, if the first one <10, and also check if the med is
-// 1 or 2 divisions per draw but prob 1
+//make that one idea in my head where its a very giant for loop where it constantly goes thorugh all possible nums and changes every time after 9 or sum from "+" to "-"
+//it can also include sqrt and ^ and bla bla bla, basicaly, try to make a fn to get a tweedegraadsfunctie lol
 
 addPastNumbers(pastNumsMain, pastNumsStar); //nie ma f
 calcBiggestProb(pastNumsMain, pastNumsStar); //f1
@@ -2487,4 +2530,4 @@ f7();
 f8();
 //allF();
 
-console.log("~ Analiza liczb loterii; v1.0.4 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.5 ~  ©");
