@@ -2203,7 +2203,6 @@ function checkDivision(arr) {//NIEsprawdzone
                     if (numsArr[i] % numsArr[0] === 0) {
                         if (gaps !== 0) counts.push(gaps);
                         gaps = 0;
-                        division = true;
                         break;
                     }
                 }
@@ -2395,7 +2394,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
 
     //step 6: check again is tripDist and dupdist === 1, if yes, go back to 3.1 and 3.2
     tripAndDupl();
-    //maybe use cleanview here?
+
     //quick check:
     console.log(main);
 
@@ -2405,9 +2404,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
 
     //7.1: doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
     let hasDivision = false;
-    for (let idx = 1; idx < duplDiv.length; idx++) {
-        if (duplDiv[idx] % duplDiv[0] === 0) hasDivision = true;
-    }
+    for (let idx = 1; idx < duplDiv.length; idx++) if (duplDiv[idx] % duplDiv[0] === 0) hasDivision = true;
 
     if (!hasDivision) {
         if (duplDiv.length < 5) {
@@ -2419,9 +2416,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
                     break;
                 }
             }
-        } else {
-            console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2423); //variable line marker
-        }
+        } else console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2422); //variable line marker
     }
 
     //7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
@@ -2444,6 +2439,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     7: done
     7.1 doesnt: done
     7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+    inbetweenstep to fill in:
     8: push into proponowane
     9: (w glowie): sprawdz /override
     */
@@ -2530,4 +2526,4 @@ f7();
 f8();
 //allF();
 
-console.log("~ Analiza liczb loterii; v1.0.5 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.5.2 ~  ©");
