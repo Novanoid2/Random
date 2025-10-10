@@ -2199,12 +2199,13 @@ function checkDivision(arr) {//NIEsprawdzone
         const numsArr = fetched[idx].results.split(",").slice(0, 5).map(x => parseInt(x));
         if (numsArr[0] < 10) {
             for (let i = 1; i < numsArr.length; i++) {
-                if (!(String(numsArr[i] / numsArr[0])).includes(".")) {
+                if (numsArr[i] % numsArr[0] === 0) {
                     if (gaps !== 0) counts.push(gaps);
                     gaps = 0;
                     break;
                 }
             }
+            if (gaps !== 0) gaps++;
         } else gaps++;
     }
 
@@ -2213,9 +2214,10 @@ function checkDivision(arr) {//NIEsprawdzone
         return acc;
     }, {});
 
-    const med = median(counts);
+    //const med = median(counts);
+    //this is basically always 1 so yeah...
 
-    f8 = () => console.log("f8:", counts2, med);
+    f8 = () => console.log("f8:", counts2);
 }
 
 function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
