@@ -1708,6 +1708,7 @@ let pastNumsMain = [];
 let cleanviewBiggest = [];
 let cleanviewSmallest = [];
 let biggestSingleDigit = [];
+let freqTwenties;
 let roznice = [];
 let numEvery = [];
 let globalMed = ["whatamidoing"];
@@ -1763,6 +1764,7 @@ function calcBiggestProb(arr1, arr2) {//sprawdzone & polepszone
     cleanviewBiggest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(0, 5).map(entry => +entry[0]);
     cleanviewSmallest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(Object.keys(counts).length - 5).map(entry => +entry[0]);
     biggestSingleDigit = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).map(entry => +entry[0]).filter((num) => num < 10).slice(0, 3);
+    freqTwenties = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).map(entry => +entry[0]).filter((num) => num < 30 && num > 19).slice(0, 1);
 
     ////star////
     const countsS = arr2.reduce((acc, curr) => {
@@ -2247,12 +2249,22 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         return (last.includes(num) && last2.includes(num));
     }
 
+    function plusMin(code) {
+        if (code === 1) {
+            parzyste--;
+            nieparzyste++;
+        } else {
+            parzyste++;
+            nieparzyste--;
+        }
+    }
+
     ////main nums////
     //step1: add nums from checkproponowane() on top of if there are already nums inside
-    for (let idx = 1; idx < proponowane.length; idx += 2) {
-        const el = proponowane[idx];
+    for (let idx = 1; idx < pr.length; idx += 2) {
+        const el = pr[idx];
         if ((el === "proponowana za 1 losowań" || el === "proponowana za 2 losowań" || el === "proponowana za 3 losowań"
-            || el === "proponowana za 4 losowań" || el === "proponowana za 5 losowań") && x(proponowane[idx - 1])) main.push(proponowane[idx - 1]);
+            || el === "proponowana za 4 losowań" || el === "proponowana za 5 losowań") && x(pr[idx - 1])) main.push(pr[idx - 1]);
     }
 
     function tripAndDupl() {
@@ -2260,24 +2272,24 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             //step 3.1: if |main| already has one of the three in tripdist in czestePotrojne && tripdist === 1, then add the rest 2 (if not already inside), this should skip 3.2
             outer:
             for (let num in main) {
-                for (let i = 0; i < czestePotrojne.length; i++) {
-                    if (czestePotrojne[i].includes(String(num)) && main.length < 5) {
-                        if (czestePotrojne[i].length !== 6) console.warn("czestePotrojne nie jest 6 dlugie, sprawdz recznie, 2235", i); //variable line marker
-                        if (czestePotrojne[i].slice(0, 2) === String(num)) {
-                            if (x(czestePotrojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
-                            if (x(czestePotrojne[i].slice(4, 6))) main.push(Number(czestePotrojne[i].slice(4, 6)));
+                for (let i = 0; i < cpt.length; i++) {
+                    if (cpt[i].includes(String(num)) && main.length < 5) {
+                        if (cpt[i].length !== 6) console.warn("czestePotrojne nie jest 6 dlugie, sprawdz recznie, 2235", i); //variable line marker
+                        if (cpt[i].slice(0, 2) === String(num)) {
+                            if (x(cpt[i].slice(2, 4))) main.push(Number(cpt[i].slice(2, 4)));
+                            if (x(cpt[i].slice(4, 6))) main.push(Number(cpt[i].slice(4, 6)));
                             tripDistLocal = 0;
                             console.log("dodano trip; funckja na 2232"); //variable line marker
                             break outer;
-                        } else if (czestePotrojne[i].slice(2, 4) === String(num)) {
-                            if (x(czestePotrojne[i].slice(0, 2))) main.push(Number(czestePotrojne[i].slice(0, 2)));
-                            if (x(czestePotrojne[i].slice(4, 6))) main.push(Number(czestePotrojne[i].slice(4, 6)));
+                        } else if (cpt[i].slice(2, 4) === String(num)) {
+                            if (x(cpt[i].slice(0, 2))) main.push(Number(cpt[i].slice(0, 2)));
+                            if (x(cpt[i].slice(4, 6))) main.push(Number(cpt[i].slice(4, 6)));
                             tripDistLocal = 0;
                             console.log("dodano trip; funckja na 2238"); //variable line marker
                             break outer;
                         } else {
-                            if (x(czestePotrojne[i].slice(0, 2))) main.push(Number(czestePotrojne[i].slice(0, 2)));
-                            if (x(czestePotrojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                            if (x(cpt[i].slice(0, 2))) main.push(Number(cpt[i].slice(0, 2)));
+                            if (x(cpt[i].slice(2, 4))) main.push(Number(cpt[i].slice(2, 4)));
                             tripDistLocal = 0;
                             console.log("dodano trip; funckja na 2244"); //variable line marker
                             break outer;
@@ -2292,50 +2304,50 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             //step 3.2: if |main| already has one of the two in czestePodwojne && dupdist === 1, then add the other one (but make sure its not already inside, otherwise break; ig)
             outerfor:
             for (let num in main) {
-                for (let i = 0; i < czestePodwojne.length; i++) {
-                    if (czestePodwojne[i].includes(String(num)) && main.length < 5) {
-                        if (czestePodwojne[i].length === 4) {
-                            if (czestePodwojne[i].slice(0, 2) === String(num)) {
-                                if (x(czestePodwojne[i].slice(2, 4))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                for (let i = 0; i < cpd.length; i++) {
+                    if (cpd[i].includes(String(num)) && main.length < 5) {
+                        if (cpd[i].length === 4) {
+                            if (cpd[i].slice(0, 2) === String(num)) {
+                                if (x(cpd[i].slice(2, 4))) main.push(Number(cpd[i].slice(2, 4)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
                             } else {
-                                if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                                if (x(cpd[i].slice(0, 2))) main.push(Number(cpd[i].slice(0, 2)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
                             }
-                        } else if (czestePodwojne[i].length === 3) {
-                            if (czestePodwojne[i].slice(0, 1) === String(num)) {
-                                if (x(czestePodwojne[i].slice(1, 3))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                        } else if (cpd[i].length === 3) {
+                            if (cpd[i].slice(0, 1) === String(num)) {
+                                if (x(cpd[i].slice(1, 3))) main.push(Number(cpd[i].slice(2, 4)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
-                            } else if (czestePodwojne[i].slice(0, 2) === String(num)) {
-                                if (x(czestePodwojne[i].slice(2, 3))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                            } else if (cpd[i].slice(0, 2) === String(num)) {
+                                if (x(cpd[i].slice(2, 3))) main.push(Number(cpd[i].slice(0, 2)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
-                            } else if (czestePodwojne[i].slice(2, 3) === String(num)) {
-                                if (x(czestePodwojne[i].slice(0, 2))) main.push(Number(czestePotrojne[i].slice(2, 4)));
+                            } else if (cpd[i].slice(2, 3) === String(num)) {
+                                if (x(cpd[i].slice(0, 2))) main.push(Number(cpd[i].slice(2, 4)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
-                            } else if (czestePodwojne[i].slice(1, 3) === String(num)) {
-                                if (x(czestePodwojne[i].slice(0, 1))) main.push(Number(czestePodwojne[i].slice(0, 2)));
+                            } else if (cpd[i].slice(1, 3) === String(num)) {
+                                if (x(cpd[i].slice(0, 1))) main.push(Number(cpd[i].slice(0, 2)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
                             }
                         } else {
-                            if (czestePodwojne[i].charAt(0) === String(num)) {
-                                if (x(czestePodwojne[i].charAt(0))) main.push(Number(czestePotrojne[i].charAt(0)));
+                            if (cpd[i].charAt(0) === String(num)) {
+                                if (x(cpd[i].charAt(0))) main.push(Number(cpd[i].charAt(0)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
                             } else {
-                                if (x(czestePodwojne[i].charAt(1))) main.push(Number(czestePodwojne[i].charAt(1)));
+                                if (x(cpd[i].charAt(1))) main.push(Number(cpd[i].charAt(1)));
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
@@ -2353,10 +2365,10 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     if (main.length !== 0) {
         tripAndDupl();
     } else {
-        //step 3.3: add one from |cleanview| but make sure the last draw DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
-        for (let idx in cleanviewBiggest) {
-            if (!inLast2(cleanviewBiggest[idx]) && x(cleanviewBiggest[idx])) {
-                main.push(cleanviewBiggest[idx]);
+        //step 3.3: add one from |cleanview| but make sure the last 2 draws DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
+        for (let idx in cb) {
+            if (!inLast2(cb[idx]) && x(cb[idx])) {
+                main.push(cb[idx]);
                 break;
             }
         }
@@ -2371,6 +2383,8 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             break;
         }
     }
+
+    if (x(freqTwenties)) main.push(freqTwenties);
 
     //step 5: add one from fetched.at(-1) but - 1;
     let hasMinusOne = false;
@@ -2392,7 +2406,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         }
     }
 
-    //step 6: check again is tripDist and dupdist === 1, if yes, go back to 3.1 and 3.2
+    //step 6: check again is tripDist or dupdist === 1, if yes, go back to 3.1 and 3.2
     tripAndDupl();
 
     //quick check:
@@ -2411,16 +2425,94 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             let toAdd = 0;
             while (toAdd <= duplDiv.at(-1)) {
                 toAdd += duplDiv[0];
-                if (x(toAdd)) {
-                    duplDiv.push(toAdd);
-                    break;
-                }
             }
+
+            if (x(toAdd)) {
+                if (dupDistLocal === 0) {
+                    if (x(toAdd) && x(toAdd - 1) && x(toAdd + 1)) duplDiv.push(toAdd);
+                    else duplDiv.push(toAdd + duplDiv[0]);
+                } else duplDiv.push(toAdd);
+            } else duplDiv.push(toAdd + duplDiv[0]);
         } else console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2422); //variable line marker
     }
 
-    //7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+    while (duplDiv.length < 5) {
+        for (let idx in cb) {
+            if (dupDistLocal === 0) {
+                if (x(cb[idx]) && x(cb[idx] - 1) && x(cb[idx] + 1)) duplDiv.push(cb[idx]);
+            } else if (x(cb[idx])) duplDiv.push(cb[idx]);
+        }
+        for (let idx in cs) {
+            if (dupDistLocal === 0) {
+                if (x(cs[idx]) && x(cs[idx] - 1) && x(cs[idx] + 1)) duplDiv.push(cs[idx]);
+            } else if (x(cs[idx])) duplDiv.push(cs[idx]);
+        }
+    }
 
+    //7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+    while (duplParz.length < 5) {
+        for (let idx in cb) {
+            if (dupDistLocal === 0) {
+                if (x(cb[idx]) && x(cb[idx] - 1) && x(cb[idx] + 1)) duplParz.push(cb[idx]);
+            } else if (x(cb[idx])) duplParz.push(cb[idx]);
+        }
+        for (let idx in cs) {
+            if (dupDistLocal === 0) {
+                if (x(cs[idx]) && x(cs[idx] - 1) && x(cs[idx] + 1)) duplParz.push(cs[idx]);
+            } else if (x(cs[idx])) duplParz.push(cs[idx]);
+        }
+    }
+
+    if (!(parzyste === parz && nieparzyste === nieparz)) {
+        console.log("dodatkowa funkcja wlaczona, linia: 2202"); //variable line marker
+        while (!(parzyste === parz && nieparzyste === nieparz)) {
+            if (count > 3) break;
+            count++;
+
+            const place = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 === 0);
+
+            if (place !== -1) {
+                if (!main.includes(`${parseInt(dupl[place]) - 1}`)) {
+                    dupl[place] = parseInt(dupl[place]) - 1 + "+-";
+                    plusMin(1);
+                    if (parzyste === parz) break;
+                } else if (!main.includes(`${parseInt(dupl[place]) + 1}`)) {
+                    dupl[place] = parseInt(dupl[place]) + 1 + "++";
+                    plusMin(1);
+                    if (parzyste === parz) break;
+                } else {
+                    dupl[place] = parseInt(dupl[place]) - 3 + "+-3";
+                    plusMin(1);
+                    if (parzyste === parz) break;
+                }
+            }
+
+            const place2 = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 !== 0);
+            if (place2 !== -1) {
+                if (!main.includes(`${parseInt(dupl[place2]) + 1}`) && cleanview.includes(parseInt(dupl[place2]) + 1)) {
+                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+w/c";
+                    plusMin();
+                    if (parzyste === parz) break;
+                } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`) && cleanview.includes(parseInt(dupl[place2]) - 1)) {
+                    dupl[place2] = parseInt(dupl[place2]) - 1 + "--/c";
+                    plusMin();
+                    if (parzyste === parz) break;
+                } else if (!main.includes(`${parseInt(dupl[place2]) + 1}`)) {
+                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+";
+                    plusMin();
+                    if (parzyste === parz) break;
+                } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`)) {
+                    dupl[place2] = parseInt(dupl[place2]) - 1 + "--";
+                    plusMin();
+                    if (parzyste === parz) break;
+                } else {
+                    dupl[place2] = parseInt(dupl[place2]) + 3 + "-+3";
+                    plusMin();
+                    if (parzyste === parz) break;
+                }
+            }
+        }
+    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261"); //variable line marker
 
     //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
     //i feel like they do the same thing😭
@@ -2526,4 +2618,4 @@ f7();
 f8();
 //allF();
 
-console.log("~ Analiza liczb loterii; v1.0.5.2 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.6 ~  ©");
