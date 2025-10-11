@@ -2226,12 +2226,14 @@ function checkDivision(arr) {//NIEsprawdzone
 
 function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     if (globalStop) return;
-    let main = [];
-    let mainStar = [];
+    const main = [];
+    const mainStar = [];
+    let lastAdded = false;
     let parzyste = 0;
     let nieparzyste = 0;
     let count = 0;
     let override = false;
+    const fixedPlaces = [];
     let dupDistLocal = structuredClone(Dupdist);
     let tripDistLocal = structuredClone(tripDist);
 
@@ -2267,29 +2269,63 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             || el === "proponowana za 4 losowań" || el === "proponowana za 5 losowań") && x(pr[idx - 1])) main.push(pr[idx - 1]);
     }
 
+    for (let idx in main) fixedPlaces.push(idx);
+
     function tripAndDupl() {
         if (tripDistLocal === 1) {
             //step 3.1: if |main| already has one of the three in tripdist in czestePotrojne && tripdist === 1, then add the rest 2 (if not already inside), this should skip 3.2
             outer:
-            for (let num in main) {
+            for (let num of main) {
                 for (let i = 0; i < cpt.length; i++) {
-                    if (cpt[i].includes(String(num)) && main.length < 5) {
+                    if (cpt[i].includes(String(num)) && main.length < 3) {
                         if (cpt[i].length !== 6) console.warn("czestePotrojne nie jest 6 dlugie, sprawdz recznie, 2235", i); //variable line marker
                         if (cpt[i].slice(0, 2) === String(num)) {
-                            if (x(cpt[i].slice(2, 4))) main.push(Number(cpt[i].slice(2, 4)));
-                            if (x(cpt[i].slice(4, 6))) main.push(Number(cpt[i].slice(4, 6)));
+                            if (x(cpt[i].slice(2, 4))) {
+                                fixedPlaces.push(main.length);
+                                main.push(Number(cpt[i].slice(2, 4)));
+                                lastAdded = true;
+                            }
+
+                            if (x(cpt[i].slice(4, 6))) {
+                                lastAdded === true ? fixedPlaces.push(main.length) : fixedPlaces.push(main.length + 1);
+                                main.push(Number(cpt[i].slice(4, 6)));
+                                lastAdded = false;
+                            }
+
+                            fixedPlaces.push(() => { main.findIndex(x => x === num) });
                             tripDistLocal = 0;
                             console.log("dodano trip; funckja na 2232"); //variable line marker
                             break outer;
                         } else if (cpt[i].slice(2, 4) === String(num)) {
-                            if (x(cpt[i].slice(0, 2))) main.push(Number(cpt[i].slice(0, 2)));
-                            if (x(cpt[i].slice(4, 6))) main.push(Number(cpt[i].slice(4, 6)));
+                            if (x(cpt[i].slice(0, 2))) {
+                                fixedPlaces.push(main.length);
+                                main.push(Number(cpt[i].slice(0, 2)));
+                                lastAdded = true;
+                            }
+
+                            if (x(cpt[i].slice(4, 6))) {
+                                lastAdded === true ? fixedPlaces.push(main.length) : fixedPlaces.push(main.length + 1);
+                                main.push(Number(cpt[i].slice(4, 6)));
+                                lastAdded = false;
+                            }
+
+                            fixedPlaces.push(() => { main.findIndex(x => x === num) });
                             tripDistLocal = 0;
                             console.log("dodano trip; funckja na 2238"); //variable line marker
                             break outer;
                         } else {
-                            if (x(cpt[i].slice(0, 2))) main.push(Number(cpt[i].slice(0, 2)));
-                            if (x(cpt[i].slice(2, 4))) main.push(Number(cpt[i].slice(2, 4)));
+                            if (x(cpt[i].slice(0, 2))) {
+                                fixedPlaces.push(main.length);
+                                main.push(Number(cpt[i].slice(0, 2)));
+                                lastAdded = true;
+                            }
+
+                            if (x(cpt[i].slice(2, 4))) {
+                                lastAdded === true ? fixedPlaces.push(main.length) : fixedPlaces.push(main.length + 1);
+                                main.push(Number(cpt[i].slice(2, 4)));
+                                lastAdded = false;
+                            }
+                            fixedPlaces.push(() => { main.findIndex(x => x === num) });
                             tripDistLocal = 0;
                             console.log("dodano trip; funckja na 2244"); //variable line marker
                             break outer;
@@ -2303,51 +2339,89 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         } else if (dupDistLocal === 1) {
             //step 3.2: if |main| already has one of the two in czestePodwojne && dupdist === 1, then add the other one (but make sure its not already inside, otherwise break; ig)
             outerfor:
-            for (let num in main) {
+            for (let num of main) {
                 for (let i = 0; i < cpd.length; i++) {
-                    if (cpd[i].includes(String(num)) && main.length < 5) {
+                    if (cpd[i].includes(String(num)) && main.length < 4) {
                         if (cpd[i].length === 4) {
                             if (cpd[i].slice(0, 2) === String(num)) {
-                                if (x(cpd[i].slice(2, 4))) main.push(Number(cpd[i].slice(2, 4)));
+                                if (x(cpd[i].slice(2, 4))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].slice(2, 4)));
+                                }
+
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
                             } else {
-                                if (x(cpd[i].slice(0, 2))) main.push(Number(cpd[i].slice(0, 2)));
+                                if (x(cpd[i].slice(0, 2))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].slice(0, 2)));
+                                }
+
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
                             }
                         } else if (cpd[i].length === 3) {
                             if (cpd[i].slice(0, 1) === String(num)) {
-                                if (x(cpd[i].slice(1, 3))) main.push(Number(cpd[i].slice(2, 4)));
+                                if (x(cpd[i].slice(1, 3))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].slice(2, 4)));
+                                }
+
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
                             } else if (cpd[i].slice(0, 2) === String(num)) {
-                                if (x(cpd[i].slice(2, 3))) main.push(Number(cpd[i].slice(0, 2)));
+                                if (x(cpd[i].slice(2, 3))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].slice(0, 2)));
+                                }
+
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
                             } else if (cpd[i].slice(2, 3) === String(num)) {
-                                if (x(cpd[i].slice(0, 2))) main.push(Number(cpd[i].slice(2, 4)));
+                                if (x(cpd[i].slice(0, 2))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].slice(2, 4)));
+                                }
+
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
                             } else if (cpd[i].slice(1, 3) === String(num)) {
-                                if (x(cpd[i].slice(0, 1))) main.push(Number(cpd[i].slice(0, 2)));
+                                if (x(cpd[i].slice(0, 1))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].slice(0, 2)));
+                                }
+
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
                             }
                         } else {
                             if (cpd[i].charAt(0) === String(num)) {
-                                if (x(cpd[i].charAt(0))) main.push(Number(cpd[i].charAt(0)));
+                                if (x(cpd[i].charAt(0))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].charAt(0)));
+                                }
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2263"); //variable line marker
                                 break outerfor;
                             } else {
-                                if (x(cpd[i].charAt(1))) main.push(Number(cpd[i].charAt(1)));
+                                if (x(cpd[i].charAt(1))) {
+                                    fixedPlaces.push(main.length);
+                                    main.push(Number(cpd[i].charAt(1)));
+                                }
+                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
                                 dupDistLocal = 0;
                                 console.log("dodano dupl; funckja na 2268"); //variable line marker
                                 break outerfor;
@@ -2364,7 +2438,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     //step2: first check that |main| isnt empty, if no then check tripdist(3.1), else dupdist(3.2), else 3.3 (so if its empty duhhh)
     if (main.length !== 0) {
         tripAndDupl();
-    } else {
+    } else if (main.length < 5) {
         //step 3.3: add one from |cleanview| but make sure the last 2 draws DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
         for (let idx in cb) {
             if (!inLast2(cb[idx]) && x(cb[idx])) {
@@ -2384,7 +2458,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         }
     }
 
-    if (x(freqTwenties)) main.push(freqTwenties);
+    if (x(freqTwenties) && main.length < 5) main.push(freqTwenties);
 
     //step 5: add one from fetched.at(-1) but - 1;
     let hasMinusOne = false;
@@ -2401,6 +2475,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         for (let idx = 2; idx < last.length; idx++) {//i chose 2 because i feel like that the least likely for main to already have that number
             if (x(last[idx]) && main.length < 5) {
                 main.push(last[idx]);
+                fixedPlaces.push(main.length);
                 break;
             }
         }
@@ -2423,9 +2498,9 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     if (!hasDivision) {
         if (duplDiv.length < 5) {
             let toAdd = 0;
-            while (toAdd <= duplDiv.at(-1)) {
-                toAdd += duplDiv[0];
-            }
+            while (toAdd <= duplDiv.at(-1)) toAdd += duplDiv[0];
+
+            fixedPlaces.push(main.length);
 
             if (x(toAdd)) {
                 if (dupDistLocal === 0) {
@@ -2433,6 +2508,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
                     else duplDiv.push(toAdd + duplDiv[0]);
                 } else duplDiv.push(toAdd);
             } else duplDiv.push(toAdd + duplDiv[0]);
+
         } else console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2422); //variable line marker
     }
 
@@ -2618,4 +2694,4 @@ f7();
 f8();
 //allF();
 
-console.log("~ Analiza liczb loterii; v1.0.6 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.7 ~  ©");
