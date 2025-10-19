@@ -1854,7 +1854,7 @@ function coIleTakaSama() {//sprawdzone i polepszone
         numEvery.push(`liczba ${num} powtarza sie medianowo co ${globalMed[num]} cyfr. dokładnie: `, counts);
     }
 
-    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    fs.writeFileSync('C/lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     let numIn = new Array("nic");
 
@@ -1921,7 +1921,7 @@ function coIleTakaSama() {//sprawdzone i polepszone
         numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo co ${globalMedStar[numStar]} cyfr. dokładnie: `, countsStar);
     }
 
-    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    fs.writeFileSync('C/lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
 
     let numInStar = new Array("nic");
 
@@ -2578,7 +2578,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, parz, nieparz) {
 
     main = main.concat(mainStar).join();
 
-    allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
+    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
 komentarze na /override: -/
 Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3
                      - liczby sie moge troche zmienic bo uzywam Math.random() (czyli generuje randomowe liczby)`, 'utf8');
