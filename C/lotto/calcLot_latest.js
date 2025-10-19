@@ -1854,7 +1854,7 @@ function coIleTakaSama() {//sprawdzone i polepszone
         numEvery.push(`liczba ${num} powtarza sie medianowo co ${globalMed[num]} cyfr. dokładnie: `, counts);
     }
 
-    fs.writeFileSync('C/lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     let numIn = new Array("nic");
 
@@ -1921,7 +1921,7 @@ function coIleTakaSama() {//sprawdzone i polepszone
         numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo co ${globalMedStar[numStar]} cyfr. dokładnie: `, countsStar);
     }
 
-    fs.writeFileSync('C/lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
 
     let numInStar = new Array("nic");
 
@@ -2396,22 +2396,22 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, parz, nieparz) {
     let hasMinusOne = false;
     const last = fetched.at(-1).results.split(",").slice(0, 5).map(x => parseInt(x));
 
-    for (let idx = 0; idx < last.length; idx++) {
-        if (main.includes(last[idx] - 1)) {
-            hasMinusOne = true;
-            break;
-        }
-    }
+    while (true) {
+        /*
+        useless comment */
+        let idx = Math.floor(Math.random() * last.length);
 
-    if (!hasMinusOne) {
-        while (true) {
-            let idx = Math.floor(Math.random() * last.length);
+        if (main.includes(last[idx] - 1)) hasMinusOne = true
+
+        if (!hasMinusOne) {
+            console.log("minus one:", 2407);
             if (x(last[idx]) && main.length < 5) {
-                main.push(last[idx]);
+                main.push(last[idx] - 1);
                 fixedPlaces.push(main.length);
-                break;
+
             }
         }
+        break;
     }
 
     //step 6: check again is tripDist or dupdist === 1, if yes, go back to 3.1 and 3.2
@@ -2522,13 +2522,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, parz, nieparz) {
                 }
             }
         } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261"); //variable line marker
-     
-        //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
-        //i feel like they do the same thing😭
-        /* ok chill out, najpierw zrob plan jak checsz logike, zapamietaj lub zapisz, potem zaczni powoli od main i stars, sprawdz
-        czy sa bugi i potem nie wiem ciesz sie?
-        luuuuub oczywiescie po prostu usun to... x3
-        */
+
     /*ok so logic fromm start to finish:
     1: done
     2:  done
@@ -2547,17 +2541,17 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, parz, nieparz) {
     if (mainStar.length < 2) {
         if (DupdistStar === 1) {
             if (!mainStar[0]) {
-                if (proponowaneStar[1] === "proponowana star za 1 losowań" || proponowaneStar[1] === "proponowana star za 2 cyfr" || proponowaneStar[1] === "proponowana star za 3 cyfr") mainStar.push(` /${proponowaneStar[0]}/`);
+                if (proponowaneStar[1] === "proponowana star za 1 cyfr" || proponowaneStar[1] === "proponowana star za 2 cyfr" || proponowaneStar[1] === "proponowana star za 3 cyfr") mainStar.push(` /${proponowaneStar[0]}/`);
             } else {
                 mainStar.push(` (${mainStar[0] + 1})`);
                 DupdistStar = 0;
             }
 
         } else {
-            if (mainStar[0] && mainStar[0] !== proponowaneStar[0] && (proponowaneStar[1] === "proponowana star za 1 losowań" || proponowaneStar[1] === "proponowana star za 2 losowań")) {
+            if (mainStar[0] && mainStar[0] !== proponowaneStar[0] && (proponowaneStar[1] === "proponowana star za 1 cyfr" || proponowaneStar[1] === "proponowana star za 2 cyfr")) {
                 mainStar.push(` ${proponowaneStar[0]}/`);
             }
-            if (!mainStar[1] && mainStar[0] !== proponowaneStar[2] && (proponowaneStar[3] === "proponowana star za 1 losowań" || proponowaneStar[3] === "proponowana star za 2 losowań")) {
+            if (!mainStar[1] && mainStar[0] !== proponowaneStar[2] && (proponowaneStar[3] === "proponowana star za 1 cyfr" || proponowaneStar[3] === "proponowana star za 2 cyfr")) {
                 mainStar.push(` ${proponowaneStar[2]}/`);
             }
         }
@@ -2578,7 +2572,7 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, parz, nieparz) {
 
     main = main.concat(mainStar).join();
 
-    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
+    allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
 komentarze na /override: -/
 Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3
                      - liczby sie moge troche zmienic bo uzywam Math.random() (czyli generuje randomowe liczby)`, 'utf8');
@@ -2604,6 +2598,6 @@ f7();
 f8();
 allF();
 
-console.log("~ Analiza liczb loterii; v1.0.9 ~  ©");
+console.log("~ Analiza liczb loterii; v1.1.0 ~  ©");
 //LAST VERSION because im giving up, this is literally not a good idea because it will never work... thank you for the time you've served me *salute* x3
-// last update time stamp: (dd/mm/yyyy) 19/10/2025 - 19:37
+// last update time stamp: (dd/mm/yyyy) 19/10/2025 - 21:00
