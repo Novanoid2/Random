@@ -1696,7 +1696,11 @@ const fetched = [
     { results: "11,13,24,29,33,2,5" },
     { results: "4,17,25,28,44,5,11" },
     { results: "3,8,15,17,48,2,8" },
-    { results: "6,12,18,25,41,2,6" }
+    { results: "6,12,18,25,41,2,6" },
+    { results: "24,39,42,43,48,5,8" },
+    { results: "6,7,17,20,21,1,10" },
+    { results: "5,8,14,16,18,3,10" },
+    { results: "13,35,39,44,47,3,5" },
 ];
 
 // © - 2025 by novanoid2 on discord
@@ -1742,7 +1746,7 @@ function addPastNumbers(arr1, arr2) {//sprawdzone & polepszone
     for (let i = 0; i < fetched.length; i++) {
         let errors = /,  ,|, ,|,,|00|  | /;
         if (errors.test(fetched[i].results)) { //small fail safe
-            console.warn("error at" + i, 1742); //variable line marker
+            console.warn("error at" + i, 1749); //variable line marker
             globalStop = true;
             break;
         }
@@ -1765,6 +1769,7 @@ function calcBiggestProb(arr1, arr2) {//sprawdzone & polepszone
     cleanviewSmallest = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).slice(Object.keys(counts).length - 5).map(entry => +entry[0]);
     biggestSingleDigit = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).map(entry => +entry[0]).filter((num) => num < 10).slice(0, 3);
     freqTwenties = (Object.entries(counts).sort((a, b) => +b[1] - +a[1])).map(entry => +entry[0]).filter((num) => num < 30 && num > 19).slice(0, 1);
+    freqTwenties = freqTwenties[0];
 
     ////star////
     const countsS = arr2.reduce((acc, curr) => {
@@ -1814,11 +1819,11 @@ async function minusAll() {
         rozniceS.push(roznicaDoPushS);
     }
 
-    // f2. to do later to find *a* pattern maybe
+    // f2. to do later to find *a* pattern maybe edit: mhm, "later"
     f2 = () => { console.log(`ostatnie roznice: ${roznice[roznice.length - 3]}|${roznice[roznice.length - 2]}|${roznice[roznice.length - 1]}|`, counts); }
 }
 
-function coIleTakaSama() {//NIEsprawdzone ale polepszone
+function coIleTakaSama() {//sprawdzone i polepszone
     if (globalStop) return;
     ////main////
     //sprawdz co ile jest liczba w calym ${fetched}
@@ -1837,7 +1842,7 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
 
         //get median of numIntArr with a loop or whatev and then push it into numEvery;
         if (numIntArr.length > 0) globalMed[num] = Math.round(median(numIntArr));
-        else { globalStop = true; console.warn("bład 1835"); } //variable line marker
+        else { globalStop = true; console.warn("bład 1845"); } //variable line marker
 
         const counts = numIntArr.reduce((acc, curr) => {
             acc[curr] = (acc[curr] || 0) + 1;
@@ -1846,10 +1851,10 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
 
         for (let key in counts) counts[key] = (counts[key] / numIntArr.length * 100).toFixed(1) + "%";
 
-        numEvery.push(`liczba ${num} powtarza sie medianowo co ${globalMed[num]} liczb. dokładnie: `, counts);
+        numEvery.push(`liczba ${num} powtarza sie medianowo co ${globalMed[num]} cyfr. dokładnie: `, counts);
     }
 
-    fs.writeFileSync('C/lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numery.txt', JSON.stringify(numEvery, null, 2), 'utf8');
 
     let numIn = new Array("nic");
 
@@ -1904,7 +1909,7 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
         }
 
         if (numIntArrStar.length > 0) globalMedStar[numStar] = Math.round(median(numIntArrStar));
-        else { globalStop = true; console.warn("błąd 1902"); } //variable line marker
+        else { globalStop = true; console.warn("błąd 1912"); } //variable line marker
 
         const countsStar = numIntArrStar.reduce((accStar, currStar) => {
             accStar[currStar] = (accStar[currStar] || 0) + 1;
@@ -1913,10 +1918,10 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
 
         for (let key in countsStar) countsStar[key] = (countsStar[key] / numIntArrStar.length * 100).toFixed(1) + "%";
 
-        numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo cy: ${globalMedStar[numStar]} liczb. dokładnie: `, countsStar);
+        numEveryStar.push(`liczba Star ${numStar} powtarza sie medianowo co ${globalMedStar[numStar]} cyfr. dokładnie: `, countsStar);
     }
 
-    fs.writeFileSync('C/lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
+    fs.writeFileSync('lotto/numeryStar.txt', JSON.stringify(numEveryStar, null, 2), 'utf8');
 
     let numInStar = new Array("nic");
 
@@ -1938,7 +1943,7 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
             theoreticalS = (remS === 0) ? medS : (medS - remS);
         }
 
-        numDistStar.push(`${numStar} była ${drawsSinceS} losowań temu i, będzie za ${theoreticalS} losowań`);
+        numDistStar.push(`${numStar} była ${drawsSinceS} losowań temu i, będzie za ${theoreticalS} cyfr`);
         numInStar.push(theoreticalS);
         globalDistStar.push(drawsSinceS);
     };
@@ -1955,10 +1960,10 @@ function coIleTakaSama() {//NIEsprawdzone ale polepszone
         }
     }
 
-    f3 = () => console.log("f3: ", proponowane, proponowaneStar, "!TO NIE SĄ ZA ILE LOSOWAŃ, TYLKO ZA ILE CYFR! (podobno)");
+    f3 = () => console.log("f3: ", proponowane, proponowaneStar);
 }
 
-function podwojne(arr) {//NIEsprawdzone ale polepszone
+function podwojne(arr) {//sprawdzone i polepszone
     if (globalStop) return;
     ////main////
     let podwojne = [];
@@ -1981,7 +1986,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
             doubles.forEach(double => {
                 if (co !== 0) counts.push(co);
                 podwojne.push(at, `${double[0]} i ${double[1]}`);
-                podwojneAvg.push(`${double[0]}${double[1]}`); //first number is smaller than the second one
+                podwojneAvg.push(`${double[0]}${double[1]}`);
                 co = 0;
             });
         } else co++;
@@ -1989,7 +1994,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
 
     let med = 1;
     if (counts.length > 1) med = Math.round(median(counts));
-    else { globalStop = true; console.warn("błąd 1987"); } //variable line marker
+    else { globalStop = true; console.warn("błąd 1997"); } //variable line marker
 
     const counts2 = podwojneAvg.reduce((acc, curr) => {
         acc[curr] = (acc[curr] || 0) + 1;
@@ -2005,7 +2010,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
 
     if (lastIdx === 0) {
         globalStop = true;
-        console.warn("błąd 2003"); //variable line marker
+        console.warn("błąd 2013"); //variable line marker
     } else if (drawsSince < med) {
         Dupdist = med - drawsSince; // jeszcze nie minęła mediana
     } else {
@@ -2021,7 +2026,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
     for (let atStar = 0; atStar < arr.length; atStar++) {
         let numsArrStar = arr[atStar].results.split(",").slice(5).map(x => parseInt(x));
         if (numsArrStar[1] - numsArrStar[0] === 1) {
-            podwojneStar.push(atStar, numsArrStar[1] + ` i ` + numsArrStar[0]);
+            podwojneStar.push(atStar, `${numsArrStar[1]} i ${numsArrStar[0]}`);
             if (coStar !== 0) countsStar.push(coStar);
             coStar = 0;
         } else coStar++;
@@ -2029,7 +2034,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
 
     let medS = 1;
     if (countsStar.length > 1) medS = Math.round(median(countsStar));
-    else { globalStop = true; console.log("błąd 2027"); } //variable line marker
+    else { globalStop = true; console.log("błąd 2037"); } //variable line marker
 
     // ostatni indeks wystąpienia (zakładamy że podwojne zapisane jako [idx, "b i a", ...])
     const lastIdxS = (podwojneStar.length >= 2) ? podwojneStar[podwojneStar.length - 2] : 0;
@@ -2038,7 +2043,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
 
     if (lastIdxS === 0) {
         globalStop = true;
-        console.log("błąd 2036");  //variable line marker
+        console.log("błąd 2046");  //variable line marker
     } else if (drawsSinceS < medS) {
         DupdistStar = medS - drawsSinceS; // jeszcze nie minęła mediana
     } else {
@@ -2050,7 +2055,7 @@ function podwojne(arr) {//NIEsprawdzone ale polepszone
     f4 = () => console.log("f4:", `(teo:) nastepny podwojny: ${Dupdist}, nastepny podwojny Star: ${DupdistStar}`, "\n", `czeste podwojne:`, czestePodwojne);
 }
 
-function splitIntoGroups(list) {
+function splitIntoGroups(list) {//sprawdzone
     if (globalStop) return;
     const groups = { "group1": 0, "group2": 0, "group3": 0, "group4": 0, "group5": 0, "group6": 0 };
 
@@ -2083,7 +2088,7 @@ function splitIntoGroups(list) {
     f5 = () => console.log("f5: grouporder:", groupsOrg);
 }
 
-function rodzajPar(arr) {
+function rodzajPar(arr) {//sprawdzone
     if (globalStop) return;
     //pierwsza liczba to parzyste a druga to nie parzyste!
     const counts = { "5/0": 0, "4/1": 0, "3/2": 0, "2/3": 0, "1/4": 0, "0/5": 0 };
@@ -2111,7 +2116,7 @@ function rodzajPar(arr) {
 
         for (let j = i * 100; j <= ((i + 1) * 100) - 1; j++) {
             if (arr[j]) {
-                const partTemp = arr[j].results.split(",").map(x => parseInt(x, 10)).slice(0, 5);
+                const partTemp = arr[j].results.split(",").slice(0, 5).map(x => parseInt(x, 10));
 
                 let even = 0, odd = 0;
                 partTemp.forEach((num) => { num % 2 === 0 ? even++ : odd++; });
@@ -2135,7 +2140,7 @@ function rodzajPar(arr) {
     f6 = () => console.log(`f6: rodzaje par (parz/nieparz):`, countsOrg, "ilosc co 100:", types);
 }
 
-function potrojne(arr) {//NIEsprawdzone
+function potrojne(arr) {//sprawdzone
     if (globalStop) return;
     ////main////
     let potrojne = [];
@@ -2166,7 +2171,7 @@ function potrojne(arr) {//NIEsprawdzone
 
     let med = 1;
     if (counts.length > 1) med = Math.round(median(counts));
-    else { globalStop = true; console.warn("błąd 2167"); } //variable line marker
+    else { globalStop = true; console.warn("błąd 2174"); } //variable line marker
 
     const counts2 = potrojneAvg.reduce((acc, curr) => {
         acc[curr] = (acc[curr] || 0) + 1;
@@ -2182,7 +2187,7 @@ function potrojne(arr) {//NIEsprawdzone
 
     if (lastIdx === 0) {
         globalStop = true;
-        console.warn("błąd 2183"); //variable line marker
+        console.warn("błąd 2190"); //variable line marker
     } else if (drawsSince < med) {
         tripDist = med - drawsSince; // jeszcze nie minęła mediana
     } else {
@@ -2194,12 +2199,12 @@ function potrojne(arr) {//NIEsprawdzone
     f7 = () => console.log("f7:", "czeste potrojne:", czestePotrojne, "za ile:", tripDist);
 }
 
-function checkDivision(arr) {//NIEsprawdzone
+function checkDivision(arr) {//sprawdzone
     let gaps = 0;
     let counts = [];
     for (let idx = 0; idx < arr.length; idx++) {
         const numsArr = fetched[idx].results.split(",").slice(0, 5).map(x => parseInt(x));
-        if (numsArr[0] !== 1) {
+        if (numsArr[0] !== 1 && numsArr[0] < 10) {
             if (numsArr[0] < 10) {
                 for (let i = 1; i < numsArr.length; i++) {
                     if (numsArr[i] % numsArr[0] === 0) {
@@ -2221,12 +2226,12 @@ function checkDivision(arr) {//NIEsprawdzone
     //const med = median(counts);
     //this is basically always 1 so yeah...
 
-    f8 = () => console.log("f8:", counts2);
+    f8 = () => console.log("f8: co ile losowan jest w cyfrze podzielenie", counts2);
 }
 
-function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
+function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, parz, nieparz) {
     if (globalStop) return;
-    const main = [];
+    let main = [];
     const mainStar = [];
     let lastAdded = false;
     let parzyste = 0;
@@ -2272,167 +2277,92 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     for (let idx in main) fixedPlaces.push(idx);
 
     function tripAndDupl() {
+        // obsługa tripli
         if (tripDistLocal === 1) {
-            //step 3.1: if |main| already has one of the three in tripdist in czestePotrojne && tripdist === 1, then add the rest 2 (if not already inside), this should skip 3.2
             outer:
             for (let num of main) {
                 for (let i = 0; i < cpt.length; i++) {
-                    if (cpt[i].includes(String(num)) && main.length < 3) {
-                        if (cpt[i].length !== 6) console.warn("czestePotrojne nie jest 6 dlugie, sprawdz recznie, 2235", i); //variable line marker
-                        if (cpt[i].slice(0, 2) === String(num)) {
-                            if (x(cpt[i].slice(2, 4))) {
-                                fixedPlaces.push(main.length);
-                                main.push(Number(cpt[i].slice(2, 4)));
-                                lastAdded = true;
-                            }
+                    const t = cpt[i];
+                    if (!t || typeof t !== "string") continue;
 
-                            if (x(cpt[i].slice(4, 6))) {
-                                lastAdded === true ? fixedPlaces.push(main.length) : fixedPlaces.push(main.length + 1);
-                                main.push(Number(cpt[i].slice(4, 6)));
-                                lastAdded = false;
-                            }
+                    if (t.includes(String(num)) && main.length < 4) {
+                        if (t.length !== 6) console.warn("czestePotrojne nie jest 6 dlugie, sprawdz recznie, 2289", i);
 
-                            fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                            tripDistLocal = 0;
-                            console.log("dodano trip; funckja na 2232"); //variable line marker
-                            break outer;
-                        } else if (cpt[i].slice(2, 4) === String(num)) {
-                            if (x(cpt[i].slice(0, 2))) {
-                                fixedPlaces.push(main.length);
-                                main.push(Number(cpt[i].slice(0, 2)));
-                                lastAdded = true;
-                            }
+                        const n1 = Number(t.slice(0, 2));
+                        const n2 = Number(t.slice(2, 4));
+                        const n3 = Number(t.slice(4, 6));
 
-                            if (x(cpt[i].slice(4, 6))) {
-                                lastAdded === true ? fixedPlaces.push(main.length) : fixedPlaces.push(main.length + 1);
-                                main.push(Number(cpt[i].slice(4, 6)));
-                                lastAdded = false;
-                            }
-
-                            fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                            tripDistLocal = 0;
-                            console.log("dodano trip; funckja na 2238"); //variable line marker
-                            break outer;
-                        } else {
-                            if (x(cpt[i].slice(0, 2))) {
-                                fixedPlaces.push(main.length);
-                                main.push(Number(cpt[i].slice(0, 2)));
-                                lastAdded = true;
-                            }
-
-                            if (x(cpt[i].slice(2, 4))) {
-                                lastAdded === true ? fixedPlaces.push(main.length) : fixedPlaces.push(main.length + 1);
-                                main.push(Number(cpt[i].slice(2, 4)));
-                                lastAdded = false;
-                            }
-                            fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                            tripDistLocal = 0;
-                            console.log("dodano trip; funckja na 2244"); //variable line marker
-                            break outer;
+                        if (num === n1) {
+                            if (x(n2)) { fixedPlaces.push(main.length); main.push(n2); }
+                            if (x(n3)) { fixedPlaces.push(main.length); main.push(n3); }
+                        } else if (num === n2) {
+                            if (x(n1)) { fixedPlaces.push(main.length); main.push(n1); }
+                            if (x(n3)) { fixedPlaces.push(main.length); main.push(n3); }
+                        } else if (num === n3) {
+                            if (x(n1)) { fixedPlaces.push(main.length); main.push(n1); }
+                            if (x(n2)) { fixedPlaces.push(main.length); main.push(n2); }
                         }
+
+                        tripDistLocal = 0;
+                        console.log("dodano trip; funckja na 2307");
+                        break outer;
                     }
                 }
             }
-            if (tripDistLocal === 1) console.log("dodanie trip sie nie udalo, proba dalsza pozniej");
-            else console.log("dodanie trip sie udalo, nie bedzie proby dalszej");
 
+            if (tripDistLocal === 1)
+                console.log("dodanie trip się nie udało, proba dalsza pozniej");
+            else
+                console.log("dodanie trip się udało, nie bedzie proby dalszej");
+
+            return;
         } else if (dupDistLocal === 1) {
             //step 3.2: if |main| already has one of the two in czestePodwojne && dupdist === 1, then add the other one (but make sure its not already inside, otherwise break; ig)
             outerfor:
             for (let num of main) {
                 for (let i = 0; i < cpd.length; i++) {
-                    if (cpd[i].includes(String(num)) && main.length < 4) {
-                        if (cpd[i].length === 4) {
-                            if (cpd[i].slice(0, 2) === String(num)) {
-                                if (x(cpd[i].slice(2, 4))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].slice(2, 4)));
-                                }
+                    const d = cpd[i];
+                    if (!d || typeof d !== "string") continue;
 
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2263"); //variable line marker
-                                break outerfor;
-                            } else {
-                                if (x(cpd[i].slice(0, 2))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].slice(0, 2)));
-                                }
+                    if (d.includes(String(num)) && main.length < 5) {
+                        let n1, n2;
 
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2268"); //variable line marker
-                                break outerfor;
-                            }
-                        } else if (cpd[i].length === 3) {
-                            if (cpd[i].slice(0, 1) === String(num)) {
-                                if (x(cpd[i].slice(1, 3))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].slice(2, 4)));
-                                }
+                        if (d.length === 4) { // np. "0710"
+                            n1 = Number(d.slice(0, 2));
+                            n2 = Number(d.slice(2, 4));
+                        } else if (d.length === 3) { // np. "712" (czyli 7 i 12)
+                            n1 = Number(d.slice(0, 1));
+                            n2 = Number(d.slice(1, 3));
+                        } else if (d.length === 2) { // np. "57"
+                            n1 = Number(d.charAt(0));
+                            n2 = Number(d.charAt(1));
+                        } else continue; // zły format
 
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2263"); //variable line marker
-                                break outerfor;
-                            } else if (cpd[i].slice(0, 2) === String(num)) {
-                                if (x(cpd[i].slice(2, 3))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].slice(0, 2)));
-                                }
-
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2268"); //variable line marker
-                                break outerfor;
-                            } else if (cpd[i].slice(2, 3) === String(num)) {
-                                if (x(cpd[i].slice(0, 2))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].slice(2, 4)));
-                                }
-
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2263"); //variable line marker
-                                break outerfor;
-                            } else if (cpd[i].slice(1, 3) === String(num)) {
-                                if (x(cpd[i].slice(0, 1))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].slice(0, 2)));
-                                }
-
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2268"); //variable line marker
-                                break outerfor;
-                            }
-                        } else {
-                            if (cpd[i].charAt(0) === String(num)) {
-                                if (x(cpd[i].charAt(0))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].charAt(0)));
-                                }
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2263"); //variable line marker
-                                break outerfor;
-                            } else {
-                                if (x(cpd[i].charAt(1))) {
-                                    fixedPlaces.push(main.length);
-                                    main.push(Number(cpd[i].charAt(1)));
-                                }
-                                fixedPlaces.push(() => { main.findIndex(x => x === num) });
-                                dupDistLocal = 0;
-                                console.log("dodano dupl; funckja na 2268"); //variable line marker
-                                break outerfor;
-                            }
+                        if (num === n1 && x(n2)) {
+                            fixedPlaces.push(main.length);
+                            main.push(n2);
+                            dupDistLocal = 0;
+                            console.log("dodano dupl; funckja na 2345");
+                            break outerfor;
+                        } else if (num === n2 && x(n1)) {
+                            fixedPlaces.push(main.length);
+                            main.push(n1);
+                            dupDistLocal = 0;
+                            console.log("dodano dupl; funckja na 2351");
+                            break outerfor;
                         }
                     }
                 }
-                if (dupDistLocal === 1) console.log("dodanie dupl sie nie udalo, proba dalsza pozniej");
-                else console.log("dodanie dupl sie udalo, nie bedzie proby dalszej");
             }
-        } else console.log("nothing done in triple and dupl function, 2319"); //variable line marker
+
+            if (dupDistLocal === 1)
+                console.log("dodanie dupl się nie udało, proba dalsza pozniej");
+            else
+                console.log("dodanie dupl się udało, nie bedzie proby dalszej");
+
+            return;
+        }
+        console.log("nothing done in triple and dupl function, 2365");
     }
 
     //step2: first check that |main| isnt empty, if no then check tripdist(3.1), else dupdist(3.2), else 3.3 (so if its empty duhhh)
@@ -2440,18 +2370,18 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
         tripAndDupl();
     } else if (main.length < 5) {
         //step 3.3: add one from |cleanview| but make sure the last 2 draws DID NOT have the one you chose from |cleanview| then repeat 3.1 or 3.2
-        for (let idx in cb) {
-            if (!inLast2(cb[idx]) && x(cb[idx])) {
-                main.push(cb[idx]);
+        while (true) {
+            let num = Math.floor(Math.random() * cb.length);
+            if (!inLast2(cb[num]) && x(cb[num])) {
+                main.push(cb[num]);
                 break;
             }
         }
-
-        tripAndDupl();
     }
 
     //step 4: add one from each group (get an array from counts with the highest freq single digit num...), but also one from the cs if cb is used completely
-    for (let num in biggestSingleDigit) {
+    while (true) {
+        let num = Math.floor(Math.random() * biggestSingleDigit.length);
         if (!inLast2(biggestSingleDigit[num]) && x(biggestSingleDigit[num]) && main.length < 5) {
             main.push(biggestSingleDigit[num]);
             break;
@@ -2459,6 +2389,8 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     }
 
     if (x(freqTwenties) && main.length < 5) main.push(freqTwenties);
+
+    tripAndDupl();
 
     //step 5: add one from fetched.at(-1) but - 1;
     let hasMinusOne = false;
@@ -2472,7 +2404,8 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     }
 
     if (!hasMinusOne) {
-        for (let idx = 2; idx < last.length; idx++) {//i chose 2 because i feel like that the least likely for main to already have that number
+        while (true) {
+            let idx = Math.floor(Math.random() * last.length);
             if (x(last[idx]) && main.length < 5) {
                 main.push(last[idx]);
                 fixedPlaces.push(main.length);
@@ -2486,116 +2419,116 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
 
     //quick check:
     console.log(main);
-
-    //step 7: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt but checks the divisions thing
-    let duplDiv = structuredClone(main);
-    let duplParz = structuredClone(main);
-
-    //7.1: doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
-    let hasDivision = false;
-    for (let idx = 1; idx < duplDiv.length; idx++) if (duplDiv[idx] % duplDiv[0] === 0) hasDivision = true;
-
-    if (!hasDivision) {
-        if (duplDiv.length < 5) {
-            let toAdd = 0;
-            while (toAdd <= duplDiv.at(-1)) toAdd += duplDiv[0];
-
-            fixedPlaces.push(main.length);
-
-            if (x(toAdd)) {
+    /*
+        //step 7: then we break of here and make two copy versions, one checks parz and nieparz and one doesnt but checks the divisions thing
+        let duplDiv = structuredClone(main);
+        let duplParz = structuredClone(main);
+     
+        //7.1: doesnt: make at least one of the bigger ones divisible by the first one and thats it i think, or make a quick fn to check for this info
+        let hasDivision = false;
+        for (let idx = 1; idx < duplDiv.length; idx++) if (duplDiv[idx] % duplDiv[0] === 0) hasDivision = true;
+     
+        if (!hasDivision) {
+            if (duplDiv.length < 5) {
+                let toAdd = 0;
+                while (toAdd <= duplDiv.at(-1)) toAdd += duplDiv[0];
+     
+                fixedPlaces.push(main.length);
+     
+                if (x(toAdd)) {
+                    if (dupDistLocal === 0) {
+                        if (x(toAdd) && x(toAdd - 1) && x(toAdd + 1)) duplDiv.push(toAdd);
+                        else duplDiv.push(toAdd + duplDiv[0]);
+                    } else duplDiv.push(toAdd);
+                } else duplDiv.push(toAdd + duplDiv[0]);
+     
+            } else console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2422); //variable line marker
+        }
+     
+        while (duplDiv.length < 5) {
+            for (let idx in cb) {
                 if (dupDistLocal === 0) {
-                    if (x(toAdd) && x(toAdd - 1) && x(toAdd + 1)) duplDiv.push(toAdd);
-                    else duplDiv.push(toAdd + duplDiv[0]);
-                } else duplDiv.push(toAdd);
-            } else duplDiv.push(toAdd + duplDiv[0]);
-
-        } else console.log("wybierz sam ktore chcesz zamienic, tylko nie dupdist lub tripdist x3", duplDiv, 2422); //variable line marker
-    }
-
-    while (duplDiv.length < 5) {
-        for (let idx in cb) {
-            if (dupDistLocal === 0) {
-                if (x(cb[idx]) && x(cb[idx] - 1) && x(cb[idx] + 1)) duplDiv.push(cb[idx]);
-            } else if (x(cb[idx])) duplDiv.push(cb[idx]);
-        }
-        for (let idx in cs) {
-            if (dupDistLocal === 0) {
-                if (x(cs[idx]) && x(cs[idx] - 1) && x(cs[idx] + 1)) duplDiv.push(cs[idx]);
-            } else if (x(cs[idx])) duplDiv.push(cs[idx]);
-        }
-    }
-
-    //7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
-    while (duplParz.length < 5) {
-        for (let idx in cb) {
-            if (dupDistLocal === 0) {
-                if (x(cb[idx]) && x(cb[idx] - 1) && x(cb[idx] + 1)) duplParz.push(cb[idx]);
-            } else if (x(cb[idx])) duplParz.push(cb[idx]);
-        }
-        for (let idx in cs) {
-            if (dupDistLocal === 0) {
-                if (x(cs[idx]) && x(cs[idx] - 1) && x(cs[idx] + 1)) duplParz.push(cs[idx]);
-            } else if (x(cs[idx])) duplParz.push(cs[idx]);
-        }
-    }
-
-    if (!(parzyste === parz && nieparzyste === nieparz)) {
-        console.log("dodatkowa funkcja wlaczona, linia: 2202"); //variable line marker
-        while (!(parzyste === parz && nieparzyste === nieparz)) {
-            if (count > 3) break;
-            count++;
-
-            const place = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 === 0);
-
-            if (place !== -1) {
-                if (!main.includes(`${parseInt(dupl[place]) - 1}`)) {
-                    dupl[place] = parseInt(dupl[place]) - 1 + "+-";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place]) + 1}`)) {
-                    dupl[place] = parseInt(dupl[place]) + 1 + "++";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                } else {
-                    dupl[place] = parseInt(dupl[place]) - 3 + "+-3";
-                    plusMin(1);
-                    if (parzyste === parz) break;
-                }
+                    if (x(cb[idx]) && x(cb[idx] - 1) && x(cb[idx] + 1)) duplDiv.push(cb[idx]);
+                } else if (x(cb[idx])) duplDiv.push(cb[idx]);
             }
-
-            const place2 = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 !== 0);
-            if (place2 !== -1) {
-                if (!main.includes(`${parseInt(dupl[place2]) + 1}`) && cleanview.includes(parseInt(dupl[place2]) + 1)) {
-                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+w/c";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`) && cleanview.includes(parseInt(dupl[place2]) - 1)) {
-                    dupl[place2] = parseInt(dupl[place2]) - 1 + "--/c";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place2]) + 1}`)) {
-                    dupl[place2] = parseInt(dupl[place2]) + 1 + "-+";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`)) {
-                    dupl[place2] = parseInt(dupl[place2]) - 1 + "--";
-                    plusMin();
-                    if (parzyste === parz) break;
-                } else {
-                    dupl[place2] = parseInt(dupl[place2]) + 3 + "-+3";
-                    plusMin();
-                    if (parzyste === parz) break;
-                }
+            for (let idx in cs) {
+                if (dupDistLocal === 0) {
+                    if (x(cs[idx]) && x(cs[idx] - 1) && x(cs[idx] + 1)) duplDiv.push(cs[idx]);
+                } else if (x(cs[idx])) duplDiv.push(cs[idx]);
             }
         }
-    } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261"); //variable line marker
-
-    //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
-    //i feel like they do the same thing😭
-    /* ok chill out, najpierw zrob plan jak checsz logike, zapamietaj lub zapisz, potem zaczni powoli od main i stars, sprawdz
-    czy sa bugi i potem nie wiem ciesz sie?
-    luuuuub oczywiescie po prostu usun to... x3
-    */
+     
+        //7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
+        while (duplParz.length < 5) {
+            for (let idx in cb) {
+                if (dupDistLocal === 0) {
+                    if (x(cb[idx]) && x(cb[idx] - 1) && x(cb[idx] + 1)) duplParz.push(cb[idx]);
+                } else if (x(cb[idx])) duplParz.push(cb[idx]);
+            }
+            for (let idx in cs) {
+                if (dupDistLocal === 0) {
+                    if (x(cs[idx]) && x(cs[idx] - 1) && x(cs[idx] + 1)) duplParz.push(cs[idx]);
+                } else if (x(cs[idx])) duplParz.push(cs[idx]);
+            }
+        }
+     
+        if (!(parzyste === parz && nieparzyste === nieparz)) {
+            console.log("dodatkowa funkcja wlaczona, linia: 2202"); //variable line marker
+            while (!(parzyste === parz && nieparzyste === nieparz)) {
+                if (count > 3) break;
+                count++;
+     
+                const place = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 === 0);
+     
+                if (place !== -1) {
+                    if (!main.includes(`${parseInt(dupl[place]) - 1}`)) {
+                        dupl[place] = parseInt(dupl[place]) - 1 + "+-";
+                        plusMin(1);
+                        if (parzyste === parz) break;
+                    } else if (!main.includes(`${parseInt(dupl[place]) + 1}`)) {
+                        dupl[place] = parseInt(dupl[place]) + 1 + "++";
+                        plusMin(1);
+                        if (parzyste === parz) break;
+                    } else {
+                        dupl[place] = parseInt(dupl[place]) - 3 + "+-3";
+                        plusMin(1);
+                        if (parzyste === parz) break;
+                    }
+                }
+     
+                const place2 = dupl.findLastIndex((el) => /lub sam/.test(el) && parseInt(el) % 2 !== 0);
+                if (place2 !== -1) {
+                    if (!main.includes(`${parseInt(dupl[place2]) + 1}`) && cleanview.includes(parseInt(dupl[place2]) + 1)) {
+                        dupl[place2] = parseInt(dupl[place2]) + 1 + "-+w/c";
+                        plusMin();
+                        if (parzyste === parz) break;
+                    } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`) && cleanview.includes(parseInt(dupl[place2]) - 1)) {
+                        dupl[place2] = parseInt(dupl[place2]) - 1 + "--/c";
+                        plusMin();
+                        if (parzyste === parz) break;
+                    } else if (!main.includes(`${parseInt(dupl[place2]) + 1}`)) {
+                        dupl[place2] = parseInt(dupl[place2]) + 1 + "-+";
+                        plusMin();
+                        if (parzyste === parz) break;
+                    } else if (!main.includes(`${parseInt(dupl[place2]) - 1}`)) {
+                        dupl[place2] = parseInt(dupl[place2]) - 1 + "--";
+                        plusMin();
+                        if (parzyste === parz) break;
+                    } else {
+                        dupl[place2] = parseInt(dupl[place2]) + 3 + "-+3";
+                        plusMin();
+                        if (parzyste === parz) break;
+                    }
+                }
+            }
+        } else console.log("dodatkowa funkcja NIE wlaczona, linia: 2261"); //variable line marker
+     
+        //change the logic here, dont know how yet, but figure it out because now its really just guessing, also do i need that many ifs?
+        //i feel like they do the same thing😭
+        /* ok chill out, najpierw zrob plan jak checsz logike, zapamietaj lub zapisz, potem zaczni powoli od main i stars, sprawdz
+        czy sa bugi i potem nie wiem ciesz sie?
+        luuuuub oczywiescie po prostu usun to... x3
+        */
     /*ok so logic fromm start to finish:
     1: done
     2:  done
@@ -2605,17 +2538,16 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
     4: done
     5: done
     7: done
-    7.1 doesnt: done
+    7.1 doesnt: done (mihgt uncomment later...)
     7.2 does: use the basis of my already exising func but modify the content cuz its prob shit
-    inbetweenstep to fill in:
-    8: push into proponowane
-    9: (w glowie): sprawdz /override
+    8: done
     */
+
     ////star nums////
     if (mainStar.length < 2) {
         if (DupdistStar === 1) {
             if (!mainStar[0]) {
-                if (proponowaneStar[1] === "proponowana star za 1 losowań" || proponowaneStar[1] === "proponowana star za 2 losowań") mainStar.push(` /${proponowaneStar[0]}/`);
+                if (proponowaneStar[1] === "proponowana star za 1 losowań" || proponowaneStar[1] === "proponowana star za 2 cyfr" || proponowaneStar[1] === "proponowana star za 3 cyfr") mainStar.push(` /${proponowaneStar[0]}/`);
             } else {
                 mainStar.push(` (${mainStar[0] + 1})`);
                 DupdistStar = 0;
@@ -2641,38 +2573,16 @@ function porownywanie(cb, cs, cS, pr, prS, cpd, cpt, div, parz, nieparz) {
             });
         }
     }
+    //step 8: push into proponowane
+    while (main.length < 5) main.push("|");
 
     main = main.concat(mainStar).join();
-    allF = () => fs.writeFileSync('C/lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
+
+    allF = () => fs.writeFileSync('lotto/proponowane.txt', `nieostateczne (jeszcze w glowie trzeba pozmieniac) proponowane liczby:... ${main}\n
 komentarze na /override: -/
-Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3`, 'utf8');
+Normalne komentarze: - najczestrze liczby to: 23, 19, 42 i 44; star: 2 i 3
+                     - liczby sie moge troche zmienic bo uzywam Math.random() (czyli generuje randomowe liczby)`, 'utf8');
 }
-
-//WHAAAAAT i actualy want to fucking pass out please kill me i hate this
-//you really need to work on porownanie, either remove it entirely because its too much work and too unreliable 
-//or fix the logic, in thats case fix the dup dist thing and STOP recommending stuff from cleanview😭
-//but like at that point how am i supposed to fill the gaps? cuz if i cant use cleanview i dont have anything else to use...
-//here:
-/*
-Option 3: Hybrid logic (recommended)
- 
-Use a fallback priority like this:
- 
-Try proponowane.
- 
-Try “distance logic” (Dupdist).
- 
-Try “nearby to existing main”.
- 
-Try “most frequent/least recently drawn”.
- 
-As a last resort, cleanview.
- 
-That way, cleanview becomes a final fallback, not your main filler.*/
-
-//variable line marker
-//make that one idea in my head where its a very giant for loop where it constantly goes thorugh all possible nums and changes every time after 9 or sum from "+" to "-"
-//it can also include sqrt and ^ and bla bla bla, basicaly, try to make a fn to get a tweedegraadsfunctie lol
 
 addPastNumbers(pastNumsMain, pastNumsStar); //nie ma f
 calcBiggestProb(pastNumsMain, pastNumsStar); //f1
@@ -2683,7 +2593,7 @@ splitIntoGroups(fetched); //f5
 rodzajPar(fetched); //f6
 potrojne(fetched); //f7
 checkDivision(fetched); //f8
-//porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne, czestePotrojne, medDivision, parz, nieparz); //allF
+porownywanie(cleanviewBiggest, cleanviewSmallest, cleanviewS, proponowane, proponowaneStar, czestePodwojne, czestePotrojne, parz, nieparz); //allF
 f1();
 //f2();
 f3();
@@ -2692,6 +2602,8 @@ f5();
 f6();
 f7();
 f8();
-//allF();
+allF();
 
-console.log("~ Analiza liczb loterii; v1.0.7 ~  ©");
+console.log("~ Analiza liczb loterii; v1.0.9 ~  ©");
+//LAST VERSION because im giving up, this is literally not a good idea because it will never work... thank you for the time you've served me *salute* x3
+// last update time stamp: (dd/mm/yyyy) 19/10/2025 - 19:37
