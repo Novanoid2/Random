@@ -247,6 +247,16 @@ li {
     text-align: center;
 }
 
+#boxDolacz-border button {
+    border: solid black 2px;
+    border-radius: 10px;
+    font-size: 1.9rem;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 200%);
+    cursor: pointer;
+}
+
 body {
     margin: 0;
     display: grid;
