@@ -19,7 +19,6 @@ getData();
 async function applyData(file) {
     for (let key in file) {
         let el = document.getElementById(key)
-                    console.log(file[key], el);
         if (el) {
             if (/prz[0-3]b/.test(key)) el.innerHTML = file[key].replace(" e", " €");
             else el.innerHTML = file[key];
@@ -58,19 +57,36 @@ document.getElementById("lang").onclick = () => {
 
 document.getElementById("DolaczBut").onclick = () => {
     if (!document.getElementById("boxDolacz-border").contains((document.getElementById("contactInfoBox")))) {
-        console.log(123);
         const buttonPos = document.getElementById("DolaczBut").getBoundingClientRect();
+
+        document.getElementById("DolaczBut").style = `transform: translate(-108px,65px);`;
+        document.getElementById("DolaczBut").textContent = "Dołącz później";
+        document.getElementById("boxDolacz-border").style.height = "350px";
+
         const div = document.createElement("div");
-        div.style = `position: relative; transform:translateY(100%); left: ${buttonPos.left + buttonPos.width / 2 - 150}px; height: 80px; width: 300px; z-index: 1; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
+        div.style = `position: relative; transform: translateY(40%); left: ${buttonPos.left + buttonPos.width / 2 - 250}px;
+        height: 200px; width: 500px; z-index: 1; opacity: 0; transition: opacity 0.7s;
+        font-size: 1.8rem; font-weight: bold; text-align: center; display: flex; opacity: 0; transition: opacity 1s;`;
         div.id = "contactInfoBox";
-        div.innerHTML = `Numer telefonowy: +32 nie wiem
-        <br>
-        lub
-        <br>
-        E-mail: jakis_tam@email.com`;
+        div.innerHTML = `<hr>
+        Kontakt z dyrygentką:
+            <br>
+            <br>
+            Numer telefonowy: +32 nie wiem
+            <br>
+            lub
+            <br>
+            E-mail: jakis_tam@email.com
+            <br>
+        <hr>`;
         document.getElementById("boxDolacz-border").appendChild(div);
         setTimeout(() => div.style.opacity = 1, 10);
-    } else document.getElementById("boxDolacz-border").removeChild(document.getElementById("contactInfoBox"));
+    } else {
+        document.getElementById("boxDolacz-border").removeChild(document.getElementById("contactInfoBox"));
+        document.getElementById("DolaczBut").style = `transform: translate(-101px,80px);`;
+        document.getElementById("boxDolacz-border").style.height = "200px";
+                document.getElementById("DolaczBut").textContent = "Dołącz teraz";
+    }
 }
 
 document.getElementById('onas').onclick = () => document.getElementById('boxONas-border').scrollIntoView({ behavior: "smooth", block: "center" });

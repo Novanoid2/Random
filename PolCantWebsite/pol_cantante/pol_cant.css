@@ -131,7 +131,7 @@ header {
     /* 7s */
     max-width: 100%;
     /* 7 */
-    height: 350px;
+    height: 150px;
     left: 50%;
     top: 99.9vh;
     /* 6 */
@@ -148,7 +148,7 @@ header {
     /* 7 */
     height: auto;
     left: 50%;
-    top: 150vh;
+    top: 130vh;
     /* 6 */
     transform: translate(-50%);
     background-color: rgb(255, 255, 255);
@@ -238,7 +238,8 @@ li {
     /* 7s */
     max-width: 100%;
     /* 7 */
-    height: 230px;
+    min-height: 200px;
+    height: auto;
     left: 50%;
     top: 300vh;
     /* 6 */
@@ -253,9 +254,11 @@ li {
     font-size: 1.9rem;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 200%);
+    transform: translate(-50%, 205%);
     cursor: pointer;
+    transition: 1s ease-out;
 }
+
 
 body {
     margin: 0;
