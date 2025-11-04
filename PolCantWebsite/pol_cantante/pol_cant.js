@@ -19,33 +19,37 @@ getData();
 async function applyData(file) {
     for (let key in file) {
         let el = document.getElementById(key)
+                    console.log(file[key], el);
         if (el) {
             if (/prz[0-3]b/.test(key)) el.innerHTML = file[key].replace(" e", " €");
             else el.innerHTML = file[key];
+
         }
     }
 }
 
-if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === "zdjęcia") { current_lang = "PL"; langs.splice(0, 1); }
-else if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === "pictures") { current_lang = "EN"; langs.splice(1, 1); }
-else if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === "fotos") { current_lang = "NL"; langs.splice(2, 1); }
-else if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === "photos") { current_lang = "FR"; langs.splice(3, 1); }
+for (let lang in arr = ["zdjęcia", "pictures", "fotos", "photos"]) {
+    if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === arr[lang]) {
+        current_lang = langs[lang];
+        langs.splice(lang, 1);
+    }
+}
 
 document.getElementById("lang").onclick = () => {
     if (!document.body.contains((document.getElementById("langBox")))) {
         const lang = document.getElementById("lang").getBoundingClientRect();
         const div = document.createElement("div");
         if (window.innerWidth - (lang.left + lang.width / 2 - 50) < 100) div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 90}px; background-color: white; height: 170px; width: 98px; z-index: 2; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
-        else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 50}px; background-color: white; height: 170px; width: 98px; z-index: 2; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
+        else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 50}px; background-color: white; height: 170px; width: 100px; z-index: 1; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
         div.id = "langBox";
         div.innerHTML = `<ul>
-          <a href="http://127.0.0.1:5500/pol_cantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.8rem;"><strong>>${current_lang}<</strong></a>
+          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.8rem;"><strong>>${current_lang}<</strong></a>
           <br>
-          <a href="http://127.0.0.1:5500/pol_cantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[0]}</a>
+          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[0]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/pol_cantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.8rem;">${langs[1]}</a>
+          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.8rem;">${langs[1]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/pol_cantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[2]}</a>
+          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[2]}</a>
         </ul>`;
         document.body.appendChild(div);
         setTimeout(() => div.style.opacity = 1, 10);
@@ -54,18 +58,19 @@ document.getElementById("lang").onclick = () => {
 
 document.getElementById("DolaczBut").onclick = () => {
     if (!document.getElementById("boxDolacz-border").contains((document.getElementById("contactInfoBox")))) {
+        console.log(123);
         const buttonPos = document.getElementById("DolaczBut").getBoundingClientRect();
         const div = document.createElement("div");
-        div.style = `position: absolute; top: ${buttonPos.top + buttonPos.height + 10}px; left: ${buttonPos.left + buttonPos.width / 2 - 50}px; background-color: white; height: 170px; width: 98px; z-index: 2; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
+        div.style = `position: relative; transform:translateY(100%); left: ${buttonPos.left + buttonPos.width / 2 - 150}px; height: 80px; width: 300px; z-index: 1; border-radius: 20px; opacity: 0; transition: opacity 0.7s;`;
         div.id = "contactInfoBox";
         div.innerHTML = `Numer telefonowy: +32 nie wiem
         <br>
         lub
         <br>
         E-mail: jakis_tam@email.com`;
-        document.body.appendChild(div);
+        document.getElementById("boxDolacz-border").appendChild(div);
         setTimeout(() => div.style.opacity = 1, 10);
-    } else document.body.removeChild(document.getElementById("contactInfoBox"));
+    } else document.getElementById("boxDolacz-border").removeChild(document.getElementById("contactInfoBox"));
 }
 
 document.getElementById('onas').onclick = () => document.getElementById('boxONas-border').scrollIntoView({ behavior: "smooth", block: "center" });
