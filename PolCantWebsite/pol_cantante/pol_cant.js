@@ -81,7 +81,35 @@ document.getElementById("dolacz").onclick = () => {
 
         div.id = "contactInfoBox";
         div.innerHTML = `<hr style="border: none;">
-              Kontakt z nami (dyrygentka): 
+              Kontakt z nami: 
+            <hr style="width: 80%;">
+            &middot; +32 nie wiem
+            <br>
+              lub
+            <br>
+            &middot; jakis_tam@email.com`;
+
+        document.body.appendChild(div);
+        setTimeout(() => div.style.opacity = 1, 10);
+    } else document.body.removeChild(document.getElementById("contactInfoBox"));
+}
+//todo
+document.getElementById("pomoc").onclick = () => {
+    if (!document.body.contains((document.getElementById("pomocBox")))) {
+        if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
+        if ((document.body.contains(document.getElementById("contactInfoBox")))) document.body.removeChild(document.getElementById("contactInfoBox"));
+        const buttonPos = document.getElementById("pomoc").getBoundingClientRect();
+        const div = document.createElement("div");
+
+        //holy shit why is this so long
+        div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
+        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: 175px; width: 355px;
+        z-index: 1; opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
+        font-weight: bold; text-align: center; opacity: 0; transition: opacity 1s; box-shadow: 0px 0px 25px black`;
+
+        div.id = "pomocBox";
+        div.innerHTML = `<hr style="border: none;">
+              Kontakt z nami: 
             <hr style="width: 80%;">
             &middot; +32 nie wiem
             <br>
