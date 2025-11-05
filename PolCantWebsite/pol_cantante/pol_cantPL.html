@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-16">
@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="pol_cant.css">
 </head>
 
-<body style="font-family: Kepler;">
+<body>
     <header>
         <div class="buts">
+            <button id="onas" class="but">O nas</button>
             <button id="koncert" class="but">Koncerty & Bilety</button>
             <!--<button id="bilet" class="but">Kup bilet</button>-->
-            <button id="onas" class="but">O nas</button>
-            <button id="pomoc" class="but">Wspomóż nas</button>
+            <button id="pomoc" class="but"
+                onclick="location.href='http://127.0.0.1:5500/PolCantWebsite/pol_cantante/donate.html'">
+                Wspomóż nas</button>
             <button id="zdjecia" class="but">Zdjęcia</button>
             <button id="dolacz" class="but">Dołącz do nas</button>
             <button id="lang" class="svg">
@@ -25,26 +27,45 @@
                 </svg>
             </button>
         </div>
-        <h2 id="h2">Witamy w<br>Polonia<br>Cantante</h2>
+
+        <h2 id="h2">Polonia<br>Cantante</h2>
         <div class="logo">
             <img src='logoPCtrans.png'>
         </div>
+
     </header>
+
+    <div class="slider">
+        <div class="slides">
+            <img src="" alt="slide 1">
+            <img src="" alt="slide 2">
+            <img src="" alt="slide 3">
+            <img src="" alt="slide 4">
+        </div>
+
+    </div>
+    
     <img id="img2" src="wszyscy2.jpg"><!-- zmiejszyc + dodac inne-->
-    <!--<h1 id="h1"><span style="color: rgb(117, 79, 255)">Witamy w Polonia Cantante</span></h1>-->
+    <h1 id="h1">Witamy w Polonia Cantante</h1>
+
     <div class="boxes">
         <div id="boxONas-border">
-            <span style="font-weight: bold; font-size: 1.8rem;">Lorem, ipsum dolor sit amet
+            <span
+                style="display: flex; font-weight: bold; font-size: 1.8rem; margin-left: 200px; margin-right: 200px; transform: translateY(50%);">Lorem,
+                ipsum dolor
+                sit amet
                 consectetur adipisicing elit. Laudantium porro provident corrupti. Praesentium est cupiditate nihil eius
                 sit, accusamus ea numquam doloribus, fuga excepturi itaque quaerat harum, hic earum voluptas!</span>
         </div>
+
         <div id="boxKoncerty-border">
-            <span style="font-size: 3rem; font-weight: bold; margin-left: 45px;">Przyszłe
+            <span style="font-size: 3rem; font-weight: bold; margin-left: 43px;">Przyszłe
                 koncerty:</span>
             <ol>
                 <li>
-                    <span id="prz1d" style="font-size: 2.5rem"></span>
+                    <span id="prz1d" style="font-size: 2.8rem"></span>
                     <br>
+                    <hr>
                     <span id="prz1c" style="font-size: 2.5rem"></span>
                     <br>
                     <span id="prz1a" style="font-size: 2.1rem"></span>
@@ -55,8 +76,9 @@
                 </li>
                 <hr>
                 <li>
-                    <span id="prz2d" style="font-size: 2.5rem;"></span>
+                    <span id="prz2d" style="font-size: 2.8rem;"></span>
                     <br>
+                    <hr>
                     <span id="prz2c" style="font-size: 2.5rem"></span>
                     <br>
                     <span id="prz2a" style="font-size: 2.1rem"></span>
@@ -67,8 +89,9 @@
                 </li>
                 <hr>
                 <li>
-                    <span id="prz3d" style="font-size: 2.5rem;"></span>
+                    <span id="prz3d" style="font-size: 2.8rem;"></span>
                     <br>
+                    <hr>
                     <span id="prz3c" style="font-size: 2.5rem"></span>
                     <br>
                     <span id="prz3a" style="font-size: 2.1rem"></span>
@@ -83,29 +106,29 @@
         <!--<div id="boxBilety-border">
             bilety
             <a href="jakis.link"></a>
-        </div>-->
+        </div>
 
         <div id="boxPomoc-border">
             <span style="font-weight: bold; font-size: 1.6rem;">Wspomaganie</span>
             <a href="jakis.link"></a>
         </div>
-        <!-- zrob tutaj ze wszystkie zdjeciq z poprzednich wystepow sie przesuwaja-->
+        -->
+        <!-- zrob tutaj ze wszystkie zdjecia z poprzednich wystepow sie przesuwaja o
+         i tez na samej gorze a nie w tym box tutaj i potem pokaz mamusi-->
         <div id="boxZdjecia-border">
             <span style="font-weight: bold; font-size: 1.6rem;">Zdjecia</span>
-            <img id="" src="">
         </div>
-
+        <!--
         <div id="boxDolacz-border">
-            <span style="font-weight: bold; font-size: 2.5rem;">Jak dołączycz?</span>
-            <button id="DolaczBut"> Dołącz teraz </button>
+            <button id="DolaczBut"> Jak dołączyć? </button>
         </div>
-
+        -->
         <img id="img3" src="head.jpg">
 
         <footer>
             <div class="footer-box">
                 © - 2025
-                v0.4.5
+                v0.5
             </div>
         </footer>
         <script src="pol_cant.js"></script>

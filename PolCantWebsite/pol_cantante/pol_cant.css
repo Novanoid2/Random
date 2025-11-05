@@ -1,6 +1,14 @@
 /* czeste cyfry obok niektorych wartosci oznacza ze inne wartosci z ta samo cyfra musza tez byc zmienione, 
 "s" (seperate) oznacza ze jesli ta wartosc zmienie, to inne z ta sama cyfra nie musze, (inne wartosci moga zostac) */
 
+
+body {
+    margin: 0;
+    display: grid;
+    background-color: #222222;
+    font-family: "Trebuchet MS";
+}
+
 header {
     /*min-height: 0px;    */
     /* 3 */
@@ -17,7 +25,8 @@ header {
     height: 865px;
     /* 1 */
     overflow: hidden;
-    position: absolute;
+    position: fixed;
+    z-index: 1;
     top: -355px;
     left: -125px;
     /* 4 */
@@ -33,12 +42,12 @@ header {
 
 #h2 {
     position: absolute;
-    left: 130px;
-    top: -20px;
+    left: 135px;
+    top: -15px;
     font-family: Palatino;
     font-weight: bold;
     text-align-last: center;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     /*color: white;*/
     background: url("pobrane.png") no-repeat center/cover;
     -webkit-background-clip: text;
@@ -49,9 +58,10 @@ header {
 .buts {
     position: absolute;
     display: flex;
-    gap: 3vw;
+    gap: 3.5vw;
     /* 5 */
-    margin-left: 24vw;
+    margin-left: 25vw;
+    margin-right: 2vw;
     /* 4 */
     margin-top: 15px;
     /* 3s */
@@ -63,10 +73,10 @@ header {
     cursor: pointer;
     border: none;
     background-color: transparent;
-    font-size: 2rem;
+    font-size: 1.8rem;
     width: fit-content;
     height: fit-content;
-    font-family: Kepler;
+    font-family: "Trebuchet MS";
     font-weight: bold;
     /*border: rgb(0, 0, 0) 2px solid;*/
     border-radius: 5px;
@@ -102,13 +112,17 @@ header {
 #h1 {
     position: absolute;
     left: 50%;
-    top: 50px;
+    top: 40%;
     width: auto;
-    transform: translate(-50%);
+    transform: translate(-50%, -50%);
     font-size: 4rem;
-    font-family: Kepler;
+    font-family: Palatino;
     font-weight: bold;
-    -webkit-text-stroke: 0.5px rgb(0, 0, 0);
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    background: url("pobrane2.png") no-repeat center/cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 /* zmiejszyc + dodac inne */
@@ -123,7 +137,48 @@ header {
     top: 100px;
 }
 
-/*.boxes {}*/
+/*https://www.youtube.com/watch?v=A1afpqeBHBc*/
+.slider {
+    width: 100%;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    width: 300%;
+    animation: slide 6s infinite;
+}
+
+.slides img {
+    width: 100%;
+}
+/*fix this*/
+@keyframes slide {
+    0% {
+        margin-left: 0%
+    }
+
+    20% {
+        margin-left: -100%
+    }
+
+    40% {
+        margin-left: -200%
+    }
+
+    60% {
+        margin-left: -200%
+    }
+
+    80% {
+        margin-left: -200%
+    }
+
+    100% {
+        margin-left: 0
+    }
+}
+
 
 #boxONas-border {
     position: absolute;
@@ -160,10 +215,11 @@ ol {
     justify-content: space-around;
     margin: auto;
     margin-bottom: 40px;
-    margin-left: -40px;
+    margin-left: -30px;
+    margin-top: 50px;
+    margin-right: 30px;
     list-style-type: none;
     line-height: 50px;
-    margin-top: 50px;
     font-family: Garamond;
     font-weight: bold;
 }
@@ -172,19 +228,6 @@ li {
     max-width: calc(99.9vw / 3);
     margin-left: 50px;
     margin-right: 50px;
-}
-
-
-#prz1d {
-    border: double 5px black;
-}
-
-#prz2d {
-    border: double 5px black;
-}
-
-#prz3d {
-    border: double 5px black;
 }
 
 /*#boxBilety-border {
@@ -201,14 +244,31 @@ li {
     background-color: rgb(255, 255, 255);
     text-align: center;
 }*/
-
+/*
 #boxPomoc-border {
+    position: absolute;
+    width: 100vw;
+    /* 7s */
+/*max-width: 100%;
+    /* 7 */
+/*height: 200px;
+    left: 50%;
+    top: 200vh;
+    /* 6 */
+/*transform: translate(-50%);
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+}
+*/
+
+#boxZdjecia-border {
     position: absolute;
     width: 100vw;
     /* 7s */
     max-width: 100%;
     /* 7 */
-    height: 200px;
+    min-height: 400px;
+    height: auto;
     left: 50%;
     top: 200vh;
     /* 6 */
@@ -217,32 +277,16 @@ li {
     text-align: center;
 }
 
-#boxZdjecia-border {
-    position: absolute;
-    width: 100vw;
-    /* 7s */
-    max-width: 100%;
-    /* 7 */
-    height: 200px;
-    left: 50%;
-    top: 250vh;
-    /* 6 */
-    transform: translate(-50%);
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-}
 
+/*
 #boxDolacz-border {
     position: absolute;
     width: 100vw;
-    /* 7s */
     max-width: 100%;
-    /* 7 */
     min-height: 200px;
     height: auto;
     left: 50%;
     top: 300vh;
-    /* 6 */
     transform: translate(-50%);
     background-color: rgb(255, 255, 255);
     text-align: center;
@@ -251,20 +295,15 @@ li {
 #boxDolacz-border button {
     border: solid black 2px;
     border-radius: 10px;
-    font-size: 1.9rem;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 205%);
+    font-size: 2.5rem;
+    font-weight: bold;
+    position: relative;
+    left: 0%;
+    transform: translateY(50%);
     cursor: pointer;
     transition: 1s ease-out;
 }
-
-
-body {
-    margin: 0;
-    display: grid;
-    background-color: #222222;
-}
+*/
 
 #img3 {
     position: absolute;
@@ -276,11 +315,13 @@ body {
 }
 
 footer {
-    margin-top: 400vh;
+    margin-top: 300vh;
     max-height: 200px;
     min-height: 300px;
-    background-color: white;
+    background-color: black;
     border-radius: 10px;
+    color: white;
+    text-align: center;
 }
 
 a {
@@ -291,4 +332,8 @@ a {
 li a {
     border: solid black 2px;
     border-radius: 10px;
+}
+
+hr {
+    border: 2px solid rgba(165, 165, 165, 0.766);
 }
