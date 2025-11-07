@@ -113,7 +113,7 @@ header {
     position: absolute;
     left: 50%;
     top: 40%;
-    width: auto;
+    width: max-content;
     transform: translate(-50%, -50%);
     font-size: 4rem;
     font-family: Palatino;
@@ -125,18 +125,18 @@ header {
     color: transparent;
 }
 
-/* zmiejszyc + dodac inne */
+/* zmiejszyc + dodac inne 
 #img2 {
     position: absolute;
     z-index: -1;
     /*width: 100vw;*/
-    box-shadow: 0px 0px 125px rgb(124, 58, 0);
+    /*box-shadow: 0px 0px 125px rgb(124, 58, 0);
     border-radius: 1px;
     left: 50%;
     transform: translateX(-50%);
     top: 100px;
 }
-
+*/
 /*https://www.youtube.com/watch?v=A1afpqeBHBc*/
 .slider {
     width: 100%;
@@ -145,48 +145,30 @@ header {
 
 .slides {
     display: flex;
-    width: 300%;
-    animation: slide 6s infinite;
+    width: 100vw;
+    height: 100vh;
+    animation: slide 12s infinite;
 }
 
 .slides img {
     width: 100%;
+
 }
 /*fix this*/
 @keyframes slide {
-    0% {
-        margin-left: 0%
-    }
-
-    20% {
-        margin-left: -100%
-    }
-
-    40% {
-        margin-left: -200%
-    }
-
-    60% {
-        margin-left: -200%
-    }
-
-    80% {
-        margin-left: -200%
-    }
-
-    100% {
-        margin-left: 0
-    }
+    0%{margin-left: 0;}
+    33%{margin-left: -100%;}
+    66%{margin-left: -200%;}
+    100%{margin-left: 0;}
 }
 
-
-#boxONas-border {
+#boxONas {
     position: absolute;
     width: 100vw;
     /* 7s */
     max-width: 100%;
     /* 7 */
-    height: 150px;
+    height: fit-content;
     left: 50%;
     top: 99.9vh;
     /* 6 */
@@ -195,7 +177,7 @@ header {
     text-align: center;
 }
 
-#boxKoncerty-border {
+#boxKoncerty {
     position: absolute;
     width: 100vw;
     /* 7s */
@@ -226,6 +208,7 @@ ol {
 
 li {
     max-width: calc(99.9vw / 3);
+    width: max-content;
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -261,7 +244,7 @@ li {
 }
 */
 
-#boxZdjecia-border {
+#boxZdjecia {
     position: absolute;
     width: 100vw;
     /* 7s */

@@ -1,7 +1,7 @@
 let current_lang = navigator.language.toUpperCase();
 let langs = [`PL`, "EN", "NL", "FR"];
 let boxesExist = false;
-
+//current todo: test swiperjs, implement here w pics, make seperate web for bilety, ask if anything more to add, search for bugs/things to shorten, translate to other langs and done
 async function getData() {
     let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PolCantWebsite/pol_cantante/info.json`)
         .then(d => d.json())
@@ -41,14 +41,15 @@ document.getElementById("lang").onclick = () => {
 
         const lang = document.getElementById("lang").getBoundingClientRect();
         const div = document.createElement("div");
-
+        //holy shit why is this so long
         if (window.innerWidth - (lang.left + lang.width / 2 - 50) < 100) div.style = `position: absolute;
         top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 90}px; background-color: white;
-        height: 170px; width: 98px; z-index: 2; border-radius: 20px; opacity: 0; transition: opacity 0.7s; box-shadow: 0px 0px 25px black`;
+        height: auto; width: 100px; border-radius: 20px; opacity: 0; transition: opacity 0.8s;
+        box-shadow: 0px 0px 25px black font-family: Palatino`;
 
         else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 50}px;
-        background-color: white; height: 170px; width: 100px; z-index: 1; border-radius: 20px; opacity: 0;
-        transition: opacity 0.7s; box-shadow: 0px 0px 25px black`;
+        background-color: white; height: auto; width: 100px; border-radius: 20px; opacity: 0;
+        transition: opacity 0.8s; box-shadow: 0px 0px 25px black; font-family: Palatino`;
 
         div.id = "langBox";
         div.innerHTML = `<ul>
@@ -59,7 +60,8 @@ document.getElementById("lang").onclick = () => {
           <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.8rem;">${langs[1]}</a>
           <br>
           <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[2]}</a>
-        </ul>`;
+        </ul>
+        <hr style="border: none;">`;
 
         document.body.appendChild(div);
         setTimeout(() => div.style.opacity = 1, 10);
@@ -73,27 +75,27 @@ document.getElementById("dolacz").onclick = () => {
         const buttonPos = document.getElementById("dolacz").getBoundingClientRect();
         const div = document.createElement("div");
 
-        //holy shit why is this so long
         div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
-        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: 175px; width: 355px;
-        z-index: 1; opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
-        font-weight: bold; text-align: center; opacity: 0; transition: opacity 1s; box-shadow: 0px 0px 25px black`;
+        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 350px;
+        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
+        font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
 
         div.id = "contactInfoBox";
         div.innerHTML = `<hr style="border: none;">
-              Kontakt z nami: 
-            <hr style="width: 80%;">
-            &middot; +32 nie wiem
-            <br>
-              lub
-            <br>
-            &middot; jakis_tam@email.com`;
+         Kontakt z nami:
+        <hr style="width: 80%;">
+        &middot; +32 nie wiem
+        <br>
+        lub
+        <br>
+        &middot; jakis_tam@email.com
+        <hr style="border: none;">`;
 
         document.body.appendChild(div);
         setTimeout(() => div.style.opacity = 1, 10);
     } else document.body.removeChild(document.getElementById("contactInfoBox"));
 }
-//todo
+
 document.getElementById("pomoc").onclick = () => {
     if (!document.body.contains((document.getElementById("pomocBox")))) {
         if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
@@ -101,23 +103,23 @@ document.getElementById("pomoc").onclick = () => {
         const buttonPos = document.getElementById("pomoc").getBoundingClientRect();
         const div = document.createElement("div");
 
-        //holy shit why is this so long
         div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
-        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: 125px; width: 355px;
-        z-index: 1; opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
-        font-weight: bold; text-align: center; opacity: 0; transition: opacity 1s; box-shadow: 0px 0px 25px black`;
+        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 355px;
+        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
+        font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
 
         div.id = "pomocBox";
         div.innerHTML = `<hr style="border: none;">
-              Mozna wesprzec na tym koncie: 
+            Można nas wesprzeć na tym koncie: 
             <hr style="width: 80%;">
-            &middot; BE10 xxxx xxxx xxxx`;
+            &middot; BE10 xxxx xxxx xxxx
+            <hr style="border: none;">`;
 
         document.body.appendChild(div);
         setTimeout(() => div.style.opacity = 1, 10);
-    } else document.body.removeChild(document.getElementById("contactInfoBox"));
+    } else document.body.removeChild(document.getElementById("pomocBox"));
 }
-
+//why isnt this smooth on the website? im so confused wth
 document.getElementById('onas').onclick = () => document.getElementById('boxONas-border').scrollIntoView({ behavior: "smooth", block: "center" });
 
 document.getElementById('koncert').onclick = () => document.getElementById('boxKoncerty-border').scrollIntoView({ behavior: "smooth", block: "center" });
