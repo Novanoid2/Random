@@ -50,7 +50,7 @@ header {
     font-size: 2.8rem;
     /*color: white;*/
     background: url("pobrane.png") no-repeat center/cover;
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
@@ -120,7 +120,7 @@ header {
     font-weight: bold;
     -webkit-text-stroke: 1px rgb(0, 0, 0);
     background: url("pobrane2.png") no-repeat center/cover;
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
