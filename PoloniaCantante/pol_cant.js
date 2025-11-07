@@ -3,7 +3,7 @@ let langs = [`PL`, "EN", "NL", "FR"];
 let boxesExist = false;
 //current todo: test swiperjs, implement here w pics, make seperate web for bilety, ask if anything more to add, search for bugs/things to shorten, translate to other langs and done
 async function getData() {
-    let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PolCantWebsite/pol_cantante/info.json`)
+    let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PoloniaCantante/info.json`)
         .then(d => d.json())
         .then(d =>
             fetch(
@@ -53,13 +53,13 @@ document.getElementById("lang").onclick = () => {
 
         div.id = "langBox";
         div.innerHTML = `<ul>
-          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.8rem;"><strong>>${current_lang}<</strong></a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.8rem;"><strong>>${current_lang}<</strong></a>
           <br>
-          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[0]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[0]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.8rem;">${langs[1]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.8rem;">${langs[1]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/PolCantWebsite/pol_cantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[2]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[2]}</a>
         </ul>
         <hr style="border: none;">`;
 
