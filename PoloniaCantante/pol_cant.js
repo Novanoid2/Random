@@ -1,6 +1,7 @@
 let current_lang = navigator.language.toUpperCase();
 let langs = [`PL`, "EN", "NL", "FR"];
 let boxesExist = false;
+
 //current todo: test swiperjs, implement here w pics, make seperate web for bilety, ask if anything more to add, search for bugs/things to shorten, translate to other langs and done
 async function getData() {
     let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PoloniaCantante/info.json`)
@@ -27,12 +28,6 @@ async function applyData(file) {
     }
 }
 
-for (let lang in arr = ["zdjęcia", "pictures", "fotos", "photos"]) {//PL, EN, NL, FR
-    if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === arr[lang]) {
-        current_lang = langs[lang];
-        langs.splice(lang, 1);
-    }
-}
 
 document.getElementById("lang").onclick = () => {
     if (!document.body.contains((document.getElementById("langBox")))) {
@@ -119,18 +114,25 @@ document.getElementById("pomoc").onclick = () => {
         setTimeout(() => div.style.opacity = 1, 10);
     } else document.body.removeChild(document.getElementById("pomocBox"));
 }
+
 //why isnt this smooth on the website? im so confused wth
 document.getElementById('onas').onclick = () => document.getElementById('boxONas-border').scrollIntoView({ behavior: "smooth", block: "center" });
 
 document.getElementById('koncert').onclick = () => document.getElementById('boxKoncerty-border').scrollIntoView({ behavior: "smooth", block: "center" });
-
-//document.getElementById('bilet').onclick = () => document.getElementById('boxBilety-border').scrollIntoView({ behavior: 'smooth' });
 
 //document.getElementById('pomoc').onclick = () => document.getElementById('boxPomoc-border').scrollIntoView({ behavior: "smooth", block: "center" });
 
 document.getElementById('zdjecia').onclick = () => document.getElementById('boxZdjecia-border').scrollIntoView({ behavior: "smooth", block: "center" });
 
 //document.getElementById('dolacz').onclick = () => document.getElementById('boxDolacz-border').scrollIntoView({ behavior: "smooth", block: "center" });
+
+
+for (let lang in arr = ["zdjęcia", "pictures", "fotos", "photos"]) {//PL, EN, NL, FR
+    if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === arr[lang]) {
+        current_lang = langs[lang];
+        langs.splice(lang, 1);
+    }
+}
 
 window.addEventListener('resize', () => { location.reload(); });
 

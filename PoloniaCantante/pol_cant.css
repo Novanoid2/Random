@@ -1,7 +1,6 @@
 /* czeste cyfry obok niektorych wartosci oznacza ze inne wartosci z ta samo cyfra musza tez byc zmienione, 
 "s" (seperate) oznacza ze jesli ta wartosc zmienie, to inne z ta sama cyfra nie musze, (inne wartosci moga zostac) */
 
-
 body {
     margin: 0;
     display: grid;
@@ -10,16 +9,12 @@ body {
 }
 
 header {
-    /*min-height: 0px;    */
-    /* 3 */
-    /* max-height: 0px;    */
-    /* 3 */
-
-    width: 99vw;
+    width: 99.9vw;
     border-radius: 20px;
 }
 
 .logo {
+        z-index: 2;
     width: 400px;
     /* 1 */
     height: 865px;
@@ -41,6 +36,7 @@ header {
 }
 
 #h2 {
+        z-index: 2;
     position: absolute;
     left: 135px;
     top: -15px;
@@ -49,13 +45,14 @@ header {
     text-align-last: center;
     font-size: 2.8rem;
     /*color: white;*/
-    background: url("pobrane.png") no-repeat center/cover;
+    background: url("pics/pobrane.png") no-repeat center/cover;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
 
 .buts {
+    z-index: 2;
     position: absolute;
     display: flex;
     gap: 3.5vw;
@@ -70,6 +67,7 @@ header {
 }
 
 .but {
+        z-index: 2;
     cursor: pointer;
     border: none;
     background-color: transparent;
@@ -84,6 +82,7 @@ header {
 }
 
 .svg {
+        z-index: 2;
     border: none;
     padding: 0;
     width: 50px;
@@ -103,6 +102,7 @@ header {
 }
 
 .svg svg {
+        z-index: 2;
     position: absolute;
     width: 100%;
     height: 110%;
@@ -110,6 +110,7 @@ header {
 }
 
 #h1 {
+        z-index: 2;
     position: absolute;
     left: 50%;
     top: 40%;
@@ -119,7 +120,7 @@ header {
     font-family: Palatino;
     font-weight: bold;
     -webkit-text-stroke: 1px rgb(0, 0, 0);
-    background: url("pobrane2.png") no-repeat center/cover;
+    background: url("pics/pobrane2.png") no-repeat center/cover;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
@@ -130,37 +131,44 @@ header {
     position: absolute;
     z-index: -1;
     /*width: 100vw;*/
-    /*box-shadow: 0px 0px 125px rgb(124, 58, 0);
+/*box-shadow: 0px 0px 125px rgb(124, 58, 0);
     border-radius: 1px;
     left: 50%;
     transform: translateX(-50%);
     top: 100px;
 }
 */
-/*https://www.youtube.com/watch?v=A1afpqeBHBc*/
-.slider {
-    width: 100%;
-    overflow: hidden;
-}
 
-.slides {
-    display: flex;
-    width: 100vw;
+.swiper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100vh;
-    animation: slide 12s infinite;
+    z-index: -1;
+    pointer-events: none;
+        max-width: 99.9vw;
+    max-height: 99.9vh;
 }
 
-.slides img {
+.swiper-wrapper {
     width: 100%;
+    height: 100%;
+}
 
+.swiper-slide {
+    width: 100%;
+    height: 100%;
 }
-/*fix this*/
-@keyframes slide {
-    0%{margin-left: 0;}
-    33%{margin-left: -100%;}
-    66%{margin-left: -200%;}
-    100%{margin-left: 0;}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
+
 
 #boxONas {
     position: absolute;
