@@ -1,8 +1,7 @@
 let current_lang = navigator.language.toUpperCase();
 let langs = [`PL`, "EN", "NL", "FR"];
-let boxesExist = false;
 
-//current todo: test swiperjs, implement here w pics, make seperate web for bilety, ask if anything more to add, search for bugs/things to shorten, translate to other langs and done
+//current todo: make seperate web for bilety, ask if anything more to add, search for bugs/things to shorten, translate to other langs and done
 async function getData() {
     let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PoloniaCantante/info.json`)
         .then(d => d.json())
@@ -27,7 +26,6 @@ async function applyData(file) {
         }
     }
 }
-
 
 document.getElementById("lang").onclick = () => {
     if (!document.body.contains((document.getElementById("langBox")))) {

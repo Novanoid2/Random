@@ -47,14 +47,12 @@
             <div class="swiper-slide"><img src="pics/pic4.jpg"></div>
         </div>
 
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
     </div>
 
     <!--/*https://www.youtube.com/watch?v=A1afpqeBHBc*/-->
     <h1 id="h1">Witamy na stronie Polonia Cantante!</h1>
 
-    <div class="boxes">
+    <div class="boxes" style="max-width: 99vw;">
         <div id="boxONas">
             <span style="display: inline-block; vertical-align: middle; line-height: 30px; font-weight: bold;
                 font-size: 1.8rem; margin-left: 200px; margin-right: 200px;">
@@ -136,30 +134,25 @@
             <div class="footer-box">
                 © &middot; 2025
                 <br>
-                v0.6
+                v0.6.1
             </div>
         </footer>
         <script src="pol_cant.js"></script>
         <script type="module">
             import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.mjs'
 
-const swiper = new Swiper('.swiper', {
-    speed: 1000,
-    loop: true,
-    slidesPerView: 1,
-    spaceBetween: 0,
+            const swiper = new Swiper('.swiper', {
+                speed: 1000,
+                loop: true,
+                slidesPerView: 1,
+                spaceBetween: 0,
 
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
+                autoplay: {
+                    delay: 2500,
+                },
+            });
 
-    autoplay: {
-        delay: 2500,
-    },
-});
-
-            document.addEventListener("DOMContentLoaded", swiper.enable())
+            document.addEventListener("DOMContentLoaded", swiper.enable());
         </script>
 </body>
 
