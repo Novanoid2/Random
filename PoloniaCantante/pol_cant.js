@@ -19,7 +19,7 @@ getData();
 
 async function applyData(file) {
     for (let key in file) {
-        let el = document.getElementById(key)
+        let el = document.getElementById(key);
         if (el) {
             if (/prz[0-3]b/.test(key)) el.innerHTML = file[key].replace(" e", " €");
             else el.innerHTML = file[key];
@@ -114,13 +114,13 @@ document.getElementById("pomoc").onclick = () => {
 }
 
 //why isnt this smooth on the website? im so confused wth
-document.getElementById('onas').onclick = () => document.getElementById('boxONas-border').scrollIntoView({ behavior: "smooth", block: "center" });
+document.getElementById('onas').onclick = () => document.getElementById('boxONas').scrollIntoView({ behavior: "smooth", block: "center" });
 
-document.getElementById('koncert').onclick = () => document.getElementById('boxKoncerty-border').scrollIntoView({ behavior: "smooth", block: "center" });
+document.getElementById('koncert').onclick = () => document.getElementById('boxKoncerty').scrollIntoView({ behavior: "smooth", block: "center" });
 
-//document.getElementById('pomoc').onclick = () => document.getElementById('boxPomoc-border').scrollIntoView({ behavior: "smooth", block: "center" });
+document.getElementById('proby').onclick = () => document.getElementById('boxProby').scrollIntoView({ behavior: "smooth", block: "center" });
 
-document.getElementById('zdjecia').onclick = () => document.getElementById('boxZdjecia-border').scrollIntoView({ behavior: "smooth", block: "center" });
+document.getElementById('zdjecia').onclick = () => document.getElementById('boxZdjecia').scrollIntoView({ behavior: "smooth", block: "center" });
 
 //document.getElementById('dolacz').onclick = () => document.getElementById('boxDolacz-border').scrollIntoView({ behavior: "smooth", block: "center" });
 

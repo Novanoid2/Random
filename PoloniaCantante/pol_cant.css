@@ -211,37 +211,6 @@ li {
     margin-right: 50px;
 }
 
-/*#boxBilety-border {
-    position: absolute;
-    width: 100vw;*/
-/* 7s */
-/* max-width: 100%;*/
-/* 7 */
-/*height: 200px;
-    left: 50%;
-    top: 200vh;*/
-/* 6 */
-/* transform: translate(-50%);
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-}*/
-/*
-#boxPomoc-border {
-    position: absolute;
-    width: 100vw;
-    /* 7s */
-/*max-width: 100%;
-    /* 7 */
-/*height: 200px;
-    left: 50%;
-    top: 200vh;
-    /* 6 */
-/*transform: translate(-50%);
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-}
-*/
-
 #boxZdjecia {
     position: absolute;
     width: 99.9vw;
@@ -258,33 +227,18 @@ li {
     text-align: center;
 }
 
-
-/*
-#boxDolacz-border {
+#boxProby {
     position: absolute;
-    width: 100vw;
+    width: 99.9vw;
     max-width: 100%;
-    min-height: 200px;
+    min-height: 300px;
     height: auto;
     left: 50%;
-    top: 300vh;
+    top: 250vh;
     transform: translate(-50%);
     background-color: rgb(255, 255, 255);
     text-align: center;
 }
-
-#boxDolacz-border button {
-    border: solid black 2px;
-    border-radius: 10px;
-    font-size: 2.5rem;
-    font-weight: bold;
-    position: relative;
-    left: 0%;
-    transform: translateY(50%);
-    cursor: pointer;
-    transition: 1s ease-out;
-}
-*/
 
 #img3 {
     position: absolute;
@@ -296,13 +250,40 @@ li {
 }
 
 footer {
-    margin-top: 250vh;
+    margin-top: 300vh;
     max-height: 200px;
-    min-height: 300px;
     background-color: black;
     border-radius: 10px;
     color: white;
     text-align: center;
+    max-width: 99vw;
+}
+
+.left {
+    position: relative;
+    left: 0;
+    top: 0;
+    border: white 2px solid;
+    height: 200px;
+    width: 49vw;
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    left: 7vw;
+    top: 20px;
+    max-width: 35vw;
+}
+
+.right {
+    position: relative;
+    left: 50%;
+    top: -203px;
+    border: white 2px solid;
+    height: 200px;
+    width: 49vw;
 }
 
 a {
@@ -316,5 +297,5 @@ li a {
 }
 
 hr {
-    border: 2px solid rgba(165, 165, 165, 0.766);
+    border: 2px solid rgba(172, 172, 172, 0.719);
 }
