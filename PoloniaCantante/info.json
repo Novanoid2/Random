@@ -1,5 +1,5 @@
 {
-    "prz1d": "2025-09-nie wiem",
+    "prz1d": "1789-01-01",
     "prz2d": "2025-12-cos tam",
     "prz3d": "2026-xx-xx",
 
@@ -11,7 +11,7 @@
     "prz2a": "Aarschot, ulica ulicowa, xyz",
     "prz3a": "Leuven, ulica ulicowa, zyx",
     
-    "prz1b": "Koszt biletu: e3",
-    "prz2b": "Koszt biletu: e60.000",
-    "prz3b": "Koszt biletu: e6! - log2(8)"
+    "prz1b": " e3",
+    "prz2b": " e60.000",
+    "prz3b": " e6! - log2(8)"
 }

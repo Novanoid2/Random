@@ -1,5 +1,6 @@
 /* czeste cyfry obok niektorych wartosci oznacza ze inne wartosci z ta samo cyfra musza tez byc zmienione, 
 "s" (seperate) oznacza ze jesli ta wartosc zmienie, to inne z ta sama cyfra nie musze, (inne wartosci moga zostac) */
+/* edit: uhhhhh troche przestalem uzywac ten system x3 */
 
 body {
     margin: 0;
@@ -10,7 +11,7 @@ body {
 
 header {
     width: 99.9vw;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 .logo {
@@ -110,6 +111,24 @@ header {
 
 }
 
+#langChangeGuide {
+    position: relative;
+    width: auto;
+    height: auto;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+#langChangeGuide button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    cursor: pointer;
+}
+
 #h1 {
     z-index: 1;
     position: absolute;
@@ -173,6 +192,35 @@ header {
     transform: translate(-50%);
     background-color: rgb(255, 255, 255);
     text-align: center;
+}
+
+.left img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    border: gold 2px double
+}
+
+#titleONas {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+#lorem {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-left: 100px;
+    margin-right: 100px;
 }
 
 #boxKoncerty {

@@ -1,7 +1,5 @@
-let current_lang = navigator.language.toUpperCase();
-let langs = [`PL`, "EN", "NL", "FR"];
+//current todo: finish proby, ask if anything more to add / for custom fonts and color and stuff, make seperate web for bilety, search for bugs/things to shorten, translate to other langs and done
 
-//current todo: make seperate web for bilety, ask if anything more to add, search for bugs/things to shorten, translate to other langs and done
 async function getData() {
     let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PoloniaCantante/info.json`)
         .then(d => d.json())
@@ -27,6 +25,9 @@ async function applyData(file) {
     }
 }
 
+let current_lang = navigator.language.toUpperCase();
+let langs = [`PL`, "EN", "NL", "FR"];
+//change this to relative so i can add it to html w "hidden" or whatev and not a long ass javascript command lol
 document.getElementById("lang").onclick = () => {
     if (!document.body.contains((document.getElementById("langBox")))) {
         if ((document.body.contains(document.getElementById("contactInfoBox")))) document.body.removeChild(document.getElementById("contactInfoBox"));
@@ -60,7 +61,7 @@ document.getElementById("lang").onclick = () => {
         setTimeout(() => div.style.opacity = 1, 10);
     } else document.body.removeChild(document.getElementById("langBox"));
 }
-
+//change this to relative so i can add it to html w "hidden" or whatev and not a long ass javascript command lol
 document.getElementById("dolacz").onclick = () => {
     if (!document.body.contains((document.getElementById("contactInfoBox")))) {
         if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
@@ -75,6 +76,7 @@ document.getElementById("dolacz").onclick = () => {
 
         div.id = "contactInfoBox";
         div.innerHTML = `<hr style="border: none;">
+         Chcesz dołączyć do nas?
          Kontakt z nami:
         <hr style="width: 80%;">
         &middot; +32 nie wiem
@@ -88,7 +90,7 @@ document.getElementById("dolacz").onclick = () => {
         setTimeout(() => div.style.opacity = 1, 10);
     } else document.body.removeChild(document.getElementById("contactInfoBox"));
 }
-
+//change this to relative so i can add it to html w "hidden" or whatev and not a long ass javascript command lol
 document.getElementById("pomoc").onclick = () => {
     if (!document.body.contains((document.getElementById("pomocBox")))) {
         if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
@@ -123,7 +125,6 @@ document.getElementById('proby').onclick = () => document.getElementById('boxPro
 document.getElementById('zdjecia').onclick = () => document.getElementById('boxZdjecia').scrollIntoView({ behavior: "smooth", block: "center" });
 
 //document.getElementById('dolacz').onclick = () => document.getElementById('boxDolacz-border').scrollIntoView({ behavior: "smooth", block: "center" });
-
 
 for (let lang in arr = ["zdjęcia", "pictures", "fotos", "photos"]) {//PL, EN, NL, FR
     if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === arr[lang]) {
