@@ -115,8 +115,8 @@ header {
     position: relative;
     width: auto;
     height: auto;
-    top: 0;
-    left: 0;
+    bottom: -150px;
+    right: 250px;
     align-items: center;
     justify-content: center;
 }
@@ -311,8 +311,9 @@ footer {
     position: relative;
     left: 0;
     top: 0;
-    border: white 2px solid;
-    height: 200px;
+    border: black 2px solid;
+    min-height: 200px;
+    height: auto;
     width: 49vw;
 }
 
