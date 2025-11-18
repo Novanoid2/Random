@@ -1,16 +1,17 @@
-//current todo: finish proby, ask if anything more to add / for custom fonts and color and stuff, make seperate web for bilety, search for bugs/things to shorten, translate to other langs and done
+/*current todo: zrob ver pion, finish proby, ask if anything more to add / for custom fonts and color and stuff, popraw css zeby automatycznie bylo pod soba,
+make seperate web for bilety, search for bugs/things to shorten, translate to other langs and done*/
 
 async function getData() {
-    let data = await fetch(`https://api.github.com/repos/Novanoid2/Random/contents/PoloniaCantante/info.json`)
-        .then(d => d.json())
-        .then(d =>
-            fetch(
-                `https://api.github.com/repos/Novanoid2/random/git/blobs/${d.sha}`
-            )
-        )
-        .then(d => d.json())
-        .then(d => JSON.parse(atob(d.content)));
-    applyData(data)
+    try {
+        const raw = await fetch(`https://raw.githubusercontent.com/Novanoid2/Random/main/PoloniaCantante/info.json`);
+        if (raw.ok) {
+            const data = await raw.json();
+            applyData(data)
+            return;
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 getData();
@@ -43,7 +44,7 @@ document.getElementById("lang").onclick = () => {
 
         else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 50}px;
         background-color: white; height: auto; width: 100px; border-radius: 20px; opacity: 0;
-        transition: opacity 0.8s; box-shadow: 0px 0px 25px black; font-family: Palatino`;
+        transition: opacity 0.8s; box-shadow: 0px 0px 25px black; font-family: Palatino; z-index: 2;`;
 
         div.id = "langBox";
         div.innerHTML = `<ul>
@@ -71,7 +72,7 @@ document.getElementById("dolacz").onclick = () => {
 
         div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
         top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 350px;
-        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
+        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem; z-index: 2;
         font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
 
         div.id = "contactInfoBox";
@@ -100,7 +101,7 @@ document.getElementById("pomoc").onclick = () => {
 
         div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
         top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 355px;
-        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem;
+        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem; z-index: 2;
         font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
 
         div.id = "pomocBox";
