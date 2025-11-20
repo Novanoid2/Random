@@ -241,18 +241,25 @@ header {
 }
 
 #boxKoncerty {
-    position: absolute;
+    position: relative;
     width: 99.9vw;
-    /* 7s */
     max-width: 100%;
-    /* 7 */
     height: auto;
-    left: 50%;
-    top: 200vh;
-    /* 6 */
-    transform: translate(-50%);
+    margin-top: 100px;
     background-color: rgb(255, 255, 255);
     text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#koncert1 {
+    position: relative;
+}
+#koncert2 {
+        position: relative;
+}
+#koncert3 {
+        position: relative;
 }
 
 ol {
