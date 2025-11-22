@@ -48,13 +48,13 @@ document.getElementById("lang").onclick = () => {
 
         div.id = "langBox";
         div.innerHTML = `<ul>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.8rem;"><strong>>${current_lang}<</strong></a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.6rem;"><strong>>${current_lang}<</strong></a>
           <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[0]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.6rem;">${langs[0]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.8rem;">${langs[1]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.6rem;">${langs[1]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.8rem;">${langs[2]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.6rem;">${langs[2]}</a>
         </ul>
         <hr style="border: none;">`;
 
@@ -72,7 +72,7 @@ document.getElementById("dolacz").onclick = () => {
 
         div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
         top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 350px;
-        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem; z-index: 2;
+        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.4rem; z-index: 2;
         font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
 
         div.id = "contactInfoBox";
@@ -101,7 +101,7 @@ document.getElementById("pomoc").onclick = () => {
 
         div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
         top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 355px;
-        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.5rem; z-index: 2;
+        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.4rem; z-index: 2;
         font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
 
         div.id = "pomocBox";
