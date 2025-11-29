@@ -1,16 +1,25 @@
 /*current todo: zrob ver pion, finish proby, ask if anything more to add / for custom fonts and color and stuff, popraw css zeby automatycznie bylo pod soba,
 make seperate web for bilety, search for bugs/things to shorten, translate to other langs and done*/
 
+function pushErrorDiv() {
+    const errorDiv = document.createElement("div");
+    errorDiv.textContent = "We have encountered an error, some parts of the website may not work correctly, we are working on a fix.";
+    errorDiv.style = "position: absolute; top: 200px; left: 0; width: 100%; text-align: center; background-color: red; color: white; font-size: 1.4rem; padding: 10px; z-index: 3;";
+    document.body.appendChild(errorDiv);
+}
+
 async function getData() {
     try {
         const raw = await fetch(`https://raw.githubusercontent.com/Novanoid2/Random/main/PoloniaCantante/info.json`);
         if (raw.ok) {
             const data = await raw.json();
-            applyData(data)
+            applyData(data);
             return;
         }
+        pushErrorDiv();
     } catch (err) {
         console.error(err);
+        pushErrorDiv();
     }
 }
 
