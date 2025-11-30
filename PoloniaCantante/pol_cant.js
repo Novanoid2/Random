@@ -1,5 +1,6 @@
-/*current todo: zrob ver pion, finish proby, ask if anything more to add / for custom fonts and color and stuff, popraw css zeby automatycznie bylo pod soba,
+/*current todo: finish proby, ask if anything more to add / for custom fonts and color and stuff, popraw css zeby automatycznie bylo pod soba,
 make seperate web for bilety, search for bugs/things to shorten, translate to other langs and done*/
+//change the popping-up info boxes to html w "aria-hidden" or whatev and not a long ass javascript command lol
 
 function pushErrorDiv() {
     const errorDiv = document.createElement("div");
@@ -37,7 +38,7 @@ async function applyData(file) {
 
 let current_lang = navigator.language.toUpperCase();
 let langs = [`PL`, "EN", "NL", "FR"];
-//change this to relative so i can add it to html w "hidden" or whatev and not a long ass javascript command lol
+
 document.getElementById("lang").onclick = () => {
     if (!document.body.contains((document.getElementById("langBox")))) {
         if ((document.body.contains(document.getElementById("contactInfoBox")))) document.body.removeChild(document.getElementById("contactInfoBox"));
@@ -48,11 +49,11 @@ document.getElementById("lang").onclick = () => {
         //holy shit why is this so long
         if (window.innerWidth - (lang.left + lang.width / 2 - 50) < 100) div.style = `position: absolute;
         top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 90}px; background-color: white;
-        height: auto; width: 100px; border-radius: 20px; opacity: 0; transition: opacity 0.8s;
+        height: auto; width: 90px; border-radius: 20px; opacity: 0; transition: opacity 0.8s;
         box-shadow: 0px 0px 25px black font-family: Palatino`;
 
         else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 50}px;
-        background-color: white; height: auto; width: 100px; border-radius: 20px; opacity: 0;
+        background-color: white; height: auto; width: 90px; border-radius: 20px; opacity: 0;
         transition: opacity 0.8s; box-shadow: 0px 0px 25px black; font-family: Palatino; z-index: 2;`;
 
         div.id = "langBox";
@@ -71,7 +72,7 @@ document.getElementById("lang").onclick = () => {
         setTimeout(() => div.style.opacity = 1, 10);
     } else document.body.removeChild(document.getElementById("langBox"));
 }
-//change this to relative so i can add it to html w "hidden" or whatev and not a long ass javascript command lol
+
 document.getElementById("dolacz").onclick = () => {
     if (!document.body.contains((document.getElementById("contactInfoBox")))) {
         if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
@@ -100,7 +101,7 @@ document.getElementById("dolacz").onclick = () => {
         setTimeout(() => div.style.opacity = 1, 10);
     } else document.body.removeChild(document.getElementById("contactInfoBox"));
 }
-//change this to relative so i can add it to html w "hidden" or whatev and not a long ass javascript command lol
+
 document.getElementById("pomoc").onclick = () => {
     if (!document.body.contains((document.getElementById("pomocBox")))) {
         if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
@@ -125,7 +126,6 @@ document.getElementById("pomoc").onclick = () => {
     } else document.body.removeChild(document.getElementById("pomocBox"));
 }
 
-//why isnt this smooth on the website? im so confused wth
 document.getElementById('onas').onclick = () => document.getElementById('boxONas').scrollIntoView({ behavior: "smooth", block: "center" });
 
 document.getElementById('koncert').onclick = () => document.getElementById('boxKoncerty').scrollIntoView({ behavior: "smooth", block: "center" });

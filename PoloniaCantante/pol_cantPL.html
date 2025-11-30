@@ -59,11 +59,12 @@
 
     </div>
 
-    <!--/*https://www.youtube.com/watch?v=A1afpqeBHBc*/-->
-    <h1 id="h1">Witamy na stronie Polonia Cantante!</h1>
+    <div id="h1Div">
+        <h1 id="h1">Witamy na stronie Polonia Cantante!</h1>
+    </div>
     <!-- you might notice some text tags here have values but are overriden in js later,
- thats to make sure that if the script gets an error reading the .json file with the correct info, the website still displays 
- some info by default (so it doesnt look stupid)-->
+ thats to make sure that if the script gets an error reading the .json file with the correct info,
+ the website still displays some info by default (so it doesnt look stupid)-->
     <div class="boxes">
         <div id="boxONas">
             <div class="left">
@@ -197,7 +198,85 @@
         <div id="boxProby">
             <span style="font-weight: bold; font-size: 2rem;">Nasze próby</span>
             <!-- try to make a constant rolling slideshow w swiper (or sum else) here to just show past próby-->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div class="proby">
+                            <div class="left">
+                                <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
+                            </div>
+                            <div class="right">
+                                <ol>
+                                    <li>
+                                        <span id="" style="font-size: 2.7rem;">2026-07-07</span>
+                                        <br>
+                                        <hr>
+                                        <span id="" style="font-size: 2.4rem">12:00</span>
+                                        <br>
+                                        <span id="" style="font-size: 2.0rem">Leuven</span>
+                                        <br>
+                                        <span id="" style="font-size: 1.8rem">€?</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="proby">
+                            <div class="left">
+                                <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
+                            </div>
+                            <div class="right">
+                                <ol>
+                                    <li>
+                                        <span id="" style="font-size: 2.7rem;">2026-07-07</span>
+                                        <br>
+                                        <hr>
+                                        <span id="" style="font-size: 2.4rem">12:00</span>
+                                        <br>
+                                        <span id="" style="font-size: 2.0rem">Leuven</span>
+                                        <br>
+                                        <span id="" style="font-size: 1.8rem">€?</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="proby">
+                            <div class="left">
+                                <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
+                            </div>
+                            <div class="right">
+                                <ol>
+                                    <li>
+                                        <span id="" style="font-size: 2.7rem;">2026-07-07</span>
+                                        <br>
+                                        <hr>
+                                        <span id="" style="font-size: 2.4rem">12:00</span>
+                                        <br>
+                                        <span id="" style="font-size: 2.0rem">Leuven</span>
+                                        <br>
+                                        <span id="" style="font-size: 1.8rem">€?</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
+    </div>
     </div>
 
     <footer>
@@ -226,13 +305,18 @@
                     </svg>
                 </a>
             </div>
+            <button style="position: relative; top: 50px; border: 2px solid white; background: none;"><a
+                    style="color: white; font-size: 1.5rem;" href="#">Wróć na górę</a></button>
         </div>
 
         <div class="footer-right">
             © &middot; 2025
             <br>
-            <span style="position: absolute; bottom: 5px; right: auto;">Strona przez Bernard Kutrzeba-Kotowski &middot;
-                v poziom: 0.6.6; v pion: 0.4</span>
+            <span style="position: relative; top:50px;">Strona przez Bernard Kutrzeba-Kotowski
+                <br>
+                &middot;
+                <br>
+                v poziom: 0.7; v pion: 0.5</span>
         </div>
 
     </footer>
