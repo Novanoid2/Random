@@ -1,51 +1,39 @@
-/* czeste cyfry obok niektorych wartosci oznacza ze inne wartosci z ta samo cyfra musza tez byc zmienione, 
-"s" (seperate) oznacza ze jesli ta wartosc zmienie, to inne z ta sama cyfra nie musze, (inne wartosci moga zostac) */
-/* edit: uhhhhh troche przestalem uzywac ten system x3 */
+/* *adds a very realistic copyright restriction here* */
 
 body {
     margin: 0;
     display: grid;
     background-color: #222222;
     font-family: "Trebuchet MS";
-}
-
-header {
-    width: 99.9vw;
-    border-radius: 15px;
+    max-width: 99.9vw;
 }
 
 .logo {
     z-index: 2;
     width: 400px;
-    /* 1 */
     height: 865px;
-    /* 1 */
     overflow: hidden;
     position: fixed;
     top: -360px;
     left: -145px;
-    /* 4 */
     transform: scale(0.15);
-    /* 2 */
     border-radius: 25%;
 }
 
 .logo img {
     z-index: 2;
     margin: 0px 0px 0px -68px;
-    /* 1 & 2s */
 }
 
 #h2 {
     z-index: 2;
     position: absolute;
     left: 110px;
-    top: -10px;
+    top: -7px;
     font-family: Palatino;
     font-weight: bold;
     text-align-last: center;
     font-size: 2.4rem;
-    /*color: white;*/
     background: url("pics/pobrane.png") no-repeat center/cover;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -56,14 +44,11 @@ header {
     z-index: 2;
     position: absolute;
     display: flex;
-    gap: 2vw;
-    /* 5 */
-    right: 15px;
-    /* 4 */
+    gap: clamp(1vw, 1.8vw, 2vw);
+    right: 20px;
     padding-top: 20px;
-    padding-left: 275px;
+    padding-left: 300px;
     max-height: 40px;
-    /* 3s */
     max-width: 99.9vw;
     vertical-align: middle;
 }
@@ -71,26 +56,23 @@ header {
 .but {
     z-index: 2;
     cursor: pointer;
-    border: none;
     background-color: transparent;
-    font-size: 1.5rem;
-    width: fit-content;
-    height: fit-content;
+    font-size: 1.7rem;
+    width: auto;
+    height: auto;
     font-family: "Trebuchet MS";
     font-weight: bold;
     /*border: rgb(0, 0, 0) 2px solid;*/
+    border: none;
     border-radius: 5px;
     color: white;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
 }
 
 .svg {
-    z-index: 1;
     border: none;
-    padding: 0;
     width: 50px;
-    /* 5 */
     height: 35px;
-    /* 3s */
     cursor: pointer;
     position: relative;
     display: flex;
@@ -101,7 +83,6 @@ header {
 }
 
 .svg svg {
-    z-index: 1;
     position: absolute;
     width: 100%;
     height: 110%;
@@ -110,17 +91,17 @@ header {
 #h1Div {
     z-index: 1;
     width: auto;
-    height: 10vh;
     background-color: rgba(178, 54, 255, 0.197);
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 20px;
+    height: 4vw;
 }
 
-#h1 {
-    /* without the parent div:
+h1 {
+    /* without the parent (#h1Div) div:
     z-index: 1;
     position: absolute;
     left: 50%;
@@ -134,12 +115,11 @@ header {
     background: url("pics/pobrane2.png") no-repeat center/cover;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
-    */
+    color: transparent; */
     position: relative;
     padding: 10px 10px;
     width: max-content;
-    font-size: 3.5rem;
+    font-size: clamp(2rem, 3.2vw, 4rem);
     font-family: Palatino;
     font-weight: bold;
     -webkit-text-stroke: 1px rgb(0, 0, 0);
@@ -158,12 +138,12 @@ header {
     height: 100vh;
     z-index: -1;
     pointer-events: none;
-    max-width: 98.1vw;
-    max-height: 99.9vh;
+    max-width: 100vw;
+    max-height: 100vh;
 }
 
 .swiper-wrapper {
-    max-width: 99vw;
+    max-width: 100vw;
     width: 100%;
     height: 100%;
     z-index: -1;
@@ -207,7 +187,7 @@ header {
     left: auto;
     top: auto;
     height: auto;
-    width: 60vw;
+    width: 50vw;
     text-align: center;
 }
 
@@ -221,6 +201,7 @@ header {
     object-position: center;
     display: block;
     border-radius: 10px;
+    margin-top: 15px;
 }
 
 #titleONas {
@@ -229,6 +210,7 @@ header {
     font-weight: bold;
     font-size: 2.7rem;
     margin-bottom: 50px;
+    margin-left: 50px;
 }
 
 #lorem {
@@ -237,23 +219,9 @@ header {
     line-height: 30px;
     font-weight: bold;
     font-size: 1.8rem;
+    padding: 0px 40px;
     margin-left: 50px;
-    margin-right: 50px;
 }
-
-/*
-#boxKoncerty {
-    position: relative;
-    width: 99.9vw;
-    max-width: 100%;
-    height: auto;
-    margin-top: 100px;
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-    display: inline-block;
-    vertical-align: middle;
-}
-*/
 
 #boxKoncerty {
     position: relative;
@@ -262,6 +230,7 @@ header {
     height: auto;
     margin-top: 100px;
     background-color: rgb(0, 255, 0);
+    text-align: center;
 }
 
 .koncerty-img {
@@ -291,12 +260,12 @@ header {
 }
 
 .koncerty .right {
-    /* this is fine tuned - so prob dont change it*/
     position: absolute;
     left: 40%;
-    top: 9vh;
     height: auto;
     width: 50vw;
+    top: 50%;
+    transform: translateY(-50%);
     text-align: center;
 }
 
@@ -311,14 +280,13 @@ ol {
     height: auto;
 }
 
-/*
-li {
+/*li {
     max-width: calc(99.9vw / 3);
     width: max-content;
     margin-left: 50px;
     margin-right: 50px;
-}
-*/
+}*/
+
 li {
     width: auto;
     padding: 0px 40px;
@@ -345,7 +313,6 @@ li {
 }
 
 .proby .right {
-    /* this is fine tuned - so prob dont change it*/
     position: absolute;
     left: 40%;
     top: 9vh;
