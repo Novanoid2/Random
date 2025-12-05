@@ -1,6 +1,5 @@
-- Hi! I’m Novanoid𓆱 👋
+- Hi! I’m Miren 👋
 - I do coding for fun and hopefully get a job in the future🙏
-- 2010
-- How to reach me: urexstt@gmail.com or novanoid2 on discord (preferably the second option) 📫
+- How to reach me: urexstt@gmail.com or miren.3 on discord (preferably the second option) 📫
 - Fun fact: im a furry UwU ⚡
 - Some coding projects may be in polish because im polish :3

@@ -1,15 +1,6 @@
-/*current todo: finish proby(make a second swiper somehow), find out why changing width theres a bar on the bottom? (something to do w .boxes), 
-make seperate web for bilety, search for bugs/things to shorten translate to other langs and done*/
-//change the popping-up info boxes to html w "aria-hidden" or whatev and not a long ass javascript command lol
-//for later -> use document.getElementById("test").removeAttribute("hidden"); because i just tested it and it works! yippie
-
-function pushErrorDiv() {
-    const errorDiv = document.createElement("div");
-    errorDiv.textContent = "We have encountered an error, some parts of the website may not work correctly, we are working on a fix.";
-    errorDiv.style = "position: absolute; top: 200px; width: 80%; text-align: center; background-color: red; color: white; font-size: 1.3vw; padding: 10px; z-index: 1; left: 50%; transform: translateX(-50%);";
-    document.body.appendChild(errorDiv);
-}
-
+/*current todo: find out why changing width theres a bar on the bottom? (something to do w .boxes), 
+make seperate web for bilety, search for bugs/things to shorten translate \/ to other langs, zrob .nav pionowo i done
+(4 objects w translations for each language, the translations get applied from current_lang)?*/
 getData();
 
 async function getData() {
@@ -20,10 +11,10 @@ async function getData() {
             applyData(data);
             return;
         }
-        pushErrorDiv();
+        makeErrorDiv();
     } catch (err) {
         console.error(err);
-        pushErrorDiv();
+        makeErrorDiv();
     }
 }
 
@@ -33,32 +24,39 @@ async function applyData(file) {
         if (el) {
             if (/prz[0-3]b/.test(key)) el.innerHTML = file[key].replace(" e", " €");
             else el.innerHTML = file[key];
+        } else {
+            console.warn(`Element with id ${key} not found.`);
+            makeErrorDiv();
         }
     }
+}
+
+async function makeErrorDiv() {
+    const errorDiv = document.createElement("div");
+    errorDiv.textContent = "Wystąpił błąd po naszej stronie, możliwe że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem.";
+    errorDiv.style = "position: absolute; top: 200px; width: 80%; text-align: center; background-color: red; color: white; font-size: 1.3vw; padding: 10px; z-index: 1; left: 50%; transform: translateX(-50%);";
+    document.body.appendChild(errorDiv);
 }
 
 let current_lang = navigator.language.toUpperCase();
 let langs = [`PL`, "EN", "NL", "FR"];
 
 document.getElementById("lang").onclick = () => {
-    if (!document.body.contains((document.getElementById("langBox")))) {
-        if ((document.body.contains(document.getElementById("contactInfoBox")))) document.body.removeChild(document.getElementById("contactInfoBox"));
-        if ((document.body.contains(document.getElementById("pomocBox")))) document.body.removeChild(document.getElementById("pomocBox"));
+    document.getElementById("contactInfoBox").setAttribute("hidden", "");
+    document.getElementById("pomocBox").setAttribute("hidden", "");
+    const box = document.getElementById("langBox");
+    const buttonPos = document.getElementById("lang").getBoundingClientRect();
 
-        const lang = document.getElementById("lang").getBoundingClientRect();
-        const div = document.createElement("div");
-        //holy shit why is this so long
-        if (window.innerWidth - (lang.left + lang.width / 2 - 50) < 100) div.style = `position: absolute;
-        top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 87}px; background-color: white;
-        height: auto; width: 90px; border-radius: 20px; opacity: 0; transition: opacity 0.8s;
-        box-shadow: 0px 0px 25px black font-family: Palatino`;
+    if (box.hasAttribute("hidden")) {
+        if (window.innerWidth - (buttonPos.left + buttonPos.width / 2 - 50) < 100) {
+            box.style.left = `${buttonPos.left + buttonPos.width / 2 - 87}px`;
+            box.style.top = `${buttonPos.top + buttonPos.height + 20}px`;
+        } else {
+            box.style.left = `${buttonPos.left + buttonPos.width / 2 - 47}px`;
+            box.style.top = `${buttonPos.top + buttonPos.height + 20}px`;
+        }
 
-        else div.style = `position: absolute; top: ${lang.top + lang.height + 10}px; left: ${lang.left + lang.width / 2 - 47}px;
-        background-color: white; height: auto; width: 90px; border-radius: 20px; opacity: 0;
-        transition: opacity 0.8s; box-shadow: 0px 0px 25px black; font-family: Palatino; z-index: 2;`;
-
-        div.id = "langBox";
-        div.innerHTML = `<ul>
+        box.innerHTML = `<ul>
           <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.6rem;"><strong>>${current_lang}<</strong></a>
           <br>
           <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.6rem;">${langs[0]}</a>
@@ -67,64 +65,50 @@ document.getElementById("lang").onclick = () => {
           <br>
           <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.6rem;">${langs[2]}</a>
         </ul>
-        <hr style="border: none;">`;
+        <hr style="border: none;">
+         <svg width="30" height="20" style="position: absolute; top: -20px; right: 30px;">
+        <polygon points="15,10 0,20 30,20" fill="white" />
+        </svg>`;
 
-        document.body.appendChild(div);
-        setTimeout(() => div.style.opacity = 1, 10);
-    } else document.body.removeChild(document.getElementById("langBox"));
+        box.removeAttribute("hidden");
+        setTimeout(() => box.style.opacity = 1, 10);
+    } else {
+        box.setAttribute("hidden", "");
+        box.style.opacity = 0;
+    }
 }
 
 document.getElementById("dolacz").onclick = () => {
-    if (!document.body.contains((document.getElementById("contactInfoBox")))) {
-        if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
-        if ((document.body.contains(document.getElementById("pomocBox")))) document.body.removeChild(document.getElementById("pomocBox"));
-        const buttonPos = document.getElementById("dolacz").getBoundingClientRect();
-        const div = document.createElement("div");
-
-        div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
-        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 350px;
-        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.4rem; z-index: 2;
-        font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
-
-        div.id = "contactInfoBox";
-        div.innerHTML = `<hr style="border: none;">
-         Chcesz dołączyć do nas?
-         Kontakt z nami:
-        <hr style="width: 80%;">
-        &middot; +32 nie wiem
-        <br>
-        lub
-        <br>
-        &middot; jakis_tam@email.com
-        <hr style="border: none;">`;
-
-        document.body.appendChild(div);
-        setTimeout(() => div.style.opacity = 1, 10);
-    } else document.body.removeChild(document.getElementById("contactInfoBox"));
+    document.getElementById("langBox").setAttribute("hidden", "");
+    document.getElementById("pomocBox").setAttribute("hidden", "");
+    const box = document.getElementById("contactInfoBox");
+    const buttonPos = document.getElementById("dolacz").getBoundingClientRect();
+    if (box.hasAttribute("hidden")) {
+        box.style.left = `${buttonPos.left + buttonPos.width / 2 - 150}px`;
+        box.style.top = `${buttonPos.top + buttonPos.height + 40}px`;
+        box.removeAttribute("hidden");
+        setTimeout(() => box.style.opacity = 1, 10);
+    } else {
+        box.setAttribute("hidden", "");
+        box.style.opacity = 0;
+    }
 }
 
 document.getElementById("pomoc").onclick = () => {
-    if (!document.body.contains((document.getElementById("pomocBox")))) {
-        if ((document.body.contains(document.getElementById("langBox")))) document.body.removeChild(document.getElementById("langBox"));
-        if ((document.body.contains(document.getElementById("contactInfoBox")))) document.body.removeChild(document.getElementById("contactInfoBox"));
-        const buttonPos = document.getElementById("pomoc").getBoundingClientRect();
-        const div = document.createElement("div");
-
-        div.style = `position: absolute; left: ${buttonPos.left + buttonPos.width / 2 - 175}px;
-        top: ${buttonPos.top + buttonPos.height + 20}px; background-color: white; height: auto; width: 355px;
-        opacity: 0; transition: opacity 0.7s; border-radius: 20px; font-size: 1.4rem; z-index: 2;
-        font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black`;
-
-        div.id = "pomocBox";
-        div.innerHTML = `<hr style="border: none;">
-            Można nas wesprzeć na tym koncie: 
-            <hr style="width: 80%;">
-            &middot; BE10 xxxx xxxx xxxx
-            <hr style="border: none;">`;
-
-        document.body.appendChild(div);
-        setTimeout(() => div.style.opacity = 1, 10);
-    } else document.body.removeChild(document.getElementById("pomocBox"));
+    document.getElementById("langBox").setAttribute("hidden", "");
+    document.getElementById("contactInfoBox").setAttribute("hidden", "");
+    const box = document.getElementById("pomocBox");
+    const buttonPos = document.getElementById("pomoc").getBoundingClientRect();
+    if (box.hasAttribute("hidden")) {
+        box.style.left = `${buttonPos.left + buttonPos.width / 2 - 250}px`;
+        box.style.top = `${buttonPos.top + buttonPos.height + 40}px`;
+        console.log(buttonPos);
+        box.removeAttribute("hidden");
+        setTimeout(() => box.style.opacity = 1, 10);
+    } else {
+        box.setAttribute("hidden", "");
+        box.style.opacity = 0;
+    }
 }
 
 document.getElementById('onas').onclick = () => document.getElementById('boxONas').scrollIntoView({ behavior: "smooth", block: "center" });
