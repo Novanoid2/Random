@@ -8,7 +8,7 @@
         "proby": "Próby",
         "pomoc": "Wspomóż nas",
         "dolacz": "Dołącz do nas",
-        "pomocBoxTitle": " Możesz nas wesprzeć wpłacając dowolną<br>kwotę na konto: ",
+        "pomocBoxTitle": " Możesz nas wesprzeć wpłacając dowolną <br>kwotę na konto:",
         "contactTitle": "Kontakt z nami:",
         "loremHead": "Polonia Cantante to pełen entuzjazmu polski chór amatorski z Leuven, który od 2019 roku spotyka się, aby dzielić się miłością do muzyki i radością wspólnego śpiewania. Nasz repertuar jest tak różnorodny, jak nasi członkowie.",
         "loremSub": "Zapraszamy na nasze koncerty!",
@@ -21,7 +21,8 @@
         "sopranTitle": "Nasze soprany",
         "altTitle": "Nasze alty",
         "tenorTitle": "Nasze alty 2",
-        "findTitle": "Można nas znaleźć na:"
+        "findTitle": "Można nas znaleźć na:",
+        "doGory":"Wróć na górę"
     },
     "EN": {
         "welcome": "Welcome to the Polonia Cantante website!",
