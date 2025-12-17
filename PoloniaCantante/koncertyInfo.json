@@ -1,0 +1,14 @@
+{
+    "prz1d": "1789-01-01",
+    "prz2d": "2025-12-cos tam",
+    "prz3d": "2026-xx-xx",
+    "prz1c": "-12:00",
+    "prz2c": "24:00",
+    "prz3c": "15:32",
+    "prz1a": "Holsbeek, ulica ulicowa, xyz",
+    "prz2a": "Aarschot, ulica ulicowa, xyz",
+    "prz3a": "Leuven, ulica ulicowa, zyx",
+    "prz1b": " e3",
+    "prz2b": " e60.000",
+    "prz3b": " e6! - log2(8)"
+}

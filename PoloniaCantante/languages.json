@@ -1,0 +1,18 @@
+{
+    "PL": {
+        "welcome": "Witamy na stronie Polonia Cantante!",
+        "error": "Wystąpił błąd po naszej stronie, możliwe że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem."
+    },
+    "EN": {
+        "welcome": "Welcome to the Polonia Cantante website!",
+        "error": "An error has occured on our side, some information may not be correct. We are working on a fix."
+    },
+    "FR": {
+        "welcome": "Bienvenu(e) sur le site de Polonia Cantante!",
+        "error": "Une erreur s’est produite de notre côté. Certaines informations peuvent être incorrectes. Nous y travaillons"
+    },
+    "NL": {
+        "welcome": "Welkom bij de website van Polonia Cantante!",
+        "error": "Er is een fout opgetreden, mogelijk is bepaalde informatie niet correct. We werken aan een oplossing."
+    }
+}
