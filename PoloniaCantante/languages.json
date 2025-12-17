@@ -1,18 +1,57 @@
 {
     "PL": {
-        "welcome": "Witamy na stronie Polonia Cantante!",
-        "error": "Wystąpił błąd po naszej stronie, możliwe że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem."
+        "welcome": "Witamy na stronie<br>Polonia Cantante!",
+        "errorMsg": "Wystąpił błąd po naszej stronie, możliwe że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem.",
+        "oNas": "O nas",
+        "koncerty": "Koncerty & Bilety",
+        "zdjecia": "Zdjęcia",
+        "proby": "Próby",
+        "pomoc": "Wspomóż nas",
+        "dolacz": "Dołącz do nas",
+        "pomocBoxTitle": " Można nas wesprzeć wpłacając na to konto: ",
+        "contactTitle": "Kontakt z nami:",
+        "loremHead": "Polonia Cantante to pełen entuzjazmu polski chór amatorski z Leuven, który od 2019 roku spotyka się, aby dzielić się miłością do muzyki i radością wspólnego śpiewania. Nasz repertuar jest tak różnorodny, jak nasi członkowie.",
+        "loremSub": "Zapraszamy na nasze koncerty!",
+        "koncertTitle": "Przyszłe koncerty:",
+        "ZdjeciaTitle": "Zdjęcia",
+        "probyTitle": "Nasze próby",
+        "opis1": "info info info info info info info info info info info info info info info info info info info",
+        "opis2": "info info info info info info info info info info info info info info info info info info info",
+        "opis3": "info info info info info info info info info info info info info info info info info info info",
+        "glosyTitle": "Nasze głosy",
+        "sopranTitle": "Nasze soprany",
+        "altTitle": "Nasze alty",
+        "tenorTitle": "Nasze alty 2 (tenory)",
+        "findTitle": "Można nas znaleźć na:"
     },
     "EN": {
         "welcome": "Welcome to the Polonia Cantante website!",
-        "error": "An error has occured on our side, some information may not be correct. We are working on a fix."
+        "errorMsg": "An error has occured on our side, some information may not be correct. We are working on a fix.",
+        "oNas": "About us",
+        "koncerty": "Concerts & tickets",
+        "zdjecia": "Pictures",
+        "proby": "Rehearsals",
+        "pomoc": "Support us",
+        "dolacz": "Join us"
     },
     "FR": {
         "welcome": "Bienvenu(e) sur le site de Polonia Cantante!",
-        "error": "Une erreur s’est produite de notre côté. Certaines informations peuvent être incorrectes. Nous y travaillons"
+        "errorMsg": "Une erreur s’est produite de notre côté. Certaines informations peuvent être incorrectes. Nous y travaillons",
+        "oNas": "À propos de nous",
+        "koncerty": "Concerts & Billets",
+        "zdjecia": "Photos",
+        "proby": "Répétitions",
+        "pomoc": "Soutenez-nous",
+        "dolacz": "Rejoignez-nous"
     },
     "NL": {
         "welcome": "Welkom bij de website van Polonia Cantante!",
-        "error": "Er is een fout opgetreden, mogelijk is bepaalde informatie niet correct. We werken aan een oplossing."
+        "errorMsg": "Er is een fout opgetreden, mogelijk is bepaalde informatie niet correct. We werken aan een oplossing.",
+        "oNas": "Over ons",
+        "koncerty": "Koncerten & biletten",
+        "zdjecia": "Foto's",
+        "proby": "Repetities",
+        "pomoc": "Steun ons",
+        "dolacz": "Word lid"
     }
 }
