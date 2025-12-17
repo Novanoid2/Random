@@ -1,19 +1,18 @@
 {
     "PL": {
-        "welcome": "Witamy na stronie<br>Polonia Cantante!",
-        "errorMsg": "Wystąpił błąd po naszej stronie, możliwe że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem.",
+        "welcome": "Witamy na stronie Polonia Cantante!",
+        "errorMsg": "Wystąpił błąd po naszej stronie, możliwe, że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem.",
         "oNas": "O nas",
         "koncerty": "Koncerty & Bilety",
         "zdjecia": "Zdjęcia",
         "proby": "Próby",
         "pomoc": "Wspomóż nas",
         "dolacz": "Dołącz do nas",
-        "pomocBoxTitle": " Można nas wesprzeć wpłacając na to konto: ",
+        "pomocBoxTitle": " Możesz nas wesprzeć wpłacając dowolną<br>kwotę na konto: ",
         "contactTitle": "Kontakt z nami:",
         "loremHead": "Polonia Cantante to pełen entuzjazmu polski chór amatorski z Leuven, który od 2019 roku spotyka się, aby dzielić się miłością do muzyki i radością wspólnego śpiewania. Nasz repertuar jest tak różnorodny, jak nasi członkowie.",
         "loremSub": "Zapraszamy na nasze koncerty!",
         "koncertTitle": "Przyszłe koncerty:",
-        "ZdjeciaTitle": "Zdjęcia",
         "probyTitle": "Nasze próby",
         "opis1": "info info info info info info info info info info info info info info info info info info info",
         "opis2": "info info info info info info info info info info info info info info info info info info info",
@@ -21,7 +20,7 @@
         "glosyTitle": "Nasze głosy",
         "sopranTitle": "Nasze soprany",
         "altTitle": "Nasze alty",
-        "tenorTitle": "Nasze alty 2 (tenory)",
+        "tenorTitle": "Nasze alty 2",
         "findTitle": "Można nas znaleźć na:"
     },
     "EN": {
