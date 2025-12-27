@@ -1,75 +1,100 @@
-/*current todo: find out why changing width theres a bar on the bottom? (something to do w .boxes), 
-make seperate web for bilety, search for bugs/things to shorten translate \/ to other langs, zrob .nav pionowo i done
-(4 objects w translations for each language, the translations get applied from current_lang)?*/
-getData();
+/*current todo: fix navBoxes pos when pionowo, media queries, search for bugs/things to shorten, done
+zrobic rozne wersje*/
+const langs = ["PL", "EN", "NL", "FR"];
+const valueArr = ["zdjęcia", "pictures", "fotos", "photos"] //PL, EN, NL, FR
+const place = valueArr.indexOf(document.getElementById("zdjecia").textContent.trim().toLowerCase());
+let current_lang = langs[place] || "EN";
+langs.splice(place, 1);
 
-async function getData() {
-    try {
-        const raw = await fetch(`https://raw.githubusercontent.com/Novanoid2/Random/main/PoloniaCantante/info.json`);
-        if (raw.ok) {
-            const data = await raw.json();
-            applyData(data);
-            return;
+fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
+    .then(raw => {
+        if (raw.ok) return raw.json();
+        makeErrorDiv('Mrn: Fetch failed in koncertyInfo.json');
+    })
+    .then(data => {
+        for (let key in data) {
+            let el = document.getElementById(key);
+            if (el) {
+                if (/prz[0-3]b/.test(key)) el.innerHTML = data[key].replace("e", "€");
+                else el.innerHTML = data[key];
+            } else console.warn(`Mrn: Element with id '${key}' not found in html.`);
         }
-        makeErrorDiv();
-    } catch (err) {
-        console.error(err);
-        makeErrorDiv();
-    }
-}
+    }).catch(err => makeErrorDiv(err + 'from koncertyInfo.json'));
 
-async function applyData(file) {
-    for (let key in file) {
-        let el = document.getElementById(key);
-        if (el) {
-            if (/prz[0-3]b/.test(key)) el.innerHTML = file[key].replace(" e", " €");
-            else el.innerHTML = file[key];
-        } else {
-            console.warn(`Element with id ${key} not found.`);
-            makeErrorDiv();
+fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/languages.json`)
+    .then(raw => {
+        if (raw.ok) return raw.json();
+        makeErrorDiv('Mrn: Fetch failed in languages.json');
+    }).then(data => {
+        data = data[current_lang]
+        for (let key in data) {
+            let el = document.getElementById(key);
+            if (el) el.innerHTML = data[key];
+            else console.warn(`Mrn: Element with id '${key}' not found in html.`);
         }
+    }).catch(err => makeErrorDiv(err + " from languages.json"));
+
+const ML = window.innerWidth <= 1350 ? -26 : -22; //ML = margin-left for lang links
+document.getElementById("langBox").innerHTML += `<ul>
+          <a href='#' style="margin-left: -35px; font-family: Kepler;"><strong>>${current_lang}<</strong></a>
+          <br>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: ${ML}px; font-family: Kepler;">${langs[0]}</a>
+          <br>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: ${ML}px; font-family: Kepler;">${langs[1]}</a>
+          <br>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: ${ML}px; font-family: Kepler;">${langs[2]}</a>
+        </ul>`;
+
+setTimeout(() => {
+    for (let helpBox of ["langBox", "contactInfoBox", "pomocBox"]) {
+        const box = document.getElementById(helpBox);
+        const buttonPos = helpBox === 'langBox' ? document.getElementById("lang").getBoundingClientRect() : (helpBox === "contactInfoBox" ? document.getElementById("dolacz").getBoundingClientRect() : document.getElementById("pomoc").getBoundingClientRect());
+        const boxPos = box.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        if (helpBox === 'langBox') box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2) - 15}px`;
+        else {
+            box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
+            box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: -19px; right: ${boxPos.width / 2 - 15}px;">
+                                <polygon points="15,0 0,20 30,20" fill="white" />
+                             </svg>`;
+        }
+
+        if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
+        else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
+
+        box.setAttribute("hidden", "");
     }
+
+
+    if (window.innerWidth <= 545) {
+        const w = document.getElementById("welcome");
+        if (current_lang === 'PL') w.innerHTML = "Wiatmy na stronie<br>Polonia Cantante!";
+        else if (current_lang === 'EN') w.innerHTML = "Welcome to the<br>Polonia Cantane website!";
+        else if (current_lang === 'NL') w.innerHTML = "Welkom bij de website<br>van Polonia Cantante!";
+        else w.innerHTML = "Bienvenu(e) sur le site<br>de Polonia Cantante!";//FR
+
+        document.getElementById("welcomeDiv").style.height = `10vh`;
+    }
+}, 80);//please dont abuse this time frame🙏
+
+let allowError = true;
+
+async function makeErrorDiv(info) {
+    if (allowError) {
+        allowError = false;
+        document.getElementById("errorMsg").removeAttribute("hidden");
+        console.error("Mrn: error from: " + info);
+    } else console.log("Mrn: Error div blocked from " + info);
 }
 
-async function makeErrorDiv() {
-    const errorDiv = document.createElement("div");
-    errorDiv.textContent = "Wystąpił błąd po naszej stronie, możliwe że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem.";
-    errorDiv.style = "position: absolute; top: 200px; width: 80%; text-align: center; background-color: red; color: white; font-size: 1.3vw; padding: 10px; z-index: 1; left: 50%; transform: translateX(-50%);";
-    document.body.appendChild(errorDiv);
-}
-
-let current_lang = navigator.language.toUpperCase();
-let langs = [`PL`, "EN", "NL", "FR"];
-
-document.getElementById("lang").onclick = () => {
-    document.getElementById("contactInfoBox").setAttribute("hidden", "");
-    document.getElementById("pomocBox").setAttribute("hidden", "");
-    const box = document.getElementById("langBox");
-    const buttonPos = document.getElementById("lang").getBoundingClientRect();
+function toggleBox(id) {
+    let arr = ["langBox", "contactInfoBox", "pomocBox"];
+    arr.splice(arr.indexOf(id), 1);
+    for (let other of arr) { document.getElementById(other).setAttribute("hidden", ""); document.getElementById(other).style.opacity = 0; }
+    const box = document.getElementById(id);
 
     if (box.hasAttribute("hidden")) {
-        if (window.innerWidth - (buttonPos.left + buttonPos.width / 2 - 50) < 100) {
-            box.style.left = `${buttonPos.left + buttonPos.width / 2 - 87}px`;
-            box.style.top = `${buttonPos.top + buttonPos.height + 20}px`;
-        } else {
-            box.style.left = `${buttonPos.left + buttonPos.width / 2 - 47}px`;
-            box.style.top = `${buttonPos.top + buttonPos.height + 20}px`;
-        }
-
-        box.innerHTML = `<ul>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${current_lang}.html" style="margin-left: -24px; font-family: Kepler; font-size: 1.6rem;"><strong>>${current_lang}<</strong></a>
-          <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.6rem;">${langs[0]}</a>
-          <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: -10px; font-family: Kepler; font-size: 1.6rem;">${langs[1]}</a>
-          <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: -11px; font-family: Kepler; font-size: 1.6rem;">${langs[2]}</a>
-        </ul>
-        <hr style="border: none;">
-         <svg width="30" height="20" style="position: absolute; top: -20px; right: 30px;">
-        <polygon points="15,10 0,20 30,20" fill="white" />
-        </svg>`;
-
         box.removeAttribute("hidden");
         setTimeout(() => box.style.opacity = 1, 10);
     } else {
@@ -78,59 +103,19 @@ document.getElementById("lang").onclick = () => {
     }
 }
 
-document.getElementById("dolacz").onclick = () => {
-    document.getElementById("langBox").setAttribute("hidden", "");
-    document.getElementById("pomocBox").setAttribute("hidden", "");
-    const box = document.getElementById("contactInfoBox");
-    const buttonPos = document.getElementById("dolacz").getBoundingClientRect();
-    if (box.hasAttribute("hidden")) {
-        box.style.left = `${buttonPos.left + buttonPos.width / 2 - 150}px`;
-        box.style.top = `${buttonPos.top + buttonPos.height + 40}px`;
-        box.removeAttribute("hidden");
-        setTimeout(() => box.style.opacity = 1, 10);
-    } else {
-        box.setAttribute("hidden", "");
-        box.style.opacity = 0;
-    }
+function scrollToId(id) {
+    if (id === 'boxKoncerty') document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
+    else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-document.getElementById("pomoc").onclick = () => {
-    document.getElementById("langBox").setAttribute("hidden", "");
-    document.getElementById("contactInfoBox").setAttribute("hidden", "");
-    const box = document.getElementById("pomocBox");
-    const buttonPos = document.getElementById("pomoc").getBoundingClientRect();
-    if (box.hasAttribute("hidden")) {
-        box.style.left = `${buttonPos.left + buttonPos.width / 2 - 250}px`;
-        box.style.top = `${buttonPos.top + buttonPos.height + 40}px`;
-        console.log(buttonPos);
-        box.removeAttribute("hidden");
-        setTimeout(() => box.style.opacity = 1, 10);
-    } else {
-        box.setAttribute("hidden", "");
-        box.style.opacity = 0;
-    }
+//.navBar style for small screens
+if (window.innerWidth < 1050) {
+    document.getElementById("navBar").style.flexDirection = "column-reverse";
+    document.getElementById("navBar").style.alignItems = "center";
+    document.getElementById("navBar").style.gap = "15px";
 }
-
-document.getElementById('onas').onclick = () => document.getElementById('boxONas').scrollIntoView({ behavior: "smooth", block: "center" });
-
-document.getElementById('koncert').onclick = () => document.getElementById('boxKoncerty').scrollIntoView({ behavior: "smooth", block: "center" });
-
-document.getElementById('proby').onclick = () => document.getElementById('boxProby').scrollIntoView({ behavior: "smooth", block: "center" });
-
-document.getElementById('zdjecia').onclick = () => document.getElementById('boxZdjecia').scrollIntoView({ behavior: "smooth", block: "center" });
-
-for (let lang in arr = ["zdjęcia", "pictures", "fotos", "photos"]) {//PL, EN, NL, FR
-    if (document.getElementById("zdjecia").textContent.trim().toLowerCase() === arr[lang]) {
-        current_lang = langs[lang];
-        langs.splice(lang, 1);
-    }
-}
-
-if (window.innerWidth < 545) document.getElementById("h1").innerHTML = `Witamy na stronie<br>Polonia Cantante!`
-
-//if (window.innerWidth < 1050)
 
 window.addEventListener('resize', () => { location.reload(); });
 
 document.documentElement.style.setProperty(`--dl`, `PL`);
-console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 22px;');
+console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
