@@ -1,10 +1,9 @@
 /*current todo: fix navBoxes pos when pionowo, media queries, search for bugs/things to shorten, done
 zrobic rozne wersje*/
 const langs = ["PL", "EN", "NL", "FR"];
-const valueArr = ["zdjęcia", "pictures", "fotos", "photos"] //PL, EN, NL, FR
-const place = valueArr.indexOf(document.getElementById("zdjecia").textContent.trim().toLowerCase());
-let current_lang = langs[place] || "EN";
-langs.splice(place, 1);
+const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
+const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
+langs.splice(langs.indexOf(current_lang), 1);
 
 fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
     .then(raw => {
