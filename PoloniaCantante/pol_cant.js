@@ -33,15 +33,15 @@ fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/Po
         }
     }).catch(err => makeErrorDiv(err + " from languages.json"));
 
-const ML = window.innerWidth <= 1350 ? -26 : -22; //ML = margin-left for lang links
-document.getElementById("langBox").innerHTML += `<ul>
-          <a href='#' style="margin-left: -35px; font-family: Kepler;"><strong>>${current_lang}<</strong></a>
+const ML = window.innerWidth <= 1350 ? -26 : -21; //ML = margin-left for lang links
+document.getElementById("langBox").innerHTML += `<ul style="font-family: Kepler;">
+          <a href='#' style="margin-left: -35px;"><strong>>${current_lang}<</strong></a>
           <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: ${ML}px; font-family: Kepler;">${langs[0]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: ${ML}px;">${langs[0]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: ${ML}px; font-family: Kepler;">${langs[1]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: ${ML}px;">${langs[1]}</a>
           <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: ${ML}px; font-family: Kepler;">${langs[2]}</a>
+          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: ${ML}px;">${langs[2]}</a>
         </ul>`;
 
 setTimeout(() => {
@@ -51,31 +51,49 @@ setTimeout(() => {
         const boxPos = box.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-        if (helpBox === 'langBox') box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2) - 15}px`;
-        else {
-            box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
-            box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: -19px; right: ${boxPos.width / 2 - 15}px;">
+        if (window.innerWidth < 1050) {
+            if (helpBox === 'langBox') {
+                box.style.left = `${buttonPos.left - boxPos.width - 70}px`;
+                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
+                                    <polygon points="20,10 0,0 0,20" fill="white" />
+                                  </svg>`;
+                box.style.top = `${buttonPos.top + scrollY}px`;
+            } else {
+                box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
+                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
+                                    <polygon points="20,10 0,0 0,20" fill="white" />
+                                  </svg>`;
+                box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
+            }
+
+        } else {
+            if (helpBox === 'langBox') {
+                box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2) - 15}px`;
+                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: -19px; right: ${boxPos.width / 2 - 25}px;">
                                 <polygon points="15,0 0,20 30,20" fill="white" />
                              </svg>`;
-        }
+            } else {
+                box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
+                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: -19px; right: ${boxPos.width / 2 - 15}px;">
+                                <polygon points="15,0 0,20 30,20" fill="white" />
+                             </svg>`;
+            }
 
-        if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
-        else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
+            if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
+            else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
+        }
 
         box.setAttribute("hidden", "");
     }
 
-
-    if (window.innerWidth <= 545) {
+    if (window.innerWidth <= 680) {
         const w = document.getElementById("welcome");
         if (current_lang === 'PL') w.innerHTML = "Wiatmy na stronie<br>Polonia Cantante!";
         else if (current_lang === 'EN') w.innerHTML = "Welcome to the<br>Polonia Cantane website!";
         else if (current_lang === 'NL') w.innerHTML = "Welkom bij de website<br>van Polonia Cantante!";
         else w.innerHTML = "Bienvenu(e) sur le site<br>de Polonia Cantante!";//FR
-
-        document.getElementById("welcomeDiv").style.height = `10vh`;
     }
-}, 80);//please dont abuse this time frame🙏
+}, 75);//please dont abuse this time frame🙏
 
 let allowError = true;
 
@@ -113,6 +131,10 @@ if (window.innerWidth < 1050) {
     document.getElementById("navBar").style.alignItems = "center";
     document.getElementById("navBar").style.gap = "15px";
 }
+
+//break tags for grupy
+if (window.innerWidth < 950) document.getElementById("breakSopran").removeAttribute("hidden");
+if (window.innerWidth < 500) document.getElementById("breakAlty").removeAttribute("hidden");
 
 window.addEventListener('resize', () => { location.reload(); });
 

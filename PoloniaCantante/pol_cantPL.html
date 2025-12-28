@@ -30,18 +30,15 @@
         </g>
 
         <g id="navBoxes"> <!--navigation boxes with extra information-->
-            <div id="pomocBox"
-                style="opacity: 0; transition: opacity 0.8s; position: absolute; background-color: white; height: auto; width: auto; border-radius: 20px; font-size: clamp(1.1rem, 1.5vw, 1.8rem); z-index: 2; font-weight: bold; text-align: center; box-shadow: 0px 0px 25px black; padding: 0px 10px;">
-                <hr style="border: none;">
+            <div id="pomocBox" class="navBox"
+                style="opacity: 0; transition: opacity 0.8s; padding: 1.7vh 15px; text-align: center; font-weight: bold;">
                 <span id="pomocBoxTitle">Można nas wesprzeć wpłacając na to konto:</span>
-                <hr style="width: 80%;">
+                <hr style="width: 90%;">
                 &middot; BE10 xxxx xxxx xxxx
-                <hr style="border: none;">
             </div>
 
-            <div id="contactInfoBox"
-                style="position: absolute; background-color: white; height: auto; width: auto; border-radius: 20px; font-size: clamp(1.1rem, 1.5vw, 1.8rem); z-index: 2; font-weight: bold; text-align: center; opacity: 0; transition: opacity 0.8s; box-shadow: 0px 0px 25px black; padding: 0px 10px;">
-                <hr style="border: none;">
+            <div id="contactInfoBox" class="navBox"
+                style="opacity: 0; transition: opacity 0.8s; padding: 1.7vh 5px; text-align: center; font-weight: bold;">
                 <span id="contactTitle">Kontakt z nami:</span>
                 <hr style="width: 80%;">
                 &middot; +32 nie wiem
@@ -50,21 +47,17 @@
                 <br><!-- change the recipient here ofc-->
                  &middot; <a
                     href="mailto:recipient@example.com?subject=Chciał(a) bym dołączyć do waszego chóru">jakis_tam@email.com </a>
-                <hr style="border: none;">
             </div>
 
-            <div id="langBox" style="position: absolute; background-color: white; font-size: clamp(1.2rem, 1.7vw, 1.8rem);
-        height: min-content; width: auto; border-radius: 20px; opacity: 0; transition: opacity 0.8s;
-        box-shadow: 0px 0px 25px black; font-family: Palatino; z-index: 2; padding: 0px 10px; ">
-                <svg width="30" height="20" style="position: absolute; top: -16px; right: 10px;">
-                    <polygon points="15,0 0,20 30,20" fill="white" />
-                </svg>
+            <div id="langBox" class="navBox"
+                style="font-size: clamp(1.2rem, 1.7vw, 1.8rem); opacity: 0; transition: opacity 0.8s; padding: 0 10px; ">
             </div>
         </g>
 
         <div class="logo">
             <img src='pics/logoPCtrans.png'>
         </div>
+
         <h2 id="h2">Polonia<br>Cantante</h2>
     </header>
 
@@ -88,12 +81,11 @@
     </div>
 
     <div class="boxes">
-
         <!-- you might notice some text tags here have values that are overridden in js later, thats in case if the script gets an error reading the
      .json files with the correct info, the website still displays some info by default (so it doesnt look stupid)-->
 
         <div id="boxONas-outer" style="padding: 20px 0;">
-            <span class="titleONas" id="oNas">O nas</span>
+            <span class="titles" id="oNas2">O nas</span>
             <hr style="width: 35%;">
             <div id="boxONas-inner">
                 <div class="left">
@@ -115,9 +107,7 @@
         </div>
 
         <div id="boxKoncerty" class="box">
-            <span style="font-size: clamp(1.6rem, 3vw, 3.2rem); font-weight: bold; position: relative;"
-                id="koncertTitle">Przyszłe
-                koncerty:</span>
+            <span class="titles" id="koncertTitle">Przyszłe koncerty:</span>
             <hr style="width: 35%;">
             <!-- v pion -->
             <div class="koncerty">
@@ -234,7 +224,7 @@
             </div>-->
         </div>
         <div id="boxZdjecia" class="box">
-            <span style="font-weight: bold; font-size: clamp(1.6rem, 3vw, 3.2rem);" id="zdjecia">Zdjęcia</span>
+            <span class="titles" id="zdjecia">Zdjęcia</span>
             <hr style="width: 35%;">
             <hr style="width: 0%;"><!-- too lazy to do a fix here, maybe later-->
             <div class="swiper swiper-three">
@@ -252,7 +242,7 @@
         </div>
 
         <div id="boxProby" class="box">
-            <span style="font-weight: bold; font-size: clamp(1.6rem, 3vw, 3.2rem);" id="probyTitle">Nasze
+            <span class="titles" id="probyTitle">Nasze
                 próby</span>
             <hr style="width: 35%;">
             <div class="swiper swiper-two">
@@ -265,9 +255,7 @@
                                 <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
                             </div>
                             <div class="right">
-                                <p id="opis1">info info info info info info info info info info info info info info
-                                    info
-                                    info info info info info info info info info</p>
+                                <p id="opis1">info info info info info info info info</p>
                             </div>
                         </div>
                     </div>
@@ -278,9 +266,7 @@
                                 <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
                             </div>
                             <div class="right">
-                                <p id="opis2">info info info info info info info info info info info info info info
-                                    info
-                                    info info info info info info info info info</p>
+                                <p id="opis2">info info info info info info info info</p>
                             </div>
                         </div>
                     </div>
@@ -291,9 +277,7 @@
                                 <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
                             </div>
                             <div class="right">
-                                <p id="opis3">info info info info info info info info info info info info info info
-                                    info
-                                    info info info info info info info info info</p>
+                                <p id="opis3">info info info info info info info info</p>
                             </div>
                         </div>
                     </div>
@@ -308,16 +292,11 @@
         </div>
 
         <div id="boxGrupy" class="box">
-            <span style="font-weight: bold; font-size: clamp(1.6rem, 3vw, 3.2rem);" id="glosyTitle">Nasze
-                głosy</span>
+            <span class="titles" id="glosyTitle">Nasze głosy</span>
             <hr style="width: 35%;">
             <g id="sopran">
                 <h2 id="sopranTitle">Nasze soprany:</h2>
                 <ol>
-                    <li>
-                        <img src="pics/">
-                        <h3>Miłka</h3>
-                    </li>
                     <li>
                         <img src="pics/">
                         <h3>Anetka</h3>
@@ -329,6 +308,10 @@
                     <li>
                         <img src="pics/">
                         <h3>Jowi</h3>
+                    </li>
+                    <li>
+                        <img src="pics/">
+                        <h3>Miłka</h3>
                     </li>
                     <li>
                         <img src="pics/">
@@ -406,8 +389,7 @@
     <footer>
         <div class="footer-left">
             <span style="position: relative; font-size: clamp(1.6rem, 2vw, 2.5rem);" id="findTitle">Można nas
-                znaleźć
-                na:</span>
+                znaleźć na:</span>
             <g class="links">
                 <a href="https://www.facebook.com/people/Polonia-Cantante/100076230652057/"
                     style="margin-top: 7px; transform:scale(1.1)">
@@ -431,21 +413,23 @@
             </g>
 
             <img id="test" src="pics/kartaEnhanced.jpg"></img>
-            <label for="test"> <a href="pics/kartaEnhanced.jpg" download="karta_wizytówka">Download</a>
+            <label id="a" for="test"> <a href="pics/kartaEnhanced.jpg" download="karta_wizytówka">Download</a>
             </label>
             <br>
-            <button><a style="font-size: clamp(1.1rem, 1.5vw, 1.8rem);" href="#" id="doGory">Return to
-                    top</a></button>
+            <button>
+                <a style="font-size: clamp(1.1rem, 1.5vw, 1.8rem);" href="#" id="doGory">Return to top</a>
+            </button>
         </div>
 
         <div class="footer-right">
             © &middot; 2025
             <br>
-            <span style="position: relative; top: 50px;">Strona przez Bernard Kutrzeba-Kotowski
+            <span style="position: relative; top: 50px; font-size: clamp(0.8rem, 1.3vw, 1.2rem);">Strona przez Bernard
+                Kutrzeba-Kotowski
                 <br>
                 &middot;
                 <br><!--pierwsze dwie to v slowa obok a po drugiej kropce to v ogolnie strony-->
-                v poziom: 0.8.8; v pion: 0.8.3</span>
+                v poziom: 0.8.8.2; v pion: 0.8.3.2</span>
         </div>
     </footer>
 

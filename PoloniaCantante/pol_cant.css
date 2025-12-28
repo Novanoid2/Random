@@ -16,6 +16,26 @@ img {
     border-radius: 20px;
 }
 
+a {
+    /*this is for the lang box, i got confused one time*/
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: red;
+}
+
+hr {
+    /*border: 2px solid rgba(172, 172, 172, 0.719);*/
+    border: 2px solid red
+}
+
+.titles {
+    font-weight: bold;
+    font-size: clamp(1.6rem, 3vw, 3.2rem);
+}
+
 .logo {
     z-index: 2;
     overflow: hidden;
@@ -85,6 +105,17 @@ img {
     height: 110%;
     min-width: 40px;
     min-height: 20px;
+}
+
+.navBox {
+    background-color: white;
+    position: absolute;
+    height: auto;
+    width: auto;
+    border-radius: 20px;
+    font-size: clamp(1.1rem, 1.5vw, 1.8rem);
+    z-index: 2;
+    box-shadow: 0px 0px 25px black;
 }
 
 #errorMsg {
@@ -211,7 +242,6 @@ max-width: 100%;
     width: 90%;
 }
 
-
 #boxONas-inner img {
     left: 0;
     margin-inline: auto;
@@ -229,12 +259,6 @@ max-width: 100%;
     top: auto;
     height: auto;
     flex: 1;
-}
-
-.titleONas {
-    position: relative;
-    font-weight: bold;
-    font-size: clamp(1.6rem, 3vw, 3.2rem);
 }
 
 .infoONas {
@@ -388,6 +412,17 @@ li a {
     left: -15px;
 }
 
+g ol {
+    gap: 5px;
+}
+
+g ol li {
+    flex: 1 0 10%;
+    margin: 15px 5px;
+    height: 100px;
+    background-color: blue;
+}
+
 /* tez pion jesli za male*/
 footer {
     margin-top: 250px;
@@ -397,7 +432,7 @@ footer {
     border-radius: 15px;
     color: black;
     text-align: center;
-    padding-top: 20px;
+    padding: 20px 0 4vh 0;
     display: flex;
 }
 
@@ -456,21 +491,6 @@ footer button {
     margin-right: 10px;
 }
 
-a {
-    /*this is for the lang box, i got confused one time*/
-    text-decoration: none;
-    color: black;
-}
-
-a:hover {
-    color: red;
-}
-
-hr {
-    /*border: 2px solid rgba(172, 172, 172, 0.719);*/
-    border: 2px solid red
-}
-
 @media (max-width: 1200px) {
     .infoONas {
         line-height: 25px;
@@ -515,6 +535,10 @@ hr {
         width: 40px;
         height: 30px;
     }
+
+    g ol li {
+        flex: 1 0 20%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -533,18 +557,33 @@ hr {
     }
 
     footer img {
-        width: 60%;
-        height: 60%;
+        width: 50%;
+        height: 50%;
     }
 
     footer button {
-        margin-top: 0px;
+        margin-top: -2px;
+    }
+}
+
+@media (max-width: 650px) {
+    #welcome {
+        font-size: 1.5rem;
+        transform: translateY(-25%);
+    }
+
+    #welcomeDiv {
+        height: 60px;
     }
 }
 
 @media (max-width: 480px) {
 
     /* h1 mniejsze + <br>; koncerty: text mniejszy + zdjecie pod spodem a jesli nie to tylko tekst mniejszy; grupy: alty: <br> w srodku*/
+    #navBar {
+        right: 10px;
+    }
+
     .logo {
         top: -390px;
         left: -230px;
@@ -561,18 +600,18 @@ hr {
         height: 20vh;
     }
 
+    g ol li {
+        flex: 1 0 30%;
+    }
+
     .footer-left,
     .footer-right {
         padding-bottom: 80px;
     }
 
     footer img {
-        width: 70%;
-        height: 70%;
+        width: 60%;
+        height: 60%;
         top: -20px;
-    }
-
-    footer button {
-        transform: translateY(-100%);
     }
 }
