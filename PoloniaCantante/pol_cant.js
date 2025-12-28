@@ -132,10 +132,6 @@ if (window.innerWidth < 1050) {
     document.getElementById("navBar").style.gap = "15px";
 }
 
-//break tags for grupy
-if (window.innerWidth < 950) document.getElementById("breakSopran").removeAttribute("hidden");
-if (window.innerWidth < 500) document.getElementById("breakAlty").removeAttribute("hidden");
-
 window.addEventListener('resize', () => { location.reload(); });
 
 document.documentElement.style.setProperty(`--dl`, `PL`);
