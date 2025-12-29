@@ -1,4 +1,4 @@
-/*current todo: fix navBoxes pos when pionowo, media queries, search for bugs/things to shorten, done
+/*current todo: media queries, search for bugs/things to shorten, done
 zrobic rozne wersje*/
 const langs = ["PL", "EN", "NL", "FR"];
 const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
@@ -51,16 +51,16 @@ setTimeout(() => {
         const boxPos = box.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-        if (window.innerWidth < 1050) {
+        if (window.innerWidth < 950) {
             if (helpBox === 'langBox') {
-                box.style.left = `${buttonPos.left - boxPos.width - 70}px`;
+                box.style.left = `${buttonPos.left - boxPos.width - 60}px`;
                 box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
                                     <polygon points="20,10 0,0 0,20" fill="white" />
                                   </svg>`;
-                box.style.top = `${buttonPos.top + scrollY}px`;
+                box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
             } else {
                 box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
-                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
+                    box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
                                     <polygon points="20,10 0,0 0,20" fill="white" />
                                   </svg>`;
                 box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
@@ -108,7 +108,11 @@ async function makeErrorDiv(info) {
 function toggleBox(id) {
     let arr = ["langBox", "contactInfoBox", "pomocBox"];
     arr.splice(arr.indexOf(id), 1);
-    for (let other of arr) { document.getElementById(other).setAttribute("hidden", ""); document.getElementById(other).style.opacity = 0; }
+    for (let other of arr) {
+        document.getElementById(other).setAttribute("hidden", "");
+        document.getElementById(other).style.opacity = 0;
+    }
+
     const box = document.getElementById(id);
 
     if (box.hasAttribute("hidden")) {
@@ -116,20 +120,13 @@ function toggleBox(id) {
         setTimeout(() => box.style.opacity = 1, 10);
     } else {
         box.setAttribute("hidden", "");
-        box.style.opacity = 0;
+        setTimeout(() => box.style.opacity = 0, 10);
     }
 }
 
 function scrollToId(id) {
     if (id === 'boxKoncerty') document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
     else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-//.navBar style for small screens
-if (window.innerWidth < 1050) {
-    document.getElementById("navBar").style.flexDirection = "column-reverse";
-    document.getElementById("navBar").style.alignItems = "center";
-    document.getElementById("navBar").style.gap = "15px";
 }
 
 window.addEventListener('resize', () => { location.reload(); });

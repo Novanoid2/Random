@@ -113,7 +113,7 @@ hr {
     height: auto;
     width: auto;
     border-radius: 20px;
-    font-size: clamp(1.1rem, 1.5vw, 1.8rem);
+    font-size: clamp(1rem, 1.5vw, 1.8rem);
     z-index: 2;
     box-shadow: 0px 0px 25px black;
 }
@@ -239,7 +239,7 @@ max-width: 100%;
     align-items: center;
     justify-content: center;
     padding: 20px 0;
-    width: 90%;
+    width: 95%;
 }
 
 #boxONas-inner img {
@@ -432,7 +432,7 @@ footer {
     border-radius: 15px;
     color: black;
     text-align: center;
-    padding: 20px 0 4vh 0;
+    padding-top: 20px;
     display: flex;
 }
 
@@ -519,16 +519,15 @@ footer button {
 }
 
 @media (max-width: 950px) {
-
-    /* grupy: soprany: <br> na srodku */
     .but {
         font-size: clamp(1.1rem, 2.3vw, 2rem);
         max-width: 130px;
     }
 
-    .koncerty img {
-        width: 65%;
-        height: 65%;
+    #navBar {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 15px;
     }
 
     .svgNav {
@@ -536,14 +535,24 @@ footer button {
         height: 30px;
     }
 
+    .koncerty img {
+        width: 65%;
+        height: 65%;
+    }
+
     g ol li {
         flex: 1 0 20%;
     }
+
+    footer {
+        padding: 20px 0 4vh 0;
+    }
+
 }
 
 @media (max-width: 768px) {
 
-    /* infoonas: zdjecie pod, proby: zdjecie pod, i oczywiscie nav pionowo*/
+    /* proby: zdjecie pod, i oczywiscie nav pionowo*/
     .logo {
         top: -370px;
         left: -210px;
@@ -556,7 +565,18 @@ footer button {
         top: 10px;
     }
 
-    footer img {
+    #boxONas-inner {
+        flex-direction: column-reverse;
+        gap: 20px;
+        margin: 0 20px;
+    }
+
+    .proby {
+        flex-direction: column-reverse;
+        padding: 0;
+    }
+
+    | footer img {
         width: 50%;
         height: 50%;
     }
@@ -575,11 +595,15 @@ footer button {
     #welcomeDiv {
         height: 60px;
     }
+
+    footer {
+        padding: 20px 0 5vh 0;
+    }
 }
 
 @media (max-width: 480px) {
 
-    /* h1 mniejsze + <br>; koncerty: text mniejszy + zdjecie pod spodem a jesli nie to tylko tekst mniejszy; grupy: alty: <br> w srodku*/
+    /*koncerty: text mniejszy + zdjecie pod spodem a jesli nie to tylko tekst mniejszy;*/
     #navBar {
         right: 10px;
     }
