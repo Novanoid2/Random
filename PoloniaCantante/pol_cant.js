@@ -33,7 +33,7 @@ fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/Po
         }
     }).catch(err => makeErrorDiv(err + " from languages.json"));
 
-const ML = window.innerWidth <= 1350 ? -26 : -21; //ML = margin-left for lang links
+const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
 document.getElementById("langBox").innerHTML += `<ul style="font-family: Kepler;">
           <a href='#' style="margin-left: -35px;"><strong>>${current_lang}<</strong></a>
           <br>
