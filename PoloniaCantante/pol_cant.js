@@ -1,5 +1,5 @@
-/*current todo: media queries, search for bugs/things to shorten, done
-zrobic rozne wersje*/
+/*current todo: add vue.js for no interaction js--html \/ search for bugs/things to shorten, done
+zrobic rozne wersje       https://chatgpt.com/c/6956c1a2-a228-8326-8f49-371d8b72225a*/
 const langs = ["PL", "EN", "NL", "FR"];
 const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
@@ -87,6 +87,7 @@ setTimeout(() => {
     }
 
     if (window.innerWidth <= 680) {
+        console.log(1321);
         const w = document.getElementById("welcome");
         if (current_lang === 'PL') w.innerHTML = "Wiatmy na stronie<br>Polonia Cantante!";
         else if (current_lang === 'EN') w.innerHTML = "Welcome to the<br>Polonia Cantane website!";
