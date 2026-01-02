@@ -1,4 +1,4 @@
-//current todo: add placeholders in grupy, search for bugs/things to shorten, zrobic rozne wersje, gotowy
+//current todo: add placeholders in grupy, button go back in bilety, fn to check from time to time the json's, search for bugs/things to shorten, zrobic rozne wersje, gotowy
 const langs = ["PL", "EN", "NL", "FR"];
 const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
