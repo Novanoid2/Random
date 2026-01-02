@@ -1,4 +1,4 @@
-/*current todo: add vue.js for no interaction js--html \/ search for bugs/things to shorten, done
+/*current todo: add placeholders in grupy, search for bugs/things to shorten, done
 zrobic rozne wersje       https://chatgpt.com/c/6956c1a2-a228-8326-8f49-371d8b72225a*/
 const langs = ["PL", "EN", "NL", "FR"];
 const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
@@ -11,27 +11,31 @@ fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/Po
         makeErrorDiv('Mrn: Fetch failed in koncertyInfo.json');
     })
     .then(data => {
-        for (let key in data) {
-            let el = document.getElementById(key);
-            if (el) {
-                if (/prz[0-3]b/.test(key)) el.innerHTML = data[key].replace("e", "€");
-                else el.innerHTML = data[key];
-            } else console.warn(`Mrn: Element with id '${key}' not found in html.`);
-        }
-    }).catch(err => makeErrorDiv(err + 'from koncertyInfo.json'));
+        const koncert = document.querySelectorAll(".koncerty");
+        data.concerts.forEach((info, i) => {
+            const box = koncert[i];
+            if (!box) return;
 
-fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/languages.json`)
-    .then(raw => {
-        if (raw.ok) return raw.json();
-        makeErrorDiv('Mrn: Fetch failed in languages.json');
-    }).then(data => {
-        data = data[current_lang]
-        for (let key in data) {
-            let el = document.getElementById(key);
-            if (el) el.innerHTML = data[key];
-            else console.warn(`Mrn: Element with id '${key}' not found in html.`);
-        }
-    }).catch(err => makeErrorDiv(err + " from languages.json"));
+            box.querySelector("img").src = info.src;
+            box.querySelector(".dates").innerHTML = info.date;
+            box.querySelector(".times").innerHTML = info.time;
+            box.querySelector(".adresses").innerHTML = info.adress;
+            box.querySelector(".prices").innerHTML = "€" + info.price;
+        });
+    }).then(() => {
+        fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/languages.json`)
+            .then(raw => {
+                if (raw.ok) return raw.json();
+                makeErrorDiv('Mrn: Fetch failed in languages.json');
+            }).then(data => {
+                data = data[current_lang]
+                for (let key in data) {
+                    let el = document.getElementById(key);
+                    if (el) el.innerHTML = data[key];
+                    else console.warn(`Mrn: Element with id '${key}' not found in html.`);
+                }
+            }).catch(err => makeErrorDiv(err + " from languages.json"));
+    });
 
 const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
 document.getElementById("langBox").innerHTML += `<ul style="font-family: Kepler;">
@@ -60,7 +64,7 @@ setTimeout(() => {
                 box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
             } else {
                 box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
-                    box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
+                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
                                     <polygon points="20,10 0,0 0,20" fill="white" />
                                   </svg>`;
                 box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
