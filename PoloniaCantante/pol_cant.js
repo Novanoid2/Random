@@ -46,7 +46,7 @@ setInterval(() => {
                     }
                 }).catch(err => makeErrorDiv(err + " from languages.json"));
         });
-})
+}, 60000)
 
 const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
 document.getElementById("langBox").innerHTML += `<ul style="font-family: Kepler;">
@@ -103,7 +103,6 @@ function adjust() {
         }
 
         if (window.innerWidth <= 680) {
-            console.log(1321);
             const w = document.getElementById("welcome");
             if (current_lang === 'PL') w.innerHTML = "Wiatmy na stronie<br>Polonia Cantante!";
             else if (current_lang === 'EN') w.innerHTML = "Welcome to the<br>Polonia Cantane website!";
@@ -124,7 +123,7 @@ async function makeErrorDiv(info) {
 }
 
 document.querySelectorAll("g ol li img").forEach(img => {
-    img.src = "pics/kittyph.gif";
+    img.src = "pics/placeholder.jpg";
     img.alt = "wtf happened";
 });
 
@@ -157,5 +156,5 @@ function scrollToId(id) {
 
 window.addEventListener('resize', () => { toggleBox("all"); adjust(); });
 
-document.documentElement.style.setProperty(`--dl`, `PL`);
-console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
+//document.documentElement.style.setProperty(`--dl`, `PL`);
+//console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
