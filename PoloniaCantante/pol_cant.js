@@ -61,6 +61,10 @@ document.getElementById("langBox").innerHTML += `<ul style="font-family: Kepler;
           <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: ${ML}px;">${langs[2]}</a>
         </ul>`;
 
+for(box of document.querySelectorAll("#langBox a")){
+    
+}
+
 function adjustBoxes(delSVG) {
     for (let helpBox of ["langBox", "contactInfoBox", "pomocBox"]) {
         const box = document.getElementById(helpBox);
@@ -92,18 +96,14 @@ function adjustBoxes(delSVG) {
         }
 
         if (window.innerWidth < 950) {
-            box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: 17px; right: -30px;">
-                                    <polygon points="20,10 0,0 0,20" fill="white" />
-                                  </svg>`;
+            for (box of document.querySelectorAll(".navBoxes svg")) {
+                box.style.top = `17px;`;
+                box.style.right = `-30px;`;
+            }
         } else {
-            if (helpBox === 'langBox') {
-                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: -18px; right: ${boxPos.width / 3.8}px;">
-                                <polygon points="15,0 0,20 30,20" fill="white" />
-                             </svg>`;
-            } else {
-                box.innerHTML += `<svg width="30" height="20" style="position: absolute; top: -19px; right: ${boxPos.width / 2 - 15}px;">
-                                <polygon points="15,0 0,20 30,20" fill="white" />
-                             </svg>`;
+            for (box of document.querySelectorAll(".navBoxes svg")) {
+                box.style.top = `-19px;`;
+                box.style.right = `${boxPos.width / 2 - 15}px;`;
             }
         }
 
