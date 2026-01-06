@@ -1,10 +1,10 @@
-//current todo: SVG na stałe w HTML, w JS zmieniaj `left / top`, search for bugs/things to shorten, zrobic rozne wersje, gotowy
+//current todo: SVG na stałe w HTML, w JS zmieniaj `left / top`, search for bugs/things to shorten, c&p dif lang, dif ver, gotowy
 const langs = ["PL", "EN", "NL", "FR"];
-const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
+    const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
 langs.splice(langs.indexOf(current_lang), 1);
-let current1, current2;
-let tmp1, tmp2;
+let currentJson1, currentJson2;
+let tmpJson1, tmpJson2;
 
 function fetchDataAndApply() {
     fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
@@ -13,8 +13,8 @@ function fetchDataAndApply() {
             showErrorDiv('Mrn: Fetch failed in koncertyInfo.json');
         })
         .then(data => {
-            tmp1 = data;
-            if (tmp1 !== current1) {
+            tmpJson1 = data;
+            if (tmpJson1 !== currentJson1) {
                 const koncert = document.querySelectorAll(".koncerty");
                 data.concerts.forEach((info, i) => {
                     const box = koncert[i];
@@ -26,8 +26,8 @@ function fetchDataAndApply() {
                     box.querySelector(".adresses").innerHTML = info.adress;
                     box.querySelector(".prices").innerHTML = "€" + info.price;
                 });
-                current1 = tmp1;
-            }
+                currentJson1 = tmpJson1;
+            } //else: doesnt do anything
         }).catch(err => showErrorDiv(err + " from koncerty.json"))
         .then(() => {
             fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/languages.json`)
@@ -36,33 +36,32 @@ function fetchDataAndApply() {
                     showErrorDiv('Mrn: Fetch failed in languages.json');
                 }).then(data => {
                     data = data[current_lang];
-                    tmp2 = data;
-                    for (let key in data) {
-                        let el = document.getElementById(key);
-                        if (el) el.innerHTML = data[key];
-                        else console.warn(`Mrn: Element with id '${key}' not found in html.`);
-                    }
+                    tmpJson2 = data;
+                    if (tmpJson2 !== currentJson2) {
+                        for (let key in data) {
+                            let el = document.getElementById(key);
+                            if (el) el.innerHTML = data[key];
+                            else console.warn(`Mrn: Element with id '${key}' not found in html.`);
+                        }
+                        currentJson2 = tmpJson2;
+                    } //else: doesnt do anything
                 }).catch(err => showErrorDiv(err + " from languages.json"));
         });
 }
+
 fetchDataAndApply();
 setInterval(() => {
-    fetchDataAndApply();
-}, 60000)
+    fetchDataAndApply(); //check for updates every 60s
+}, 60000);
 
-const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
-document.getElementById("langBox").innerHTML += `<ul style="font-family: Kepler;">
-          <a href='#' style="margin-left: -35px;"><strong>>${current_lang}<</strong></a>
-          <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[0]}.html" style="margin-left: ${ML}px;">${langs[0]}</a>
-          <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[1]}.html" style="margin-left: ${ML}px;">${langs[1]}</a>
-          <br>
-          <a href="http://127.0.0.1:5500/PoloniaCantante/pol_cant${langs[2]}.html" style="margin-left: ${ML}px;">${langs[2]}</a>
-        </ul>`;
-
-for(box of document.querySelectorAll("#langBox a")){
-    
+//Set the the correct language redirection links
+let order = 0;
+for (let tag of document.getElementById("langBox").querySelectorAll("a")) {
+    if (order != 0) {
+        tag.href.replace("lang", `${langs[order]}`);
+        tag.innerHTML = `${langs[order]}`;
+    } else tag.innerHTML = `${current_lang}`;
+    order++;
 }
 
 function adjustBoxes(delSVG) {
@@ -73,6 +72,7 @@ function adjustBoxes(delSVG) {
         const boxPos = box.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
 
+        //Adjust the navBoxes positions
         if (window.innerWidth < 950) {
             if (helpBox === 'langBox') {
                 box.style.left = `${buttonPos.left - boxPos.width - 60}px`;
@@ -95,34 +95,35 @@ function adjustBoxes(delSVG) {
             else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
         }
 
-        if (window.innerWidth < 950) {
-            for (box of document.querySelectorAll(".navBoxes svg")) {
-                box.style.top = `17px;`;
-                box.style.right = `-30px;`;
-            }
-        } else {
-            for (box of document.querySelectorAll(".navBoxes svg")) {
-                box.style.top = `-19px;`;
-                box.style.right = `${boxPos.width / 2 - 15}px;`;
+        //Adjust the SVG positions
+        for (svg of document.querySelectorAll(".navBoxes svg")) {
+            if (window.innerWidth < 950) {
+                svg.style.top = `17px;`;
+                svg.style.right = `-30px;`;
+            } else {
+                svg.style.top = `-19px;`;
+                svg.style.right = `${boxPos.width / 2 - 15}px;`;
             }
         }
 
-        box.setAttribute("hidden", "");
+        box.setAttribute("hidden", ""); //hides navBoxes lol
     }
 
+    //Adjust the margin-left for each link because im too lazy to fix the css
     const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
-    let order = 1;
+    let orderLocal = 0;
     for (let tag of document.getElementById("langBox").querySelectorAll("a")) {
-        order != 1 ? tag.style.marginLeft = `${ML}px` : null;
-        order++;
+        orderLocal != 0 ? tag.style.marginLeft = `${ML}px` : null;
+        orderLocal++;
     }
 }
 
 setTimeout(() => {
     adjustBoxes();
 }, 75); //please dont abuse this time frame🙏
-let allowError = true;
 
+//Shows an error message on (top of) the screen
+let allowError = true;
 async function showErrorDiv(info) {
     if (allowError) {
         allowError = false;
@@ -131,14 +132,16 @@ async function showErrorDiv(info) {
     } else console.log("Mrn: Error div blocked from " + info);
 }
 
+//set pictures for in grupy
 document.querySelectorAll("g ol li img").forEach(img => {
     img.src = "pics/placeholder.jpg";
     img.alt = "wtf happened";
 });
 
+//toggle navBoxes visibility when one of them is pressed
 function toggleBox(id) {
     let arr = ["langBox", "contactInfoBox", "pomocBox"];
-    if (id === "all") for (let box of arr) { document.getElementById(box).removeAttribute("hidden"); document.getElementById(box).style.opacity = 0; }
+    if (id === "all") for (let box of arr) document.getElementById(box).removeAttribute("hidden");
     else {
         arr.splice(arr.indexOf(id), 1);
         for (let other of arr) {
@@ -157,11 +160,13 @@ function toggleBox(id) {
     }
 }
 
+//scrolls ig? w- wtf am i supposed to explain
 function scrollToId(id) {
     if (id === 'boxKoncerty') document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
     else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
+//pretty self-explanatory
 window.addEventListener('resize', () => { toggleBox("all"); setTimeout(() => { adjustBoxes(true) }, 75); });
 
 //document.documentElement.style.setProperty(`--dl`, `PL`);
