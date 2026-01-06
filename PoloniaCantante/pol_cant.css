@@ -71,6 +71,11 @@ hr {
     padding-left: 300px;
 }
 
+.navBox svg {
+    position: absolute;
+    pointer-events: none;
+}
+
 .but {
     cursor: pointer;
     background-color: transparent;

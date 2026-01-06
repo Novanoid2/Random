@@ -1,6 +1,6 @@
-//current todo: SVG na stałe w HTML, w JS zmieniaj `left / top`, search for bugs/things to shorten, c&p dif lang, dif ver, gotowy
+//current todo: search for bugs/things to shorten, c&p dif lang, dif ver, gotowy
 const langs = ["PL", "EN", "NL", "FR"];
-    const linkLang = window.location.href.slice(-7).replace(/\.html/, "");
+const linkLang = window.location.href.replace(/\.html|htm/, "").slice(-2);
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentJson1, currentJson2;
@@ -55,19 +55,18 @@ setInterval(() => {
 }, 60000);
 
 //Set the the correct language redirection links
-let order = 0;
+let order = -1;
 for (let tag of document.getElementById("langBox").querySelectorAll("a")) {
-    if (order != 0) {
-        tag.href.replace("lang", `${langs[order]}`);
+    if (order != -1) {
+        tag.href = tag.href.replace(/LANG/, `${langs[order]}`);
         tag.innerHTML = `${langs[order]}`;
-    } else tag.innerHTML = `${current_lang}`;
+    } else tag.innerHTML = `>${current_lang}<`;
     order++;
 }
 
-function adjustBoxes(delSVG) {
+function adjustBoxes() {
     for (let helpBox of ["langBox", "contactInfoBox", "pomocBox"]) {
         const box = document.getElementById(helpBox);
-        if (delSVG) box.querySelector("svg")?.remove();
         const buttonPos = helpBox === 'langBox' ? document.getElementById("lang").getBoundingClientRect() : (helpBox === "contactInfoBox" ? document.getElementById("dolacz").getBoundingClientRect() : document.getElementById("pomoc").getBoundingClientRect());
         const boxPos = box.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
@@ -95,16 +94,25 @@ function adjustBoxes(delSVG) {
             else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
         }
 
-        //Adjust the SVG positions
-        for (svg of document.querySelectorAll(".navBoxes svg")) {
-            if (window.innerWidth < 950) {
-                svg.style.top = `17px;`;
-                svg.style.right = `-30px;`;
-            } else {
-                svg.style.top = `-19px;`;
-                svg.style.right = `${boxPos.width / 2 - 15}px;`;
-            }
+        const svg = box.querySelector("svg");
+        if (!svg) continue;
+
+        svg.style.position = "absolute";
+
+        const polygon = svg.querySelector("polygon");
+
+        if (window.innerWidth < 950) {
+            polygon.setAttribute("points", "20,10 0,0 0,20");
+            svg.style.top = "17px";
+            svg.style.left = "auto";
+            svg.style.right = "-30px";
+        } else {
+            polygon.setAttribute("points", "15,0 0,20 30,20");
+            svg.style.top = "-19px";
+            svg.style.right = "auto";
+            svg.style.left = `${boxPos.width / 2 - 15}px`;
         }
+
 
         box.setAttribute("hidden", ""); //hides navBoxes lol
     }
@@ -167,7 +175,7 @@ function scrollToId(id) {
 }
 
 //pretty self-explanatory
-window.addEventListener('resize', () => { toggleBox("all"); setTimeout(() => { adjustBoxes(true) }, 75); });
+window.addEventListener('resize', () => { toggleBox("all"); setTimeout(() => { adjustBoxes() }, 75); });
 
 //document.documentElement.style.setProperty(`--dl`, `PL`);
 //console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
