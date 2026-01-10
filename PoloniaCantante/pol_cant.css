@@ -121,6 +121,19 @@ hr {
     font-size: clamp(1rem, 1.8vw, 1.4rem);
     z-index: 3;
     box-shadow: 0px 0px 25px black;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* zapobiega bardzo wąskim boxom */
+    max-width: 380px;
+}
+
+.navBoxTitle {
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    line-height: 1.25;
 }
 
 #errorMsg {

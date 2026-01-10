@@ -22,7 +22,7 @@
         "sopranTitle": "Soprany",
         "altTitle": "Alty 1",
         "tenorTitle": "Alty 2",
-        "dolacz2": "Chcesz dołączyć?",
+        "dolaczSeperate": "Chcesz dołączyć?",
         "findTitle": "Można nas znaleźć na:",
         "doGory": "Wróć na górę"
     },
@@ -49,6 +49,7 @@
         "sopranTitle": "Sopranos",
         "altTitle": "Altos 1",
         "tenorTitle": "Altos 2",
+        "dolaczSeperate": "Want to join?",
         "findTitle": "You can find us on:",
         "doGory": "Back to top"
     },
@@ -75,6 +76,7 @@
         "sopranTitle": "Sopranos",
         "altTitle": "Altos 1",
         "tenorTitle": "Altos 2",
+        "dolaczSeperate": "Voulez-vous rejoindre?",
         "findTitle": "Vous pouvez nous trouver sur:",
         "doGory": "Retour en haut"
     },
@@ -101,6 +103,7 @@
         "sopranTitle": "Sopranen",
         "altTitle": "Alten 1",
         "tenorTitle": "Alten 2",
+        "dolaczSeperate": "Wilt u mee doen?",
         "findTitle": "U kunt ons vinden op:",
         "doGory": "Terug naar boven"
     }

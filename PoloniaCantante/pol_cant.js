@@ -1,4 +1,4 @@
-//current todo: search for bugs/things to shorten, c&p dif lang, dif ver, gotowy
+//current todo: search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
 const langs = ["PL", "EN", "NL", "FR"];
 const linkLang = window.location.href.replace(/\.(html|htm)/, "").slice(-2).toUpperCase();
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
@@ -55,7 +55,7 @@ setInterval(() => {
 
 //Set the the correct language redirection links
 let order = -1;
-for (let tag of document.querySelectorAll("langBox a")) {
+for (let tag of document.querySelectorAll("#langBox a")) {
     if (order != -1) {
         tag.href = tag.href.replace(/LANG/, `${langs[order]}`);
         tag.innerHTML = `${langs[order]}`;
@@ -111,7 +111,7 @@ function adjustBoxes() {
     //Adjust the margin-left for each link because im too lazy to fix the css
     const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
     let orderLocal = 0;
-    for (let tag of document.querySelectorAll("langBox a")) {
+    for (let tag of document.querySelectorAll("#langBox a")) {
         orderLocal != 0 ? tag.style.marginLeft = `${ML}px` : null;
         orderLocal++;
     }
