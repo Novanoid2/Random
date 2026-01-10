@@ -1,10 +1,9 @@
 //current todo: search for bugs/things to shorten, c&p dif lang, dif ver, gotowy
 const langs = ["PL", "EN", "NL", "FR"];
-const linkLang = window.location.href.replace(/\.html|htm/, "").slice(-2);
+const linkLang = window.location.href.replace(/\.(html|htm)/, "").slice(-2).toUpperCase();
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentJson1, currentJson2;
-let tmpJson1, tmpJson2;
 
 function fetchDataAndApply() {
     fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
@@ -13,7 +12,7 @@ function fetchDataAndApply() {
             showErrorDiv('Mrn: Fetch failed in koncertyInfo.json');
         })
         .then(data => {
-            tmpJson1 = data;
+            let tmpJson1 = data;
             if (tmpJson1 !== currentJson1) {
                 const koncert = document.querySelectorAll(".koncerty");
                 data.concerts.forEach((info, i) => {
@@ -36,7 +35,7 @@ function fetchDataAndApply() {
                     showErrorDiv('Mrn: Fetch failed in languages.json');
                 }).then(data => {
                     data = data[current_lang];
-                    tmpJson2 = data;
+                    let tmpJson2 = data;
                     if (tmpJson2 !== currentJson2) {
                         for (let key in data) {
                             let el = document.getElementById(key);
@@ -56,7 +55,7 @@ setInterval(() => {
 
 //Set the the correct language redirection links
 let order = -1;
-for (let tag of document.getElementById("langBox").querySelectorAll("a")) {
+for (let tag of document.querySelectorAll("langBox a")) {
     if (order != -1) {
         tag.href = tag.href.replace(/LANG/, `${langs[order]}`);
         tag.innerHTML = `${langs[order]}`;
@@ -77,30 +76,23 @@ function adjustBoxes() {
                 box.style.left = `${buttonPos.left - boxPos.width - 60}px`;
                 box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
             } else {
-                box.style.transform = "none";
                 box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
                 box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
             }
 
         } else {
-            if (helpBox === 'langBox') {
-                box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2) - 5}px`;
-            } else {
-                box.style.left = `${buttonPos.left + buttonPos.width / 2}px`;
-                box.style.transform = `translateX(-50%)`;
-            }
+            if (helpBox === 'langBox') box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2) - 5}px`;
+            else box.style.left = `${buttonPos.left + buttonPos.width / 2 - boxPos.width / 2}px`;
 
             if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
             else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
         }
 
+        //Adjust svg position
+        const newBoxPos = box.getBoundingClientRect();
         const svg = box.querySelector("svg");
         if (!svg) continue;
-
-        svg.style.position = "absolute";
-
         const polygon = svg.querySelector("polygon");
-
         if (window.innerWidth < 950) {
             polygon.setAttribute("points", "20,10 0,0 0,20");
             svg.style.top = "17px";
@@ -110,9 +102,8 @@ function adjustBoxes() {
             polygon.setAttribute("points", "15,0 0,20 30,20");
             svg.style.top = "-19px";
             svg.style.right = "auto";
-            svg.style.left = `${boxPos.width / 2 - 15}px`;
+            svg.style.left = `${newBoxPos.width / 2 - 15}px`;
         }
-
 
         box.setAttribute("hidden", ""); //hides navBoxes lol
     }
@@ -120,15 +111,13 @@ function adjustBoxes() {
     //Adjust the margin-left for each link because im too lazy to fix the css
     const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
     let orderLocal = 0;
-    for (let tag of document.getElementById("langBox").querySelectorAll("a")) {
+    for (let tag of document.querySelectorAll("langBox a")) {
         orderLocal != 0 ? tag.style.marginLeft = `${ML}px` : null;
         orderLocal++;
     }
 }
 
-setTimeout(() => {
-    adjustBoxes();
-}, 75); //please dont abuse this time frame🙏
+requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement right after load
 
 //Shows an error message on (top of) the screen
 let allowError = true;
@@ -141,10 +130,10 @@ async function showErrorDiv(info) {
 }
 
 //set pictures for in grupy
-document.querySelectorAll("g ol li img").forEach(img => {
+document.querySelectorAll("g ol li img").forEach(img => { 
     img.src = "pics/placeholder.jpg";
-    img.alt = "wtf happened";
-});
+    // img.src = `pics/${img.alt.toLowerCase().strip()}.png` || `pics/${img.alt.toLowerCase().strip()}.jpg`
+ });
 
 //toggle navBoxes visibility when one of them is pressed
 function toggleBox(id) {
@@ -175,7 +164,8 @@ function scrollToId(id) {
 }
 
 //pretty self-explanatory
-window.addEventListener('resize', () => { toggleBox("all"); setTimeout(() => { adjustBoxes() }, 75); });
+let resizeRAF;
+window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
 //document.documentElement.style.setProperty(`--dl`, `PL`);
 //console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
