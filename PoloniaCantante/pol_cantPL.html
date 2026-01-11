@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <nav id="navBar"><!--make it pop out pionowo na mniejszych ekranach-->
+        <nav id="navBar"> <!--nav bar ig?-->
             <button id="oNas" onclick="scrollToId('boxONas-outer')" class="but">O nas</button>
             <button id="koncerty" onclick="scrollToId('boxKoncerty')" class="but">Koncerty & Bilety</button>
             <button id="zdjecia" onclick="scrollToId('boxZdjecia')" class="but">Zdjęcia</button>
@@ -33,7 +33,7 @@
                 <svg width="30" height="20" style="position: absolute;">
                     <polygon points="15,0 0,20 30,20" fill="white" />
                 </svg>
-                <div id="pomocBoxTitle" class="navBoxTitle">Można nas wesprzeć wpłacając na to konto:</div>
+                <div id="pomocBoxTitle">Można nas wesprzeć wpłacając na to konto:</div>
                 <hr style="width: 85%;">
                 <span style="padding: 0.3em 0;">&middot; BE10 xxxx xxxx xxxx</span>
             </div>
@@ -44,14 +44,14 @@
                     <polygon points="15,0 0,20 30,20" fill="white" />
                 </svg>
                 <b><span id="contactTitle">Kontakt z nami:</span></b>
-                <hr style="width: 80%;">
+                <hr style="width: 85%;">
                 &middot; +32 nie wiem
                 <br>
                 lub
                 <br><!-- change the recipient here ofc-->
                 <a style="margin: 0 5px;"
-                    href=" mailto:recipient@example.com?subject=Chciał(a) bym dołączyć do waszego chóru">&middot;
-                    jakis_tam@email.com</a>
+                    href="mailto:recipient@example.com?subject=Chciał(a) bym dołączyć do waszego chóru">
+                    &middot; jakis_tam@email.com</a>
             </div>
 
             <div id="langBox" class="navBox"
@@ -446,13 +446,12 @@
             © &middot; 2025
             <br>
             <span style="position: relative; top: 50px; font-size: clamp(0.8rem, 1.3vw, 1.2rem);">
-                Strona przez Bernard Kutrzeba-Kotowski</span>
+                Strona zrobiona przez Bernard Kutrzeba-Kotowski</span>
             <!--pierwsze dwie to v slowa obok a po drugiej kropce to v ogolnie strony
-            v poziom: 0.8.8.7.2; v pion: 0.8.3.7.2-->
+            v poziom: 0.8.8.7.3; v pion: 0.8.3.7.3-->
         </div>
     </footer>
-    <!-- "yonkagor is absolutely peak and nothing should say otherwise"
-     -Srl on discord-->
+
     <script type="module">
         import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.mjs'
 
@@ -498,6 +497,7 @@
     </script>
     <!--<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>-->
     <script src="pol_cant.js"></script>
+    <!-- "yonkagor is absolutely peak and nothing should say otherwise" -Srl on discord-->
 </body>
 
 </html>

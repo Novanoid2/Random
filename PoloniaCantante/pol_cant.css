@@ -129,7 +129,11 @@ hr {
     max-width: 380px;
 }
 
-.navBoxTitle {
+#langBox a {
+    margin-left: -23px;
+}
+
+#pomocBoxTitle {
     font-weight: bold;
     display: block;
     text-align: center;
@@ -551,6 +555,10 @@ footer button {
 }
 
 @media (max-width: 1200px) {
+    #langBox a {
+        margin-left: -26px;
+    }
+
     .infoONas {
         line-height: 25px;
     }

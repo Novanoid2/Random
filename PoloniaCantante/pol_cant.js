@@ -1,11 +1,11 @@
-//current todo: search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
+//current todo: change how lang changing works, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
 const langs = ["PL", "EN", "NL", "FR"];
 const linkLang = window.location.href.replace(/\.(html|htm)/, "").slice(-2).toUpperCase();
 const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentJson1, currentJson2;
 
-function fetchDataAndApply() {
+async function fetchDataAndApply() {
     fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
         .then(raw => {
             if (raw.ok) return raw.json();
@@ -106,14 +106,7 @@ function adjustBoxes() {
         }
 
         box.setAttribute("hidden", ""); //hides navBoxes lol
-    }
-
-    //Adjust the margin-left for each link because im too lazy to fix the css
-    const ML = window.innerWidth <= 1350 ? -26 : -23; //ML = margin-left for lang links
-    let orderLocal = 0;
-    for (let tag of document.querySelectorAll("#langBox a")) {
-        orderLocal != 0 ? tag.style.marginLeft = `${ML}px` : null;
-        orderLocal++;
+        box.style.opacity = 0;
     }
 }
 
@@ -123,17 +116,17 @@ requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement right a
 let allowError = true;
 async function showErrorDiv(info) {
     if (allowError) {
-        allowError = false;
+        allowError = !allowError;
         document.getElementById("errorMsg").removeAttribute("hidden");
         console.error("Mrn: error from: " + info);
     } else console.log("Mrn: Error div blocked from " + info);
 }
 
 //set pictures for in grupy
-document.querySelectorAll("g ol li img").forEach(img => { 
+document.querySelectorAll("g ol li img").forEach(img => {
     img.src = "pics/placeholder.jpg";
     // img.src = `pics/${img.alt.toLowerCase().strip()}.png` || `pics/${img.alt.toLowerCase().strip()}.jpg`
- });
+});
 
 //toggle navBoxes visibility when one of them is pressed
 function toggleBox(id) {
