@@ -1,18 +1,19 @@
-//current todo: change how lang changing works, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
+//current todo: maybe try localStorage?, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
 const langs = ["PL", "EN", "NL", "FR"];
-const linkLang = window.location.href.replace(/\.(html|htm)/, "").slice(-2).toUpperCase();
-const current_lang = langs.includes(linkLang) ? linkLang : "NL" || "EN";
+const default_lang = "NL";
+let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentJson1, currentJson2;
 
 async function fetchDataAndApply() {
+    console.log("fetching data...");
     fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
         .then(raw => {
             if (raw.ok) return raw.json();
             showErrorDiv('Mrn: Fetch failed in koncertyInfo.json');
         })
         .then(data => {
-            let tmpJson1 = data;
+            let tmpJson1 = data["v"];
             if (tmpJson1 !== currentJson1) {
                 const koncert = document.querySelectorAll(".koncerty");
                 data.concerts.forEach((info, i) => {
@@ -34,15 +35,18 @@ async function fetchDataAndApply() {
                     if (raw.ok) return raw.json();
                     showErrorDiv('Mrn: Fetch failed in languages.json');
                 }).then(data => {
-                    data = data[current_lang];
-                    let tmpJson2 = data;
+                    let dataLang = data[current_lang];
+                    let tmpJson2 = data["v"];
+                    console.log(tmpJson2);
                     if (tmpJson2 !== currentJson2) {
-                        for (let key in data) {
+                        console.log(tmpJson2 !== currentJson2, tmpJson2, currentJson2)
+                        for (let key in dataLang) {
                             let el = document.getElementById(key);
-                            if (el) el.innerHTML = data[key];
+                            if (el) el.innerHTML = dataLang[key];
                             else console.warn(`Mrn: Element with id '${key}' not found in html.`);
                         }
                         currentJson2 = tmpJson2;
+                        console.log("done appyling data!!!111!1");
                     } //else: doesnt do anything
                 }).catch(err => showErrorDiv(err + " from languages.json"));
         });
@@ -57,10 +61,15 @@ setInterval(() => {
 let order = -1;
 for (let tag of document.querySelectorAll("#langBox a")) {
     if (order != -1) {
-        tag.href = tag.href.replace(/LANG/, `${langs[order]}`);
         tag.innerHTML = `${langs[order]}`;
+        tag.setAttribute("onclick", `changeLang('${langs[order]}')`);
     } else tag.innerHTML = `>${current_lang}<`;
     order++;
+}
+
+function changeLang(lang) {
+    current_lang = lang;
+    fetchDataAndApply();
 }
 
 function adjustBoxes() {
@@ -110,7 +119,7 @@ function adjustBoxes() {
     }
 }
 
-requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement right after load
+requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement, right after load
 
 //Shows an error message on (top of) the screen
 let allowError = true;
@@ -124,8 +133,7 @@ async function showErrorDiv(info) {
 
 //set pictures for in grupy
 document.querySelectorAll("g ol li img").forEach(img => {
-    img.src = "pics/placeholder.jpg";
-    // img.src = `pics/${img.alt.toLowerCase().strip()}.png` || `pics/${img.alt.toLowerCase().strip()}.jpg`
+    img.src = (`pics/${img.alt.toLowerCase().trim()}.png` || `pics/${img.alt.toLowerCase().trim()}.jpg` || `pics/${img.alt.toLowerCase().trim()}.jpg`) ?? 'pics/placeholder.jpg';
 });
 
 //toggle navBoxes visibility when one of them is pressed
@@ -138,8 +146,8 @@ function toggleBox(id) {
             document.getElementById(other).setAttribute("hidden", "");
             document.getElementById(other).style.opacity = 0;
         }
-        const box = document.getElementById(id);
 
+        const box = document.getElementById(id);
         if (box.hasAttribute("hidden")) {
             box.removeAttribute("hidden");
             setTimeout(() => box.style.opacity = 1, 10);
