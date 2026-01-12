@@ -20,6 +20,7 @@ a {
     /*this is for the lang box, i got confused one time*/
     text-decoration: none;
     color: black;
+    cursor: pointer;
 }
 
 a:hover {
@@ -470,6 +471,8 @@ g ol li {
 g ol li img {
     width: 90px;
     height: 90px;
+    min-height: 90px;
+    margin-bottom: 10px;
 }
 
 g ol li h3 {

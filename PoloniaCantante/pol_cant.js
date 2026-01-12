@@ -1,9 +1,10 @@
-//current todo: --maybe-- defo try localStorage, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
+//current todo: --maybe-- defo try localStorage, every 60s and every lang change fetched a new json into memory, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentJson1, currentJson2;
+let override = false;
 
 async function fetchDataAndApply() {
     console.log("fetching data...");
@@ -37,7 +38,8 @@ async function fetchDataAndApply() {
                 }).then(data => {
                     let dataLang = data[current_lang];
                     let tmpJson2 = data["v"];
-                    if (tmpJson2 !== currentJson2) {
+                    if (tmpJson2 !== currentJson2 || override) {
+                        override = false;
                         for (let key in dataLang) {
                             let el = document.getElementById(key);
                             if (el) el.innerHTML = dataLang[key];
@@ -67,6 +69,7 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 
 function changeLang(lang) {
     current_lang = lang;
+    override = true;
     fetchDataAndApply();
 }
 
