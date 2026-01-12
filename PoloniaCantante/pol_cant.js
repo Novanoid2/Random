@@ -1,4 +1,4 @@
-//current todo: maybe try localStorage?, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
+//current todo: --maybe-- defo try localStorage, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
@@ -37,9 +37,7 @@ async function fetchDataAndApply() {
                 }).then(data => {
                     let dataLang = data[current_lang];
                     let tmpJson2 = data["v"];
-                    console.log(tmpJson2);
                     if (tmpJson2 !== currentJson2) {
-                        console.log(tmpJson2 !== currentJson2, tmpJson2, currentJson2)
                         for (let key in dataLang) {
                             let el = document.getElementById(key);
                             if (el) el.innerHTML = dataLang[key];
@@ -133,7 +131,7 @@ async function showErrorDiv(info) {
 
 //set pictures for in grupy
 document.querySelectorAll("g ol li img").forEach(img => {
-    img.src = (`pics/${img.alt.toLowerCase().trim()}.png` || `pics/${img.alt.toLowerCase().trim()}.jpg` || `pics/${img.alt.toLowerCase().trim()}.jpg`) ?? 'pics/placeholder.jpg';
+    img.src = `pics/${img.alt.toLowerCase().trim()}.png` || `pics/${img.alt.toLowerCase().trim()}.jpg` || `pics/${img.alt.toLowerCase().trim()}.jpeg` || 'pics/placeholder.jpg';
 });
 
 //toggle navBoxes visibility when one of them is pressed
