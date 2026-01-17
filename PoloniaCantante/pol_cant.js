@@ -1,76 +1,100 @@
-//current todo: --maybe-- defo try localStorage, every 60s and every lang change fetched a new json into memory, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
+//current todo: recheck grupy img margins and pos w smaller screens, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
+const cache_keys = ["key_langs", "key_concerts"];
+const TTL = 1000 * 60 * 10; //10 min
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
-let currentJson1, currentJson2;
-let override = false;
+let currentVConcerts, currentVLangs;
+let langChange = true;
 
-async function fetchDataAndApply() {
-    console.log("fetching data...");
-    fetch('https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/koncertyInfo.json')
-        .then(raw => {
-            if (raw.ok) return raw.json();
-            showErrorDiv('Mrn: Fetch failed in koncertyInfo.json');
-        })
-        .then(data => {
-            let tmpJson1 = data["v"];
-            if (tmpJson1 !== currentJson1) {
-                const koncert = document.querySelectorAll(".koncerty");
-                data.concerts.forEach((info, i) => {
-                    const box = koncert[i];
-                    if (!box) return;
-
-                    box.querySelector("img").src = info.src;
-                    box.querySelector(".dates").innerHTML = info.date;
-                    box.querySelector(".times").innerHTML = info.time;
-                    box.querySelector(".adresses").innerHTML = info.adress;
-                    box.querySelector(".prices").innerHTML = "€" + info.price;
-                });
-                currentJson1 = tmpJson1;
-            } //else: doesnt do anything
-        }).catch(err => showErrorDiv(err + " from koncerty.json"))
-        .then(() => {
-            fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/languages.json`)
-                .then(raw => {
-                    if (raw.ok) return raw.json();
-                    showErrorDiv('Mrn: Fetch failed in languages.json');
-                }).then(data => {
-                    let dataLang = data[current_lang];
-                    let tmpJson2 = data["v"];
-                    if (tmpJson2 !== currentJson2 || override) {
-                        override = false;
-                        for (let key in dataLang) {
-                            let el = document.getElementById(key);
-                            if (el) el.innerHTML = dataLang[key];
-                            else console.warn(`Mrn: Element with id '${key}' not found in html.`);
-                        }
-                        currentJson2 = tmpJson2;
-                        console.log("done appyling data!!!111!1");
-                    } //else: doesnt do anything
-                }).catch(err => showErrorDiv(err + " from languages.json"));
-        });
+async function loadKeys() {//load keys from cache
+    for (let key of cache_keys) {
+        const cached = localStorage.getItem(key);
+        if (cached) {
+            //passes data to applying function
+            const data = JSON.parse(cached);
+            key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
+            key === "key_langs" ? applyData("languages", data, 18) : applyData("koncertyInfo", data, 18);
+        } else {
+            //adds data to locaStorage if doesnt exist and recursively calls function again
+            const data = key === "key_langs" ? await fetchData("languages", 21) : await fetchData("koncertyInfo", 21);
+            key === "key_langs" ? await applyData("languages", data, 22) : await applyData("koncertyInfo", data, 22);
+            loadKeys();
+        }
+    }
 }
 
-fetchDataAndApply();
-setInterval(() => {
-    fetchDataAndApply(); //check for updates every 60s
-}, 60000);
+async function fetchData(type, from) {//fetch jsons? lol
+    console.log(`fetching data: ${type}...`, from);
+    const fetched = await fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/${type}.json`);
+    if (!fetched.ok) throw new Error(`Mrn: Fetch failed in datafetch ${type}.json`);
+    console.log(`finished fetching ${type}`, from); //kind of misleading but who cares really?
+    return await fetched.json();
+}
 
-//Set the the correct language redirection links
+async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
+    console.log(`applying data: ${type}...`, from);
+
+    if (type === "koncertyInfo") {
+        const data = dataPassed || await fetchData(type, from);
+        let tmpVConcerts = data["v"];
+        if (tmpVConcerts !== currentVConcerts) { //if version is different
+            const koncert = document.querySelectorAll(".koncerty");
+            data.concerts.forEach((info, i) => {
+                const box = koncert[i];
+                if (!box) return;
+
+                box.querySelector("img").src = info.src;
+                box.querySelector(".dates").innerHTML = info.date;
+                box.querySelector(".times").innerHTML = info.time;
+                box.querySelector(".adresses").innerHTML = info.adress;
+                box.querySelector(".prices").innerHTML = "€" + info.price;
+            });
+            localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
+            currentVConcerts = tmpVConcerts;
+        }
+    } else if (type === "languages") {
+        let data = dataPassed || await fetchData(type, from);
+        let tmpVLangs = data["v"];
+        let dataLang = data[current_lang];
+        if (tmpVLangs !== currentVLangs || langChange) { //if version is different
+            langChange = false;
+            for (let key in dataLang) {
+                let el = document.getElementById(key);
+                if (el) el.innerHTML = dataLang[key];
+                else console.warn(`Mrn: Element with id '${key}' not found in html.`);
+            }
+            localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
+            currentVLangs = tmpVLangs;
+        }
+    } else console.log("Hey ChatGPT, fix this! (none or wrong 'type' given in applyData)");
+    console.log(`done applying data ${type}!!11!1`);
+}
+
+loadKeys(); //initial load from cache
+setInterval(async () => {
+    applyData("languages", null, 77);
+    applyData("koncertyInfo", null, 77);
+}, TTL); //check for updates every 10 min
+
+//add the "onlick" attribute to change language accordingly
 let order = -1;
 for (let tag of document.querySelectorAll("#langBox a")) {
     if (order != -1) {
         tag.innerHTML = `${langs[order]}`;
         tag.setAttribute("onclick", `changeLang('${langs[order]}')`);
-    } else tag.innerHTML = `>${current_lang}<`;
+    } else {
+        tag.innerHTML = `${current_lang}`;
+        tag.setAttribute("onclick", `changeLang('${current_lang}')`);
+    }
     order++;
 }
 
 function changeLang(lang) {
     current_lang = lang;
-    override = true;
-    fetchDataAndApply();
+    langChange = true;
+    applyData("languages", null, 94);
 }
 
 function adjustBoxes() {
@@ -134,10 +158,13 @@ async function showErrorDiv(info) {
 
 //set pictures for in grupy
 document.querySelectorAll("g ol li img").forEach(img => {
-    img.src = `pics/${img.alt.toLowerCase().trim()}.png` || `pics/${img.alt.toLowerCase().trim()}.jpg` || `pics/${img.alt.toLowerCase().trim()}.jpeg` || 'pics/placeholder.jpg';
+    img.src = 'pics/placeholder.jpg';
+    img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.jpeg`;
+    img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.jpg`;
+    img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
 });
 
-//toggle navBoxes visibility when one of them is pressed
+//toggle navBoxes visibility when one of them is opened
 function toggleBox(id) {
     let arr = ["langBox", "contactInfoBox", "pomocBox"];
     if (id === "all") for (let box of arr) document.getElementById(box).removeAttribute("hidden");

@@ -131,7 +131,7 @@ hr {
 }
 
 #langBox a {
-    margin-left: -23px;
+    margin-left: -31px;
 }
 
 #pomocBoxTitle {
@@ -559,7 +559,7 @@ footer button {
 
 @media (max-width: 1200px) {
     #langBox a {
-        margin-left: -26px;
+        margin-left: -29px;
     }
 
     .infoONas {
