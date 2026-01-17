@@ -2,7 +2,6 @@
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
-const TTL = 1000 * 60 * 10; //10 min
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
@@ -15,7 +14,7 @@ async function loadKeys() {//load keys from cache
             //passes data to applying function
             const data = JSON.parse(cached);
             key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
-            key === "key_langs" ? applyData("languages", data, 18) : applyData("koncertyInfo", data, 18);
+            key === "key_langs" ? await applyData("languages", data, 18) : await applyData("koncertyInfo", data, 18);
         } else {
             //adds data to locaStorage if doesnt exist and recursively calls function again
             const data = key === "key_langs" ? await fetchData("languages", 21) : await fetchData("koncertyInfo", 21);
@@ -74,9 +73,9 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    applyData("languages", null, 77);
-    applyData("koncertyInfo", null, 77);
-}, TTL); //check for updates every 10 min
+    await applyData("languages", null, 77);
+    await applyData("koncertyInfo", null, 77);
+},  1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
 let order = -1;
