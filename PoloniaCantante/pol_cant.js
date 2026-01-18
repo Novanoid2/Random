@@ -1,4 +1,4 @@
-//current todo: recheck grupy img margins and pos w smaller screens, search for bugs/things to shorten, c&p dif lang, dif ver (combine both v here into one and rm poziom), gotowe
+//current todo: recheck grupy img margins and pos w/ smaller screens, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
