@@ -1,4 +1,4 @@
-//current todo: recheck grupy img margins and pos w/ smaller screens, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: make white header, "bilety" translation, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -14,11 +14,11 @@ async function loadKeys() {//load keys from cache
             //passes data to applying function
             const data = JSON.parse(cached);
             key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
-            key === "key_langs" ? await applyData("languages", data, 18) : await applyData("koncertyInfo", data, 18);
+            key === "key_langs" ? await applyData("languages", data, 17) : await applyData("koncertyInfo", data, 17);
         } else {
             //adds data to locaStorage if doesnt exist and recursively calls function again
-            const data = key === "key_langs" ? await fetchData("languages", 21) : await fetchData("koncertyInfo", 21);
-            key === "key_langs" ? await applyData("languages", data, 22) : await applyData("koncertyInfo", data, 22);
+            const data = key === "key_langs" ? await fetchData("languages", 20) : await fetchData("koncertyInfo", 20);
+            key === "key_langs" ? await applyData("languages", data, 21) : await applyData("koncertyInfo", data, 21);
             loadKeys();
         }
     }
@@ -73,27 +73,23 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 77);
+    await applyData("languages", null, 76);
     await applyData("koncertyInfo", null, 77);
-},  1000 * 60 * 10); //check for updates every 10 min
+}, 1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
-let order = -1;
+let order = 0;
 for (let tag of document.querySelectorAll("#langBox a")) {
-    if (order != -1) {
-        tag.innerHTML = `${langs[order]}`;
-        tag.setAttribute("onclick", `changeLang('${langs[order]}')`);
-    } else {
-        tag.innerHTML = `${current_lang}`;
-        tag.setAttribute("onclick", `changeLang('${current_lang}')`);
-    }
+    let langs = ["PL", "EN", "NL", "FR"]; //shut up i know this is stupid
+    tag.innerHTML = `${langs[order]}`;
+    tag.setAttribute("onclick", `changeLang('${langs[order]}')`);
     order++;
 }
 
 function changeLang(lang) {
     current_lang = lang;
     langChange = true;
-    applyData("languages", null, 94);
+    applyData("languages", null, 92);
 }
 
 function adjustBoxes() {
@@ -156,7 +152,7 @@ async function showErrorDiv(info) {
 }
 
 //set pictures for in grupy
-document.querySelectorAll("g ol li img").forEach(img => {
+document.querySelectorAll("section ol li img").forEach(img => {
     img.src = 'pics/placeholder.jpg';
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.jpeg`;
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.jpg`;

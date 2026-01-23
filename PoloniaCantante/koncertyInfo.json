@@ -9,8 +9,8 @@
         },
         {
             "date": "2026-1-25",
-            "time": "kiedyś",
-            "adress": "Aarschot, ulica ulicowa, xyz",
+            "time": "17:00",
+            "adress": "Celestijnenlaan 'nie wiem ktory numer'",
             "price": "60.000",
             "src": "pics/przyklad.jpg"
         },
@@ -22,5 +22,5 @@
             "src": "pics/przyklad.jpg"
         }
     ],
-    "v": "0.1"
+    "v": "0.2"
 }

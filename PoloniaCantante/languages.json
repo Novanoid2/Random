@@ -75,7 +75,7 @@
         "opis2": "info info info info info info info info info info info info info info info info info info",
         "opis3": "info info info info info info info info info info info info info info info info info info",
         "glosyTitle": "Nos voix",
-        "dyrygentTitle": "cheffe d'orchestre",
+        "dyrygentTitle": "Cheffe d'orchestre",
         "sopranTitle": "Sopranos",
         "altTitle": "Altos 1",
         "tenorTitle": "Altos 2",
@@ -103,7 +103,7 @@
         "opis2": "info info info info info info info info info info info info info info info info info info",
         "opis3": "info info info info info info info info info info info info info info info info info info",
         "glosyTitle": "Onze stemmen",
-        "dyrygentTitle": "Dirigen",
+        "dyrygentTitle": "Dirigente",
         "sopranTitle": "Sopranen",
         "altTitle": "Alten 1",
         "tenorTitle": "Alten 2",
@@ -111,5 +111,5 @@
         "findTitle": "U kunt ons vinden op:",
         "doGory": "Terug naar boven"
     },
-    "v": "0.2"
+    "v": "0.3"
 }
