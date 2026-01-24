@@ -37,6 +37,13 @@ hr {
     font-size: clamp(1.6rem, 3vw, 2.7rem);
 }
 
+header {
+    position: relative;
+    background-color: rgba(235, 235, 235, 0.9);
+    height: 90px;
+    z-index: 2;
+}
+
 .logo {
     z-index: 2;
     overflow: hidden;

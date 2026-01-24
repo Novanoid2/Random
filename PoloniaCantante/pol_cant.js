@@ -1,4 +1,4 @@
-//current todo: make white header, "bilety" translation, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -13,7 +13,7 @@ async function loadKeys() {//load keys from cache
         if (cached) {
             //passes data to applying function
             const data = JSON.parse(cached);
-            key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
+            //key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
             key === "key_langs" ? await applyData("languages", data, 17) : await applyData("koncertyInfo", data, 17);
         } else {
             //adds data to locaStorage if doesnt exist and recursively calls function again
@@ -64,6 +64,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 if (el) el.innerHTML = dataLang[key];
                 else console.warn(`Mrn: Element with id '${key}' not found in html.`);
             }
+            if (data["ppl"]) editGrupy(data["ppl"], 67);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = tmpVLangs;
         }
@@ -89,8 +90,36 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 function changeLang(lang) {
     current_lang = lang;
     langChange = true;
-    applyData("languages", null, 92);
+    applyData("languages", null, 93);
 }
+
+function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
+    console.log("editing grupy...", from);
+    const grupyBox = document.getElementById("boxGrupy");
+    dataPassed["rm"].forEach(name => {
+        const li = grupyBox.querySelector(`li[alt='${name}']`);
+        if (li) grupyBox.removeChild(li);
+    });
+
+    dataPassed["add"].forEach(name => {
+        console.log(`Mrn: for debugging: ${name}`);
+        const li = document.createElement("li");
+        li.setAttribute("alt", name);
+        const img = document.createElement("img");
+        img.onerror = function () {
+            this.src = 'pics/placeholder.jpg'; // place your error.png image instead
+        };
+        img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
+        li.appendChild(img);
+        const h3 = document.createElement("h3");
+        h3.innerHTML = name.split("_")[0];
+        li.appendChild(h3);
+        grupyBox.querySelector(name.split("_")[1]).appendChild(li);
+    });
+
+    console.log("finished editing grupy");
+}
+
 
 function adjustBoxes() {
     for (let helpBox of ["langBox", "contactInfoBox", "pomocBox"]) {
@@ -152,10 +181,10 @@ async function showErrorDiv(info) {
 }
 
 //set pictures for in grupy
-document.querySelectorAll("section ol li img").forEach(img => {
-    img.src = 'pics/placeholder.jpg';
-    img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.jpeg`;
-    img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.jpg`;
+document.querySelectorAll("#boxGrupy li img").forEach(img => {
+    img.onerror = function () {
+        this.src = 'pics/placeholder.jpg'; // place your error.png image instead
+    };
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
 });
 
