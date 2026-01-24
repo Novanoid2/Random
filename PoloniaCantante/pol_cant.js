@@ -6,6 +6,7 @@ let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
+let counter = 0;
 
 async function loadKeys() {//load keys from cache
     for (let key of cache_keys) {
@@ -216,9 +217,19 @@ function scrollToId(id) {
     else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
+setInterval(() => {
+    counter++;
+}, 1000);
+
 //pretty self-explanatory
 let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
-
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === "visible" && counter > 180) {
+        counter = 0;
+        applyData("languages", null, 230);
+        applyData("koncertyInfo", null, 231);
+    }
+});
 //document.documentElement.style.setProperty(`--dl`, `PL`);
 //console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
