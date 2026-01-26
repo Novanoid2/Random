@@ -1,4 +1,4 @@
-//current todo: search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: koncert info pop out with transform thingy, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -17,20 +17,33 @@ async function loadKeys() {//load keys from cache
             //key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
             key === "key_langs" ? await applyData("languages", data, 17) : await applyData("koncertyInfo", data, 17);
         } else {
-            //adds data to locaStorage if doesnt exist and recursively calls function again
-            const data = key === "key_langs" ? await fetchData("languages", 20) : await fetchData("koncertyInfo", 20);
-            key === "key_langs" ? await applyData("languages", data, 21) : await applyData("koncertyInfo", data, 21);
-            loadKeys();
+            //if no cache it fetches the jsons and get saved to localStorage in applyData();
+            try {
+                const data = key === "key_langs" ? await fetchData("languages", 20) : await fetchData("koncertyInfo", 20);
+                key === "key_langs" ? await applyData("languages", data, 21) : await applyData("koncertyInfo", data, 21);
+            } catch (e) {
+                console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)");
+            }
         }
     }
 }
 
 async function fetchData(type, from) {//fetch jsons? lol
     console.log(`fetching data: ${type}...`, from);
-    const fetched = await fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/${type}.json`);
-    if (!fetched.ok) throw new Error(`Mrn: Fetch failed in datafetch ${type}.json`);
-    console.log(`finished fetching ${type}`, from); //kind of misleading but who cares really?
-    return await fetched.json();
+    try {
+        //actual fetch xd
+        const fetched = await fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/${type}.json`);
+        if (!fetched.ok) {
+            await showErrorDiv(`fetchData ${type}.json`);
+            throw new Error(`Mrn: Fetch failed in datafetch ${type}.json`);
+        }
+        console.log(`finished fetching ${type}`, from); //kind of misleading but who cares really?
+        return await fetched.json();
+    } catch (err) {
+        await showErrorDiv(`fetchData ${type}.json`);
+        console.error(`Mrn: Wrong link in datafetch ${type}.json`, err);
+        throw err;
+    }
 }
 
 async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
@@ -58,7 +71,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
         let data = dataPassed || await fetchData(type, from);
         let tmpVLangs = data["v"];
         let dataLang = data[current_lang];
-        if (tmpVLangs !== currentVLangs || langChange) { //if version is different
+        if (tmpVLangs !== currentVLangs || langChange) { //if version is different or language changed
             langChange = false;
             for (let key in dataLang) {
                 let el = document.getElementById(key);
@@ -91,7 +104,8 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 function changeLang(lang) {
     current_lang = lang;
     langChange = true;
-    applyData("languages", null, 93);
+    applyData("languages", JSON.parse(localStorage.getItem(cache_keys[0])), 93);
+    adjustBoxes();
 }
 
 function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
@@ -105,8 +119,8 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     dataPassed["add"].forEach(name => {
         console.log(`Mrn: for debugging: ${name}`);
         const li = document.createElement("li");
-        li.setAttribute("alt", name);
         const img = document.createElement("img");
+        img.setAttribute("alt", name.split("_")[0]);
         img.onerror = function () {
             this.src = 'pics/placeholder.jpg'; // place your error.png image instead
         };
@@ -115,7 +129,7 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
         const h3 = document.createElement("h3");
         h3.innerHTML = name.split("_")[0];
         li.appendChild(h3);
-        grupyBox.querySelector(name.split("_")[1]).appendChild(li);
+        document.getElementById(name.split("_")[1]).querySelector("ol").appendChild(li);
     });
 
     console.log("finished editing grupy");
@@ -140,7 +154,7 @@ function adjustBoxes() {
             }
 
         } else {
-            if (helpBox === 'langBox') box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2) - 5}px`;
+            if (helpBox === 'langBox') box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
             else box.style.left = `${buttonPos.left + buttonPos.width / 2 - boxPos.width / 2}px`;
 
             if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
@@ -155,17 +169,25 @@ function adjustBoxes() {
         if (window.innerWidth < 950) {
             polygon.setAttribute("points", "20,10 0,0 0,20");
             svg.style.top = "17px";
-            svg.style.left = "auto";
+            svg.style.left = 'auto';
             svg.style.right = "-30px";
         } else {
             polygon.setAttribute("points", "15,0 0,20 30,20");
-            svg.style.top = "-19px";
-            svg.style.right = "auto";
+            svg.style.top = "-18.5px";
+            svg.style.right = 'auto';
             svg.style.left = `${newBoxPos.width / 2 - 15}px`;
         }
 
         box.setAttribute("hidden", ""); //hides navBoxes lol
         box.style.opacity = 0;
+    }
+
+    if (window.innerWidth <= 700) {
+        const t = document.getElementById("welcome");
+        if (current_lang === "PL") t.innerHTML = "Witamy na stronie<br>Polonia Cantante!";
+        else if (current_lang === "EN") t.innerHTML = "Welcome to the<br>Polonia Cantante website!";
+        else if (current_lang === "NL") t.innerHTML = "Welkom op de website<br>van Polonia Cantante!";
+        else if (current_lang === "FR") t.innerHTML = "Bienvenue sur le<br>site de Polonia Cantante!";
     }
 }
 
@@ -177,14 +199,14 @@ async function showErrorDiv(info) {
     if (allowError) {
         allowError = !allowError;
         document.getElementById("errorMsg").removeAttribute("hidden");
-        console.error("Mrn: error from: " + info);
+        console.warn("Mrn: error from: " + info);
     } else console.log("Mrn: Error div blocked from " + info);
 }
 
 //set pictures for in grupy
 document.querySelectorAll("#boxGrupy li img").forEach(img => {
     img.onerror = function () {
-        this.src = 'pics/placeholder.jpg'; // place your error.png image instead
+        this.src = 'pics/kittyph.gif'; // place your error.png image instead
     };
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
 });
@@ -217,19 +239,12 @@ function scrollToId(id) {
     else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-setInterval(() => {
-    counter++;
-}, 1000);
+setInterval(() => counter++, 1000);
 
 //pretty self-explanatory
 let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === "visible" && counter > 180) {
-        counter = 0;
-        applyData("languages", null, 230);
-        applyData("koncertyInfo", null, 231);
-    }
-});
-//document.documentElement.style.setProperty(`--dl`, `PL`);
-//console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
+
+//check files again on load just in case the cache is outdated
+document.addEventListener('DOMContentLoaded', async () => { applyData("languages", null, 232); applyData("koncertyInfo", null, 232) });
+console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');

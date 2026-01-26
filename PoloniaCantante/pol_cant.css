@@ -39,7 +39,7 @@ hr {
 
 header {
     position: relative;
-    background-color: rgba(235, 235, 235, 0.9);
+    background-color: rgba(235, 235, 235);
     height: 90px;
     z-index: 2;
 }
@@ -68,15 +68,29 @@ header {
     -webkit-text-fill-color: transparent;
 }
 
-/*make it pop out pionowo na mniejszych ekranach*/
 #navBar {
     z-index: 2;
     position: absolute;
     display: flex;
     gap: clamp(10px, 1.3vw, 40px);
     right: 20px;
-    padding-top: 20px;
-    padding-left: 300px;
+    margin: 20px 0 0 250px;
+}
+
+.navBox {
+    background-color: white;
+    position: absolute;
+    height: auto;
+    width: max-content;
+    border-radius: 20px;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    z-index: 3;
+    box-shadow: 0px 0px 25px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 380px;
+    transition-timing-function: ease-out;
 }
 
 .navBox svg {
@@ -120,25 +134,8 @@ header {
     min-height: 20px;
 }
 
-.navBox {
-    background-color: white;
-    position: absolute;
-    height: auto;
-    width: max-content;
-    border-radius: 20px;
-    font-size: clamp(1rem, 1.8vw, 1.4rem);
-    z-index: 3;
-    box-shadow: 0px 0px 25px black;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* zapobiega bardzo wąskim boxom */
-    max-width: 380px;
-}
-
 #langBox a {
-    margin-left: -31px;
+    margin-left: -32px;
 }
 
 #pomocBoxTitle {
@@ -193,7 +190,7 @@ header {
     position: relative;
     width: max-content;
     padding: 0 10px;
-    font-size: clamp(1.9rem, 3.2vw, 3.7rem);
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
     font-weight: bold;
     -webkit-text-stroke: 1px rgb(0, 0, 0);
     background: url("pics/pobrane2.png") no-repeat center/cover;
@@ -214,7 +211,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 90px);
     z-index: -1;
     pointer-events: none;
 }
@@ -607,6 +604,10 @@ footer button {
         align-items: center;
         gap: 15px;
         right: 4px;
+    }
+
+    header {
+        height: 0;
     }
 
     .svgNav {

@@ -1,6 +1,6 @@
 {
     "PL": {
-        "welcome": "Witamy na stronie <wbr>Polonia Cantante!",
+        "welcome": "Witamy na stronie Polonia Cantante!",
         "errorMsg": "Wystąpił błąd po naszej stronie, możliwe, że niektóre informacje nie są poprawnie. Pracujemy nad rozwiązaniem.",
         "oNas": "O nas",
         "oNas2": "O nas",
@@ -32,7 +32,7 @@
         "doGory": "Wróć na górę"
     },
     "EN": {
-        "welcome": "Welcome to the <wbr>Polonia Cantante website!",
+        "welcome": "Welcome to the Polonia Cantante website!",
         "errorMsg": "An error has occurred on our side. Some information may be incorrect. We are working on a fix.",
         "oNas": "About us",
         "oNas2": "About us",
@@ -64,7 +64,7 @@
         "doGory": "Back to top"
     },
     "FR": {
-        "welcome": "Bienvenue sur le <wbr>site de Polonia Cantante !",
+        "welcome": "Bienvenue sur le site de Polonia Cantante!",
         "errorMsg": "Une erreur s’est produite de notre côté. Certaines informations peuvent être incorrectes. Nous y travaillons.",
         "oNas": "À propos de nous",
         "oNas2": "À propos de nous",
@@ -96,7 +96,7 @@
         "doGory": "Retour en haut"
     },
     "NL": {
-        "welcome": "Welkom op de website <wbr>van Polonia Cantante!",
+        "welcome": "Welkom op de website van Polonia Cantante!",
         "errorMsg": "Er is een fout opgetreden. Sommige informatie kan onjuist zijn. We werken aan een oplossing.",
         "oNas": "Over ons",
         "oNas2": "Over ons",
@@ -128,8 +128,8 @@
         "doGory": "Terug naar boven"
     },
     "ppl": {
-        "add": ["OsobaTest_dyrygentka"],
-        "rm": ["nikt"]
+        "add": ["Osoba.Przykladowa_dyrygentka"],
+        "rm": []
     },
-    "v": "0.6"
+    "v": "0.7"
 }
