@@ -128,8 +128,8 @@
         "doGory": "Terug naar boven"
     },
     "ppl": {
-        "add": ["Osoba przykładowa_dyrygentka"],
-        "rm": []
+        "add": ["OsobaTest_dyrygentka"],
+        "rm": ["nikt"]
     },
-    "v": "0.5"
+    "v": "0.6"
 }
