@@ -1,4 +1,6 @@
-//current todo: koncert info pop out with transform thingy + title, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: update codepsace, 2 koncerty rocznie, koncert info pop out with transform thingy + title, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//mami: koncerty: swiper + kazdy przeszly i przyszly (na bokach fade out), przeszle: guilt trip ze ne przyszli lol + info mineło
+//|/kpe/ _ /kpe/ _ /k/ _ /k/ _ /kpy/ _ /kpy/ |
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -112,8 +114,8 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     console.log("editing grupy...", from);
     const grupyBox = document.getElementById("boxGrupy");
     dataPassed["rm"].forEach(name => {
-        const li = grupyBox.querySelector(`li[alt='${name}']`);
-        if (li) grupyBox.removeChild(li);
+        const li = grupyBox.querySelector(`li img[alt='${name}']`);
+        if (li) li.parentElement.remove();
     });
 
     dataPassed["add"].forEach(name => {
@@ -211,6 +213,7 @@ document.querySelectorAll("#boxGrupy li img").forEach(img => {
         this.src = 'pics/placeholder.jpg'; // place your error.png image instead
     };
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
+
 });
 
 //toggle navBoxes visibility when one of them is opened
