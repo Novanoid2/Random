@@ -1,4 +1,4 @@
-//current todo: koncert info pop out with transform thingy, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: koncert info pop out with transform thingy + title, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -15,12 +15,12 @@ async function loadKeys() {//load keys from cache
             //passes data to applying function
             const data = JSON.parse(cached);
             //key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
-            key === "key_langs" ? await applyData("languages", data, 17) : await applyData("koncertyInfo", data, 17);
+            key === "key_langs" ? await applyData("languages", data, 18) : await applyData("koncertyInfo", data, 18);
         } else {
             //if no cache it fetches the jsons and get saved to localStorage in applyData();
             try {
-                const data = key === "key_langs" ? await fetchData("languages", 20) : await fetchData("koncertyInfo", 20);
-                key === "key_langs" ? await applyData("languages", data, 21) : await applyData("koncertyInfo", data, 21);
+                const data = key === "key_langs" ? await fetchData("languages", 22) : await fetchData("koncertyInfo", 22);
+                key === "key_langs" ? await applyData("languages", data, 23) : await applyData("koncertyInfo", data, 23);
             } catch (e) {
                 console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)");
             }
@@ -78,7 +78,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 if (el) el.innerHTML = dataLang[key];
                 else console.warn(`Mrn: Element with id '${key}' not found in html.`);
             }
-            if (data["ppl"]) editGrupy(data["ppl"], 67);
+            if (data["ppl"]) editGrupy(data["ppl"], 81);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = tmpVLangs;
         }
@@ -88,8 +88,8 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 76);
-    await applyData("koncertyInfo", null, 77);
+    await applyData("languages", null, 91);
+    await applyData("koncertyInfo", null, 92);
 }, 1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
@@ -102,9 +102,9 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 }
 
 function changeLang(lang) {
-    current_lang = lang;
+    current_lang = lang.toUpperCase();
     langChange = true;
-    applyData("languages", JSON.parse(localStorage.getItem(cache_keys[0])), 93);
+    applyData("languages", JSON.parse(localStorage.getItem(cache_keys[0])), 107);
     adjustBoxes();
 }
 
@@ -117,8 +117,10 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     });
 
     dataPassed["add"].forEach(name => {
+        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li[alt='${name.split("_")[0]}']`))) return;
         console.log(`Mrn: for debugging: ${name}`);
         const li = document.createElement("li");
+        li.setAttribute("alt", name.split("_")[0]);
         const img = document.createElement("img");
         img.setAttribute("alt", name.split("_")[0]);
         img.onerror = function () {
@@ -206,7 +208,7 @@ async function showErrorDiv(info) {
 //set pictures for in grupy
 document.querySelectorAll("#boxGrupy li img").forEach(img => {
     img.onerror = function () {
-        this.src = 'pics/kittyph.gif'; // place your error.png image instead
+        this.src = 'pics/placeholder.jpg'; // place your error.png image instead
     };
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
 });
@@ -246,5 +248,5 @@ let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
 //check files again on load just in case the cache is outdated
-document.addEventListener('DOMContentLoaded', async () => { applyData("languages", null, 232); applyData("koncertyInfo", null, 232) });
+document.addEventListener('DOMContentLoaded', async () => { applyData("languages", null, 251); applyData("koncertyInfo", null, 251) });
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');

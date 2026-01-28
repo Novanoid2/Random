@@ -3,6 +3,7 @@
 * {
     box-sizing: border-box;
     font-family: "Trebuchet MS";
+    user-select: none;
 }
 
 body {
@@ -28,8 +29,7 @@ a:hover {
 }
 
 hr {
-    /*border: 2px solid rgba(172, 172, 172, 0.719);*/
-    border: 2px solid red
+    border: 2px solid rgba(0,0,0);
 }
 
 .titles {
@@ -39,8 +39,9 @@ hr {
 
 header {
     position: relative;
-    background-color: rgba(235, 235, 235);
-    height: 90px;
+    background-color: rgb(250, 250, 250);
+    height: 90px; /*connected to .swiper-one height */
+    max-height: 95px;
     z-index: 2;
 }
 
@@ -48,24 +49,26 @@ header {
     z-index: 2;
     overflow: hidden;
     position: fixed;
-    top: -360px;
-    left: -200px;
-    transform: scale(0.15);
+    top: -395px;
+    left: -205px;
+    transform: scale(0.1);
 }
 
 .logo img {
     display: block;
 }
 
-#h2 {
+#polCant {
     z-index: 2;
     position: absolute;
-    left: 110px;
+    top: -20px;
+    left: 90px;
     text-align: center;
-    font-size: 2.3rem;
-    background: url("pics/pobrane2.png") no-repeat center/cover;
+    font-size: 2.1rem;
+    background: url("pics/POLAND.png") no-repeat center/cover;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px black
 }
 
 #navBar {
@@ -84,7 +87,6 @@ header {
     width: max-content;
     border-radius: 20px;
     font-size: clamp(1rem, 1.8vw, 1.4rem);
-    z-index: 3;
     box-shadow: 0px 0px 25px black;
     display: flex;
     flex-direction: column;
@@ -101,7 +103,7 @@ header {
 .but {
     cursor: pointer;
     background-color: transparent;
-    font-size: clamp(1.4rem, 1.4vw, 2rem);
+    font-size: clamp(1.4rem, 1.4vw, 1.9rem);
     width: auto;
     height: auto;
     font-weight: bold;
@@ -109,7 +111,7 @@ header {
     border-radius: 5px;*/
     border: none;
     color: white;
-    -webkit-text-stroke: 1px black
+    -webkit-text-stroke: 1px black;
 }
 
 .svgNav {
@@ -122,8 +124,7 @@ header {
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    color: white;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .svgNav svg {
@@ -157,6 +158,7 @@ header {
     z-index: 2;
     left: 50%;
     transform: translateX(-50%);
+    border-radius: 10px;
 }
 
 #welcomeDiv {
@@ -193,7 +195,7 @@ header {
     font-size: clamp(1.9rem, 3.5vw, 3rem);
     font-weight: bold;
     -webkit-text-stroke: 1px rgb(0, 0, 0);
-    background: url("pics/pobrane2.png") no-repeat center/cover;
+    background: url("pics/POLAND.png") no-repeat center/cover;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
@@ -257,7 +259,7 @@ max-width: 100%;
     position: relative;
     height: auto;
     text-align: center;
-    background-color: rgb(255, 0, 187);
+    background-color: white;
 }
 
 /* zrob to pion */
@@ -298,7 +300,7 @@ max-width: 100%;
 }
 
 #boxKoncerty {
-    background-color: rgb(0, 255, 0);
+    background-color: white;
 }
 
 .dates {
@@ -395,7 +397,7 @@ li a {
 }
 
 #boxZdjecia {
-    background-color: rgb(255, 0, 0);
+    background-color: white;
     overflow-x: hidden;
     padding-bottom: 20px;
 }
@@ -405,7 +407,7 @@ li a {
     width: 100%;
     height: 45vh;
     pointer-events: none;
-    padding: 20px 0px;
+    margin: 25px 0 5px 0;
 }
 
 .swiper-three .swiper-slide img {
@@ -417,7 +419,7 @@ li a {
 }
 
 #boxProby {
-    background-color: rgb(0, 0, 255);
+    background-color: white;
     overflow: hidden;
     height: min-content;
 }
@@ -454,7 +456,7 @@ li a {
 }
 
 #boxGrupy {
-    background-color: rgb(255, 166, 0);
+    background-color: white;
 }
 
 #boxGrupy ol {
@@ -466,7 +468,7 @@ li a {
     flex: 1 0 10%;
     margin: 20px 5px;
     height: 100px;
-    background-color: blue;
+    background-color: gray;
     justify-content: center;
     text-align: center;
 }
@@ -498,11 +500,11 @@ footer {
     margin-top: 250px;
     top: auto;
     height: auto;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     border-radius: 15px;
     color: black;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 10px;
     display: flex;
 }
 
@@ -560,6 +562,7 @@ footer button {
     background-color: grey;
     margin-right: 10px;
     justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 1200px) {
@@ -572,15 +575,15 @@ footer button {
     }
 
     .logo {
-        top: -360px;
-        left: -210px;
-        transform: scale(0.12);
+        top: -395px;
+        left: -215px;
+        transform: scale(0.09);
     }
 
-    #h2 {
-        left: 90px;
-        font-size: 2rem;
-        top: 10px;
+    #polCant {
+        left: 80px;
+        font-size: 1.7rem;
+        top: -10px;
     }
 
     #koncerty img {
@@ -595,7 +598,7 @@ footer button {
 
 @media (max-width: 950px) {
     .but {
-        font-size: clamp(1.1rem, 2.3vw, 2rem);
+        font-size: clamp(1.1rem, 2.4vw, 2rem);
         max-width: 152px;
     }
 
@@ -632,15 +635,15 @@ footer button {
 
 @media (max-width: 768px) {
     .logo {
-        top: -370px;
-        left: -210px;
-        transform: scale(0.1);
+        top: -390px;
+        left: -220px;
+        transform: scale(0.08);
     }
 
-    #h2 {
-        left: 80px;
-        font-size: 1.7rem;
-        top: 10px;
+    #polCant {
+        left: 75px;
+        font-size: 1.6rem;
+        top: -5px;
     }
 
     #boxONas-inner {
@@ -700,15 +703,14 @@ footer button {
     }
 
     .logo {
-        top: -390px;
-        left: -230px;
-        transform: scale(0.08);
+        top: -395px;
+        left: -225px;
     }
 
-    #h2 {
-        left: 55px;
+    #polCant {
+        left: 60px;
         font-size: 1.3rem;
-        top: 7px;
+        top: 1px;
     }
 
     .infoONas {
