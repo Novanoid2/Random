@@ -129,7 +129,7 @@
     },
     "ppl": {
         "add": ["Osoba.Przykladowa_dyrygentka"],
-        "rm": []
+        "rm": ["bartek"]
     },
-    "v": "0.8"
+    "v": "0.9"
 }
