@@ -81,7 +81,7 @@
     <div id="errorMsg" hidden></div>
 
     <!-- Swiper main container -->
-    <div class="swiper swiper-one">
+    <div class="swiper swiper-main">
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
@@ -98,7 +98,7 @@
         <h1 id="welcome">Witamy na stronie Polonia Cantante!</h1>
     </div>
 
-    <div class="boxes">
+    <main class="boxes">
         <!-- you might notice some text tags here have values that are overridden in js later, thats in case if the script gets an error reading the
      .json files with the correct info, the website still displays some info by default (so it doesnt look stupid)-->
 
@@ -109,8 +109,7 @@
                 <div class="left">
                     <img id="img2" src="pics/wszyscy2-non.jpg">
                 </div>
-                <!-- tutaj zapewne moge usunac class i moge uzyc samo id-->
-                <section class="right">
+                <article class="right">
                     <span id="loremHead">
                         Polonia Cantante to pełen entuzjazmu polski chór amatorski z Leuven,
                         który od 2019 roku spotyka się, aby dzielić się miłością do muzyki i radością wspólnego
@@ -120,14 +119,29 @@
                     <br>
                     <span id="loremSub">Zapraszamy na nasze koncerty!</span>
                     <br>
-                </section>
+                </article>
             </div>
         </section>
 
         <section id="boxKoncerty" class="box">
             <span class="titles" id="koncertTitle">Przyszłe koncerty:</span>
             <hr style="width: 50%;">
-            <!-- v pion -->
+
+            <div class="koncerty">
+                <div class="swiper swiper-concerts">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img id="c1" class="concert">
+
+                        </div>
+                        <div class="swiper-slide"><img id="c2" class="concert"></div>
+                        <div class="swiper-slide"><img id="c3" class="concert"></div>
+                        <div class="swiper-slide"><img id="c4" class="concert"></div>
+                        <div class="swiper-slide"><img id="c5" class="concert"></div>
+                        <div class="swiper-slide"><img id="c6" class="concert"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- v pion 
             <div class="koncerty">
                 <div class="left">
                     <img id="imgK1" src="pics/przyklad.jpg">
@@ -197,7 +211,7 @@
                         </li>
                     </ol>
                 </div>
-            </div>
+            </div> v pion-->
             <!-- v1 ( v poziom )
                 <ol>
                     <li>
@@ -245,7 +259,7 @@
         <section id="boxZdjecia" class="box">
             <span class="titles" id="zdjeciaTitle">Zdjęcia</span>
             <hr style="width: 35%;">
-            <div class="swiper swiper-three">
+            <div class="swiper swiper-pics">
                 <div class="swiper-wrapper" style="transition-timing-function: linear;">
                     <div class="swiper-slide"><img id="" class="" src="pics/head.jpg"></div>
                     <div class="swiper-slide"><img id="" class="" src="pics/pic1.jpg"></div>
@@ -262,7 +276,7 @@
         <section id="boxProby" class="box">
             <span class="titles" id="probyTitle">Nasze próby</span>
             <hr style="width: 35%;">
-            <div class="swiper swiper-two">
+            <div class="swiper swiper-proby">
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                     <!-- Slides -->
@@ -414,8 +428,9 @@
             <span id="text" style="color: white; font-size: clamp(1.4rem, 1.7vw, 1.7rem);"><button
                     onclick='document.getElementById("text").style.color == "white" ? document.getElementById("text").style.color = "black" : document.getElementById("text").style.color = "white"'
                     id="dolaczSeperate">Chcesz dołączyć?</button><br>&middot; +32 nie wiem / jakis_tam@email.com</span>
-    </div>
-    </section>
+        </section>
+    </main>
+
 
     <footer>
         <div class="footer-left">
@@ -460,8 +475,7 @@
                     href="mailto:urexstt@gmail.com?subject=Błąd na stronie">
                     Jest jakiś błąd? Możesz to tutaj zgłosić!</a></button>
             <br>
-            <span
-                style="position: relative; font-size: clamp(0.8rem, 1.3vw, 1.2rem);">
+            <span style="position: relative; font-size: clamp(0.8rem, 1.3vw, 1.2rem);">
                 Strona zrobiona przez Bernard Kutrzeba-Kotowski</span>
             <!--pierwsze dwie to v slowa obok a po drugiej kropce to v ogolnie strony
             v poziom: 0.8.9.2; v pion: 0.8.4.2-->
@@ -471,7 +485,7 @@
     <script type="module">
         import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.mjs'
 
-        const swiperOne = new Swiper('.swiper-one', {
+        const swiperMain = new Swiper('.swiper-main', {
             speed: 2500,
             loop: true,
             slidesPerView: 1,
@@ -481,7 +495,7 @@
             }
         });
 
-        const swiperTwo = new Swiper('.swiper-two', {
+        const swiperProby = new Swiper('.swiper-proby', {
             speed: 3000,
             loop: true,
             slidesPerView: 1,
@@ -500,7 +514,7 @@
             }
         });
 
-        const swiperThree = new Swiper('.swiper-three', {
+        const swiperPictures = new Swiper('.swiper-pics', {
             freeMode: true,
             loop: true,
             autoplay: {
@@ -509,6 +523,12 @@
             slidesPerView: 2,
             spaceBetween: 50,
             speed: 10000
+        });
+
+        const swiperConcerts = new Swiper('.swiper-concerts', {
+            freeMode: true,
+            slidesPerView: 5.5,
+            spaceBetween: 30,
         });
     </script>
     <!--<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>-->
