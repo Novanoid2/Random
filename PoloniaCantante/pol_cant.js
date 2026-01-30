@@ -8,22 +8,24 @@ let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
-let counter = 0;
+let fetched = false;
 
 async function loadKeys() {//load keys from cache
     for (let key of cache_keys) {
         const cached = localStorage.getItem(key);
         if (cached) {
-            //passes data to applying function
             const data = JSON.parse(cached);
-            //key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
+            //passes data to applying function
             key === "key_langs" ? await applyData("languages", data, 18) : await applyData("koncertyInfo", data, 18);
         } else {
             //if no cache it fetches the jsons and get saved to localStorage in applyData();
             try {
+                fetched = true;
+                console.log(`fetched: ${fetched}`);
                 const data = key === "key_langs" ? await fetchData("languages", 22) : await fetchData("koncertyInfo", 22);
                 key === "key_langs" ? await applyData("languages", data, 23) : await applyData("koncertyInfo", data, 23);
             } catch (e) {
+                fetched = false;
                 console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)");
             }
         }
@@ -33,7 +35,6 @@ async function loadKeys() {//load keys from cache
 async function fetchData(type, from) {//fetch jsons? lol
     console.log(`fetching data: ${type}...`, from);
     try {
-        //actual fetch xd
         const fetched = await fetch(`https://raw.githubusercontent.com/Miren-3/Random/refs/heads/everything/PoloniaCantante/${type}.json`);
         if (!fetched.ok) {
             await showErrorDiv(`fetchData ${type}.json`);
@@ -43,7 +44,7 @@ async function fetchData(type, from) {//fetch jsons? lol
         return await fetched.json();
     } catch (err) {
         await showErrorDiv(`fetchData ${type}.json`);
-        console.error(`Mrn: Wrong link in datafetch ${type}.json`, err);
+        console.error(`Mrn: Wrong link in datafetch ${type}.json`, err, from);
         throw err;
     }
 }
@@ -97,7 +98,7 @@ setInterval(async () => {
 //add the "onlick" attribute to change language accordingly
 let order = 0;
 for (let tag of document.querySelectorAll("#langBox a")) {
-    let langs = ["PL", "EN", "NL", "FR"]; //shut up i know this is stupid
+    let langs = ["PL", "EN", "NL", "FR"]; //shut up i know duplication is stupid
     tag.innerHTML = `${langs[order]}`;
     tag.setAttribute("onclick", `changeLang('${langs[order]}')`);
     order++;
@@ -122,12 +123,10 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
         if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li[alt='${name.split("_")[0]}']`))) return;
         console.log(`Mrn: for debugging: ${name}`);
         const li = document.createElement("li");
-        li.setAttribute("alt", name.split("_")[0]);
+        //li.setAttribute("alt", name.split("_")[0]); //why is this here
         const img = document.createElement("img");
         img.setAttribute("alt", name.split("_")[0]);
-        img.onerror = function () {
-            this.src = 'pics/placeholder.jpg'; // place your error.png image instead
-        };
+        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found
         img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
         li.appendChild(img);
         const h3 = document.createElement("h3");
@@ -158,11 +157,11 @@ function adjustBoxes() {
             }
 
         } else {
-            if (helpBox === 'langBox') box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
-            else box.style.left = `${buttonPos.left + buttonPos.width / 2 - boxPos.width / 2}px`;
+            box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
 
-            if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
-            else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
+            /*if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
+            else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;*/
+            box.style.top = (window.innerWidth < 950) ? `${buttonPos.top + scrollY + buttonPos.height + 40}px` : `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
         }
 
         //Adjust svg position
@@ -186,7 +185,7 @@ function adjustBoxes() {
         box.style.opacity = 0;
     }
 
-    if (window.innerWidth <= 700) {
+    if (window.innerWidth <= 700) { //oh yeah also fix this cuz i wanna do <wbr> but width in css fucks it up
         const t = document.getElementById("welcome");
         if (current_lang === "PL") t.innerHTML = "Witamy na stronie<br>Polonia Cantante!";
         else if (current_lang === "EN") t.innerHTML = "Welcome to the<br>Polonia Cantante website!";
@@ -209,11 +208,8 @@ async function showErrorDiv(info) {
 
 //set pictures for in grupy
 document.querySelectorAll("#boxGrupy li img").forEach(img => {
-    img.onerror = function () {
-        this.src = 'pics/placeholder.jpg'; // place your error.png image instead
-    };
+    img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image is found
     img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
-
 });
 
 //toggle navBoxes visibility when one of them is opened
@@ -244,12 +240,10 @@ function scrollToId(id) {
     else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-setInterval(() => counter++, 1000);
-
 //pretty self-explanatory
 let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
 //check files again on load just in case the cache is outdated
-document.addEventListener('DOMContentLoaded', async () => { applyData("languages", null, 251); applyData("koncertyInfo", null, 251) });
+document.addEventListener('DOMContentLoaded', () => { if (!fetched) { applyData("languages", null, 251); applyData("koncertyInfo", null, 251); console.log("fetched at dom") } });
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
