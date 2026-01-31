@@ -14,10 +14,8 @@
         "contactTitle": "Kontakt z nami:",
         "loremHead": "Polonia Cantante to pełen entuzjazmu polski chór amatorski z Leuven, który od 2019 roku spotyka się, aby dzielić się miłością do muzyki i radością wspólnego śpiewania. Nasz repertuar jest tak różnorodny, jak nasi członkowie.",
         "loremSub": "Zapraszamy na nasze koncerty!",
-        "koncertTitle": "Przyszłe koncerty:",
-        "bilet1": "> Bilety <",
-        "bilet2": "> Bilety <",
-        "bilet3": "> Bilety <",
+        "koncertTitle": "Nasze koncerty:",
+        "bilet": "> Bilety <",
         "probyTitle": "Nasze próby",
         "opis1": "info info info info info info info info info info info info info info info info info info",
         "opis2": "info info info info info info info info info info info info info info info info info info",
@@ -29,7 +27,8 @@
         "tenorTitle": "Alty 2",
         "dolaczSeperate": "Chcesz dołączyć?",
         "findTitle": "Można nas znaleźć na:",
-        "doGory": "Wróć na górę"
+        "doGory": "Wróć na górę",
+        "concertEndedText":"Ups, Mineło! Do nastepnego razu!"
     },
     "EN": {
         "welcome": "Welcome to the Polonia Cantante website!",
@@ -46,10 +45,8 @@
         "contactTitle": "Contact with us:",
         "loremHead": "Polonia Cantante is an enthusiastic Polish amateur choir from Leuven that has been meeting since 2019 to share a love of music and the joy of singing together. Our repertoire is as diverse as our members.",
         "loremSub": "Join us for our concerts!",
-        "koncertTitle": "Upcoming concerts:",
-        "bilet1": "> Tickets <",
-        "bilet2": "> Tickets <",
-        "bilet3": "> Tickets <",
+        "koncertTitle": "Our concerts:",
+        "bilet": "> Tickets <",
         "probyTitle": "Our rehearsals",
         "opis1": "info info info info info info info info info info info info info info info info info info",
         "opis2": "info info info info info info info info info info info info info info info info info info",
@@ -61,7 +58,8 @@
         "tenorTitle": "Altos 2",
         "dolaczSeperate": "Want to join?",
         "findTitle": "You can find us on:",
-        "doGory": "Back to top"
+        "doGory": "Back to top",
+         "concertEndedText":"Oops, it ended! See you next time!"
     },
     "FR": {
         "welcome": "Bienvenue sur le site de Polonia Cantante!",
@@ -78,10 +76,8 @@
         "contactTitle": "Contacte avec nous:",
         "loremHead": "Polonia Cantante est un chœur amateur polonais enthousiaste de Louvain qui se réunit depuis 2019 pour partager l’amour de la musique et la joie de chanter ensemble. Notre répertoire est aussi varié que nos membres.",
         "loremSub": "Nous vous invitons à nos concerts !",
-        "koncertTitle": "Concerts à venir:",
-        "bilet1": "> Billets <",
-        "bilet2": "> Billets <",
-        "bilet3": "> Billets <",
+        "koncertTitle": "Nos concerts:",
+        "bilet": "> Billets <",
         "probyTitle": "Nos répétitions",
         "opis1": "info info info info info info info info info info info info info info info info info info",
         "opis2": "info info info info info info info info info info info info info info info info info info",
@@ -93,7 +89,8 @@
         "tenorTitle": "Altos 2",
         "dolaczSeperate": "Voulez-vous rejoindre?",
         "findTitle": "Vous pouvez nous trouver sur:",
-        "doGory": "Retour en haut"
+        "doGory": "Retour en haut",
+         "concertEndedText":"Oups, c'est finit! À la prochaine!"
     },
     "NL": {
         "welcome": "Welkom op de website van Polonia Cantante!",
@@ -110,10 +107,8 @@
         "contactTitle": "Contact met ons:",
         "loremHead": "Polonia Cantante is een enthousiaste Poolse amateurkoor uit Leuven dat sinds 2019 samenkomt om de liefde voor muziek en het plezier van samen zingen te delen. Ons repertoire is net zo divers als onze leden.",
         "loremSub": "Kom naar onze concerten!",
-        "koncertTitle": "Aankomende concerten:",
-        "bilet1": "> Tickets <",
-        "bilet2": "> Tickets <",
-        "bilet3": "> Tickets <",
+        "koncertTitle": "Onze Concerten:",
+        "bilet": "> Tickets <",
         "probyTitle": "Onze repetities",
         "opis1": "info info info info info info info info info info info info info info info info info info",
         "opis2": "info info info info info info info info info info info info info info info info info info",
@@ -125,11 +120,12 @@
         "tenorTitle": "Alten 2",
         "dolaczSeperate": "Wilt u mee doen?",
         "findTitle": "U kunt ons vinden op:",
-        "doGory": "Terug naar boven"
+        "doGory": "Terug naar boven",
+         "concertEndedText":"Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
-        "add": ["Osoba.Przykladowa_dyrygentka"],
+        "add": ["Osoba.Dodana.Zewnętrznie_dyrygentka"],
         "rm": ["bartek"]
     },
-    "v": "0.9"
+    "v": "0.99xD"
 }

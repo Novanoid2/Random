@@ -1,6 +1,6 @@
-//current todo: update codepsace, 2 koncerty rocznie, koncert info pop out with transform thingy + title, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
-//mami: koncerty: swiper + kazdy przeszly i przyszly (na bokach fade out), przeszle: guilt trip ze ne przyszli lol + info mineło
-//|/kpe/ _ /kpe/ _ /k/ _ /k/ _ /kpy/ _ /kpy/ |
+//current todo: koncert info pop out with transform thingy, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//mami: koncerty: (na bokach fade out), przeszle: guilt trip ze ne przyszli lol + info mineło & svg icon przy koncerty spans
+//try centered slides so it loads into the middle + fix swiper slidesPerView bug
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -9,6 +9,8 @@ langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
 let fetched = false;
+//let lastDate = new Date.now();
+//idea: save fetch date in localStorage and only fetch if more than x hours have passed
 
 async function loadKeys() {//load keys from cache
     for (let key of cache_keys) {
@@ -54,39 +56,39 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
     if (type === "koncertyInfo") {
         const data = dataPassed || await fetchData(type, from);
-        let tmpVConcerts = data["v"];
-        if (tmpVConcerts !== currentVConcerts) { //if version is different
-            const koncert = document.querySelectorAll(".koncerty");
+        if (data["v"] !== currentVConcerts) { //if version is different
+            const concert = document.querySelectorAll(".concert");
             data.concerts.forEach((info, i) => {
-                const box = koncert[i];
+                const box = concert[i];
                 if (!box) return;
 
-                box.querySelector("img").src = info.src;
-                box.querySelector(".dates").innerHTML = info.date;
-                box.querySelector(".times").innerHTML = info.time;
-                box.querySelector(".adresses").innerHTML = info.adress;
-                box.querySelector(".prices").innerHTML = "€" + info.price;
+                if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
+                if (box.querySelector(".times")) box.querySelector(".times").innerHTML = info.time;
+                if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = info.adress;
+                if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
+                if (box.querySelector("img")) box.querySelector("img").src = info.src;
             });
             localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
-            currentVConcerts = tmpVConcerts;
+            currentVConcerts = data["v"];
         }
     } else if (type === "languages") {
         let data = dataPassed || await fetchData(type, from);
-        let tmpVLangs = data["v"];
         let dataLang = data[current_lang];
-        if (tmpVLangs !== currentVLangs || langChange) { //if version is different or language changed
+        if (data["v"] !== currentVLangs || langChange) { //if version is different or language changed
             langChange = false;
             for (let key in dataLang) {
                 let el = document.getElementById(key);
-                if (el) el.innerHTML = dataLang[key];
-                else console.warn(`Mrn: Element with id '${key}' not found in html.`);
+                if (el) {
+                    if (key === "bilet") document.querySelectorAll(".bilet").textContent = dataLang[key];
+                    else el.innerHTML = dataLang[key];
+                } else console.warn(`Mrn: Element with id '${key}' not found in html.`);
             }
-            if (data["ppl"]) editGrupy(data["ppl"], 81);
+            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 81);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
-            currentVLangs = tmpVLangs;
+            currentVLangs = data["v"];
         }
-    } else console.log("Hey ChatGPT, fix this! (none or wrong 'type' given in applyData)");
-    console.log(`done applying data ${type}!!11!1`);
+    } else console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
+    console.log(`done applying ${type}!!1!1`);
 }
 
 loadKeys(); //initial load from cache
@@ -105,7 +107,7 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 }
 
 function changeLang(lang) {
-    current_lang = lang.toUpperCase();
+    current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
     langChange = true;
     applyData("languages", JSON.parse(localStorage.getItem(cache_keys[0])), 107);
     adjustBoxes();
@@ -120,13 +122,12 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     });
 
     dataPassed["add"].forEach(name => {
-        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li[alt='${name.split("_")[0]}']`))) return;
-        console.log(`Mrn: for debugging: ${name}`);
+        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
+        console.log(`Mrn: for debugging: adding: ${name}`);
         const li = document.createElement("li");
-        //li.setAttribute("alt", name.split("_")[0]); //why is this here
         const img = document.createElement("img");
         img.setAttribute("alt", name.split("_")[0]);
-        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found
+        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
         img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
         li.appendChild(img);
         const h3 = document.createElement("h3");
@@ -150,18 +151,13 @@ function adjustBoxes() {
         if (window.innerWidth < 950) {
             if (helpBox === 'langBox') {
                 box.style.left = `${buttonPos.left - boxPos.width - 60}px`;
-                box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
-            } else {
-                box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
-                box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
-            }
+                //old code: box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
+            } else box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
+            box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
 
         } else {
             box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
-
-            /*if (window.innerWidth <= screen.width * 0.6) box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 40}px`;
-            else box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;*/
-            box.style.top = (window.innerWidth < 950) ? `${buttonPos.top + scrollY + buttonPos.height + 40}px` : `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
+            box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
         }
 
         //Adjust svg position
@@ -236,8 +232,7 @@ function toggleBox(id) {
 
 //scrolls ig? w- wtf am i supposed to explain
 function scrollToId(id) {
-    if (id === 'boxKoncerty') document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "start" });
-    else document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
+    document.getElementById(id).scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 //pretty self-explanatory
