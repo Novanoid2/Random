@@ -1,5 +1,11 @@
 /* *adds a very realistic copyright restriction here* */
 
+:root {
+    --swiper-navigation-top-offset: 8%;
+    --swiper-navigation-sides-offset: 20px;
+    --swiper-navigation-color: red;
+}
+
 * {
     box-sizing: border-box;
     font-family: "Trebuchet MS";
@@ -512,9 +518,9 @@ li a {
     font-size: clamp(1.1rem, 1.6vw, 2rem);
 }
 
-.swiper-button-next svg,
-.swiper-button-prev svg {
-    color: red;
+.swiper-button-next,
+.swiper-button-prev {
+    border: 2px solid blue;
 }
 
 #boxGrupy {
