@@ -1,4 +1,4 @@
-//current todo:  svg icon przy koncerty spans, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -70,7 +70,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
                     if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
                     if (box.querySelector("img")) box.querySelector("img").src = info.src;
-                    //box.querySelector(".times").innerHTML = JSON.parse(localStorage.getItem("key_langs"))?.[current_lang]?.concertEndedText;
+                    box.querySelector(".times").innerHTML = JSON.parse(localStorage.getItem("key_langs"))?.[current_lang]?.concertEndedText;
                     for (let cls of ['.adresses', ".prices", ".buttons"]) if (box.querySelector(cls)) box.querySelector(cls).remove();
                     box.style.opacity = 0.5;
                     box.setAttribute("ended", "");
@@ -166,7 +166,7 @@ function adjustBoxes() {
             box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
         } else {
             box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
-            box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
+            box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 35}px`;
         }
 
         //Adjust svg position
@@ -181,7 +181,7 @@ function adjustBoxes() {
             svg.style.right = "-30px";
         } else {
             polygon.setAttribute("points", "15,0 0,20 30,20");
-            svg.style.top = "-18.5px";
+            svg.style.top = "-19px";
             svg.style.right = 'auto';
             svg.style.left = `${newBoxPos.width / 2 - 15}px`;
         }

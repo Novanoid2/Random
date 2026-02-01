@@ -26,8 +26,10 @@
         "altTitle": "Alty 1",
         "tenorTitle": "Alty 2",
         "dolaczSeperate": "Chcesz dołączyć?",
-        "findTitle": "Można nas znaleźć na:",
+        "linksTitle": "Można nas znaleźć na:",
         "doGory": "Wróć na górę",
+        "errorReport": "Jest jakiś błąd? Możesz to tutaj zgłosić!",
+        "autor": "Strona zrobiona przez Bernard K-K",
         "concertEndedText": "Ups, Mineło! Do nastepnego razu!"
     },
     "EN": {
@@ -57,8 +59,10 @@
         "altTitle": "Altos 1",
         "tenorTitle": "Altos 2",
         "dolaczSeperate": "Want to join?",
-        "findTitle": "You can find us on:",
+        "linksTitle": "You can find us on:",
         "doGory": "Back to top",
+        "errorReport": "Saw any errors? Report them here!",
+        "autor": "Website by Bernard K-K",
         "concertEndedText": "Oops, it ended! See you next time!"
     },
     "FR": {
@@ -88,8 +92,10 @@
         "altTitle": "Altos 1",
         "tenorTitle": "Altos 2",
         "dolaczSeperate": "Voulez-vous rejoindre?",
-        "findTitle": "Vous pouvez nous trouver sur:",
+        "linksTitle": "Vous pouvez nous trouver sur:",
         "doGory": "Retour en haut",
+        "errorReport": "Y-a-t-il une erreur? Rapporte-la ici!",
+        "autor": "Site créé par Bernard K-K",
         "concertEndedText": "Oups, c'est finit! À la prochaine!"
     },
     "NL": {
@@ -119,8 +125,10 @@
         "altTitle": "Alten 1",
         "tenorTitle": "Alten 2",
         "dolaczSeperate": "Wilt u mee doen?",
-        "findTitle": "U kunt ons vinden op:",
+        "linksTitle": "U kunt ons vinden op:",
         "doGory": "Terug naar boven",
+        "errorReport": "Een fout gevonden? Meld het hier!",
+        "autor": "Website gemaakt door Bernard K-K",
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
@@ -129,5 +137,5 @@
         ],
         "rm": []
     },
-    "v": "1"
+    "v": "1.1"
 }

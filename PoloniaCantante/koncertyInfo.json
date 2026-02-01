@@ -28,7 +28,7 @@
             "date": "w tym stuleciu",
             "time": "34:97:113",
             "adress": "ziema?",
-            "price": "43^2*log10(64)",
+            "price": "43^2*sin(64)",
             "src": "pics/przyklad.jpg",
             "ended": false
         },
@@ -49,5 +49,5 @@
             "ended": false
         }
     ],
-    "v": "0.5"
+    "v": "0.6"
 }
