@@ -17,9 +17,9 @@
             "ended": true
         },
         {
-            "date": "📅|📅|📅|📆|~6-6-2026",
-            "time": "🕓|⏲|⏱︎|15:32",
-            "adress": "📍|📌|➤|Leuven, ulica ulicowa, zyx",
+            "date": "?-?-2026",
+            "time": "15:32",
+            "adress": "Leuven, ulica ulicowa, zyx",
             "price": "6! - log2(8)",
             "src": "pics/przyklad.jpg",
             "ended": false
@@ -41,13 +41,13 @@
             "ended": false
         },
         {
-            "date": "chyba 2028",
-            "time": "zegar nie działa",
-            "adress": "pracuje nad tym o 11",
-            "price": "wybierzcie",
+            "date": "?",
+            "time": "?",
+            "adress": "?",
+            "price": "?",
             "src": "pics/przyklad.jpg",
             "ended": false
         }
     ],
-    "v": "0.4b"
+    "v": "0.5"
 }

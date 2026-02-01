@@ -61,18 +61,19 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 if (!box) return;
 
                 if (!info.ended) {
-                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
-                    if (box.querySelector(".times")) box.querySelector(".times").innerHTML = info.time;
-                    if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = info.adress;
+                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = "📅 " + info.date;
+                    if (box.querySelector(".times")) box.querySelector(".times").innerHTML = "🕓 " + info.time;
+                    if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = "📌 " + info.adress;
                     if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
                     if (box.querySelector("img")) box.querySelector("img").src = info.src;
                 } else {
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
                     if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
                     if (box.querySelector("img")) box.querySelector("img").src = info.src;
-                    box.querySelector(".times").innerHTML = JSON.parse(localStorage.getItem("key_langs"))?.[current_lang]?.concertEndedText;
+                    //box.querySelector(".times").innerHTML = JSON.parse(localStorage.getItem("key_langs"))?.[current_lang]?.concertEndedText;
                     for (let cls of ['.adresses', ".prices", ".buttons"]) if (box.querySelector(cls)) box.querySelector(cls).remove();
                     box.style.opacity = 0.5;
+                    box.setAttribute("ended", "");
                 }
             });
             localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
@@ -91,6 +92,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     else console.warn(`Mrn: Element with id '${key}' not found in html.`);
                 }
             }
+            document.querySelectorAll(`.concert[ended]`).forEach(i => i.querySelector(".times").innerHTML = dataLang.concertEndedText);
             if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 94);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
