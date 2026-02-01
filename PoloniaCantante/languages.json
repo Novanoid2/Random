@@ -28,7 +28,7 @@
         "dolaczSeperate": "Chcesz dołączyć?",
         "findTitle": "Można nas znaleźć na:",
         "doGory": "Wróć na górę",
-        "concertEndedText":"Ups, Mineło! Do nastepnego razu!"
+        "concertEndedText": "Ups, Mineło! Do nastepnego razu!"
     },
     "EN": {
         "welcome": "Welcome to the Polonia Cantante website!",
@@ -59,7 +59,7 @@
         "dolaczSeperate": "Want to join?",
         "findTitle": "You can find us on:",
         "doGory": "Back to top",
-         "concertEndedText":"Oops, it ended! See you next time!"
+        "concertEndedText": "Oops, it ended! See you next time!"
     },
     "FR": {
         "welcome": "Bienvenue sur le site de Polonia Cantante!",
@@ -90,7 +90,7 @@
         "dolaczSeperate": "Voulez-vous rejoindre?",
         "findTitle": "Vous pouvez nous trouver sur:",
         "doGory": "Retour en haut",
-         "concertEndedText":"Oups, c'est finit! À la prochaine!"
+        "concertEndedText": "Oups, c'est finit! À la prochaine!"
     },
     "NL": {
         "welcome": "Welkom op de website van Polonia Cantante!",
@@ -121,11 +121,15 @@
         "dolaczSeperate": "Wilt u mee doen?",
         "findTitle": "U kunt ons vinden op:",
         "doGory": "Terug naar boven",
-         "concertEndedText":"Oei, het is gedaan! Tot de volgende keer!"
+        "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
-        "add": ["Osoba.Dodana.Zewnętrznie_dyrygentka"],
-        "rm": ["bartek"]
+        "add": [
+            "Dodana.osoba_dyrygentka"
+        ],
+        "rm": [
+            "bartek"
+        ]
     },
-    "v": "0.99xD"
+    "v": "0.99a"
 }

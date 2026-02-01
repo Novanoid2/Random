@@ -1,6 +1,4 @@
-//current todo: koncert info pop out with transform thingy, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
-//mami: koncerty: (na bokach fade out), przeszle: guilt trip ze ne przyszli lol + info mineło & svg icon przy koncerty spans
-//try centered slides so it loads into the middle + fix swiper slidesPerView bug
+//current todo:  svg icon przy koncerty spans, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -18,14 +16,14 @@ async function loadKeys() {//load keys from cache
         if (cached) {
             const data = JSON.parse(cached);
             //passes data to applying function
-            key === "key_langs" ? await applyData("languages", data, 18) : await applyData("koncertyInfo", data, 18);
+            key === "key_langs" ? await applyData("languages", data, 19) : await applyData("koncertyInfo", data, 19);
         } else {
             //if no cache it fetches the jsons and get saved to localStorage in applyData();
             try {
                 fetched = true;
                 console.log(`fetched: ${fetched}`);
-                const data = key === "key_langs" ? await fetchData("languages", 22) : await fetchData("koncertyInfo", 22);
-                key === "key_langs" ? await applyData("languages", data, 23) : await applyData("koncertyInfo", data, 23);
+                const data = key === "key_langs" ? await fetchData("languages", 25) : await fetchData("koncertyInfo", 25);
+                key === "key_langs" ? await applyData("languages", data, 26) : await applyData("koncertyInfo", data, 26);
             } catch (e) {
                 fetched = false;
                 console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)");
@@ -62,11 +60,20 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 const box = concert[i];
                 if (!box) return;
 
-                if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
-                if (box.querySelector(".times")) box.querySelector(".times").innerHTML = info.time;
-                if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = info.adress;
-                if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
-                if (box.querySelector("img")) box.querySelector("img").src = info.src;
+                if (!info.ended) {
+                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
+                    if (box.querySelector(".times")) box.querySelector(".times").innerHTML = info.time;
+                    if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = info.adress;
+                    if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
+                    if (box.querySelector("img")) box.querySelector("img").src = info.src;
+                } else {
+                    box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
+                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
+                    if (box.querySelector("img")) box.querySelector("img").src = info.src;
+                    box.querySelector(".times").innerHTML = JSON.parse(localStorage.getItem("key_langs"))?.[current_lang]?.concertEndedText;
+                    for (let cls of ['.adresses', ".prices", ".buttons"]) if (box.querySelector(cls)) box.querySelector(cls).remove();
+                    box.style.opacity = 0.5;
+                }
             });
             localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
             currentVConcerts = data["v"];
@@ -77,13 +84,14 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
         if (data["v"] !== currentVLangs || langChange) { //if version is different or language changed
             langChange = false;
             for (let key in dataLang) {
-                let el = document.getElementById(key);
-                if (el) {
-                    if (key === "bilet") document.querySelectorAll(".bilet").textContent = dataLang[key];
-                    else el.innerHTML = dataLang[key];
-                } else console.warn(`Mrn: Element with id '${key}' not found in html.`);
+                if (key === "bilet") document.querySelectorAll(".ticket").forEach(i => i.textContent = dataLang[key]);
+                else {
+                    let el = document.getElementById(key);
+                    if (el) el.innerHTML = dataLang[key];
+                    else console.warn(`Mrn: Element with id '${key}' not found in html.`);
+                }
             }
-            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 81);
+            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 94);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
         }
@@ -93,8 +101,8 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 91);
-    await applyData("koncertyInfo", null, 92);
+    await applyData("languages", null, 104);
+    await applyData("koncertyInfo", null, 105);
 }, 1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
@@ -109,7 +117,7 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 function changeLang(lang) {
     current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
     langChange = true;
-    applyData("languages", JSON.parse(localStorage.getItem(cache_keys[0])), 107);
+    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), 120);
     adjustBoxes();
 }
 
@@ -149,12 +157,11 @@ function adjustBoxes() {
 
         //Adjust the navBoxes positions
         if (window.innerWidth < 950) {
-            if (helpBox === 'langBox') {
-                box.style.left = `${buttonPos.left - boxPos.width - 60}px`;
-                //old code: box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
-            } else box.style.left = `${buttonPos.left - boxPos.width - 30}px`;
+            let top = 30;
+            if (helpBox === 'langBox') top = 60;
+            box.style.left = `${buttonPos.left - boxPos.width - top}px`;
+            //old code for helpBox: box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
             box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
-
         } else {
             box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
             box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 30}px`;
@@ -196,7 +203,7 @@ requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement, right 
 let allowError = true;
 async function showErrorDiv(info) {
     if (allowError) {
-        allowError = !allowError;
+        allowError = false;
         document.getElementById("errorMsg").removeAttribute("hidden");
         console.warn("Mrn: error from: " + info);
     } else console.log("Mrn: Error div blocked from " + info);
@@ -240,5 +247,5 @@ let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
 //check files again on load just in case the cache is outdated
-document.addEventListener('DOMContentLoaded', () => { if (!fetched) { applyData("languages", null, 251); applyData("koncertyInfo", null, 251); console.log("fetched at dom") } });
+document.addEventListener('DOMContentLoaded', () => { if (!fetched) { applyData("languages", null, 250); applyData("koncertyInfo", null, 250); console.warn("fetched at dom") } });
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');

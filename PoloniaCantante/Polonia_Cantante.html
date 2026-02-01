@@ -251,7 +251,7 @@
                                 </li>
                             </ol>
                         </div>
-                        <!--<div class="swiper-slide fakeConcert" id="c7"></div>-->
+                        <div class="swiper-slide fakeConcert" id="c7"></div>
                     </div>
                 </div>
             </div>
@@ -592,7 +592,7 @@
             <span style="position: relative; font-size: clamp(0.8rem, 1.3vw, 1.2rem);">
                 Strona zrobiona przez Bernard Kutrzeba-Kotowski</span>
             <!--pierwsze dwie to v slowa obok a po drugiej kropce to v ogolnie strony
-            v poziom: 0.8.10; v pion: 0.8.5; 0.1.2: v mami-->
+            v poziom: 0.8.10.2; v pion: 0.8.5.2; 0.2.2.2: v mami-->
         </div>
     </footer>
 
@@ -639,37 +639,23 @@
             speed: 10000
         });
 
-        let swiperConcerts;
-        if (window.innerWidth < 950) {
-            swiperConcerts = new Swiper('.swiper-concerts', {
-                freeMode: true,
-                slidesPerView: 2,
-                spaceBetween: 30,
-            });
-        } else {
-            swiperConcerts = new Swiper('.swiper-concerts', {
-                freeMode: true,
-                slidesPerView: 4.5,
-                spaceBetween: 30,
-            });
-        }
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth < 950) {
-                swiperConcerts = new Swiper('.swiper-concerts', {
-                    freeMode: true,
+        const swiperConcerts = new Swiper('.swiper-concerts', {
+            freeMode: true,
+            slidesPerView: 1.5,
+            spaceBetween: 15,
+            centeredSlides: true,
+            centeredSlidesBounds: true,
+            breakpoints: {
+                640: {
                     slidesPerView: 2,
-                    spaceBetween: 30,
-                });
-            } else {
-                swiperConcerts = new Swiper('.swiper-concerts', {
-                    freeMode: true,
-                    slidesPerView: 4.5,
-                    spaceBetween: 30,
-                });
+                    spaceBetween: 20
+                },
+                950: {
+                    slidesPerView: 4,
+                    spaceBetween: 30
+                }
             }
         });
-        //window.addEventListener('resize', () => { if (window.innerWidth < 950) swiperConcerts.passedParams.slidesPerView = 2; console.log(swiperConcerts) });
     </script>
     <!--<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>-->
     <script src="pol_cant.js"></script>

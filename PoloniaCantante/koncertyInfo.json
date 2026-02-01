@@ -1,15 +1,7 @@
 {
     "concerts": [
         {
-            "date": "6-12-2025",
-            "time": "Ups, Mineło! Do nastepnego razu!",
-            "adress": "",
-            "price": "",
-            "src": "pics/przykladBL.jpg",
-            "ended": true
-        },
-        {
-            "date": "6-12-2025",
+            "date": "32-12-2025",
             "time": "-12:00",
             "adress": "Blanden, Haasrodestraat 72",
             "price": "3",
@@ -17,17 +9,17 @@
             "ended": true
         },
         {
-           "date": "25-1-2026",
+            "date": "25-1-2026",
             "time": "17:00",
             "adress": "Celestijnenlaan 'nie wiem ktory numer'",
             "price": "60.000",
             "src": "pics/przyklad.jpg",
-            "ended": true 
+            "ended": true
         },
-                {
-            "date": "~6-6-2026",
-            "time": "15:32",
-            "adress": "Leuven, ulica ulicowa, zyx",
+        {
+            "date": "📅|📅|📅|📆|~6-6-2026",
+            "time": "🕓|⏲|⏱︎|15:32",
+            "adress": "📍|📌|➤|Leuven, ulica ulicowa, zyx",
             "price": "6! - log2(8)",
             "src": "pics/przyklad.jpg",
             "ended": false
@@ -47,7 +39,15 @@
             "price": "wybierzcie",
             "src": "pics/przyklad.jpg",
             "ended": false
+        },
+        {
+            "date": "chyba 2028",
+            "time": "zegar nie działa",
+            "adress": "pracuje nad tym o 11",
+            "price": "wybierzcie",
+            "src": "pics/przyklad.jpg",
+            "ended": false
         }
     ],
-    "v": "0.3"
+    "v": "0.4b"
 }
