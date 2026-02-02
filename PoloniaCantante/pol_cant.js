@@ -1,4 +1,4 @@
-//current todo: manualFetchCall trans + css, 248 check, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -6,6 +6,7 @@ let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
+let first = true;
 let fetched = false;
 !localStorage?.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(Date.now())) : null;
 
@@ -15,17 +16,18 @@ async function loadKeys() {//load keys from cache
         if (cached) {
             const data = JSON.parse(cached);
             //passes data to applying function
-            key === "key_langs" ? await applyData("languages", data, 19) : await applyData("koncertyInfo", data, 19);
+            key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
+            key === "key_langs" ? await applyData("languages", data, 20) : await applyData("koncertyInfo", data, 20);
         } else {
             //if no cache it fetches the jsons and get saved to localStorage in applyData();
             try {
                 fetched = true;
                 console.log(`fetched: ${fetched}`);
-                const data = key === "key_langs" ? await fetchData("languages", 25) : await fetchData("koncertyInfo", 25);
-                key === "key_langs" ? await applyData("languages", data, 26) : await applyData("koncertyInfo", data, 26);
+                const data = key === "key_langs" ? await fetchData("languages", 26) : await fetchData("koncertyInfo", 26);
+                key === "key_langs" ? await applyData("languages", data, 27) : await applyData("koncertyInfo", data, 27);
             } catch (e) {
                 fetched = false;
-                console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)");
+                console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)", e);
             }
         }
     }
@@ -44,7 +46,7 @@ async function fetchData(type, from) {//fetch jsons? lol
     } catch (err) {
         await showErrorDiv(`fetchData ${type}.json`);
         console.error(`Mrn: Wrong link in datafetch ${type}.json`, err, from);
-        throw err;
+        throw new Error(`Mrn: Fetch failed in datafetch ${type}.json`);
     }
 }
 
@@ -53,7 +55,8 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
     if (type === "koncertyInfo") {
         const data = dataPassed || await fetchData(type, from);
-        if (data["v"] !== currentVConcerts) { //if version is different
+        if (data["v"] !== currentVConcerts || first) { //if version is different
+            first = false;
             const concert = document.querySelectorAll(".concert");
             data.concerts.forEach((info, i) => {
                 const box = concert[i];
@@ -65,13 +68,6 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = "📌 " + info.adress;
                     if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
                     if (box.querySelector("img")) box.querySelector("img").src = info.src;
-                    /* test this out:
-                    box?.querySelector(".dates")?.innerHTML = "📅 " + info?.date;
-                    box?.querySelector(".times")?.innerHTML = "🕓 " + info?.time;
-                    box?.querySelector(".adresses")?.innerHTML = "📌 " + info?.adress;
-                    box?.querySelector(".prices")?.innerHTML = "€" + info?.price;
-                    box?.querySelector("img")?.src = info?.src;
-                    */
                 } else {
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
                     if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
@@ -84,11 +80,11 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
             });
             localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
             currentVConcerts = data["v"];
+            console.log(`done applying ${type}!!1!1`);
         }
     } else if (type === "languages") {
         let data = dataPassed || await fetchData(type, from);
         let dataLang = data[current_lang];
-        console.log(data["v"], currentVLangs)
         if (data["v"] !== currentVLangs || langChange) { //if version is different or language changed
             langChange = false;
             for (let key in dataLang) {
@@ -100,18 +96,21 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 }
             }
             document.querySelectorAll(`.concert[ended]`).forEach(i => i.querySelector(".times").innerHTML = dataLang.concertEndedText);
-            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 94);
+            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 99);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
+            console.log(`done applying ${type}!!1!1`);
         }
-    } else console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
-    console.log(`done applying ${type}!!1!1`);
+    } else {
+        console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
+        throw new Error("Mrn: applyData: none or wrong 'type' given");
+    }
 }
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 104);
-    await applyData("koncertyInfo", null, 105);
+    await applyData("languages", null, 112);
+    await applyData("koncertyInfo", null, 113);
 }, 1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
@@ -126,7 +125,7 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 function changeLang(lang) {
     current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
     langChange = true;
-    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), 120);
+    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), 128);
     adjustBoxes();
 }
 
@@ -228,10 +227,9 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     });
 
     dataPassed["add"].forEach(name => {
-        if (document.getElementById(name.split("_")[1]).contains(grupyBox.querySelector(`li[alt='${name.split("_")[0]}']`))) console.log("aHHHHHHHHHHH");
+        if (document.getElementById(name.split("_")[1]).contains(grupyBox.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
         console.log(`Mrn: for debugging: adding: ${name}`);
         const li = document.createElement("li");
-        li.setAttribute("alt", name.split("_")[0]);
         const img = document.createElement("img");
         img.setAttribute("alt", name.split("_")[0]);
         img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
@@ -247,18 +245,22 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
 }
 
 async function manualFetchCall() {//check this
-    const button = document.getElementById("manualFetch");
-    button.setAttribute('disabled', '');
-    button.textContent = '...';
+    const buttonA = document.getElementById("manualFetch");
+    buttonA.parentElement.setAttribute('disabled', '');
+    buttonA.textContent = '...';
     setTimeout(() => {
-        button.removeAttribute('disabled');
-        button.textContent = JSON.parse(localStorage.getItem('key_langs').current_lang.manualFetch);
-        document.getElementById("fetchlabel").textContent = ""
+        buttonA.parentElement.removeAttribute('disabled');
+        buttonA.textContent = JSON.parse(localStorage.getItem('key_langs'))[current_lang].manualFetch;
+        document.getElementById("fetchlabel").textContent = "";
     }, 3000);
-    await applyData("languages", null, 'htmlCall');
-    await applyData("koncertyInfo", null, 'htmlCall');
-    console.log("test");
-    document.getElementById("fetchlabel").textContent = "✔️";
+    try {
+        await applyData("languages", null, 'htmlCall');
+        await applyData("koncertyInfo", null, 'htmlCall');
+        document.getElementById("fetchlabel").textContent = "✔️";
+    } catch (e) {
+        document.getElementById("fetchlabel").textContent = "❌";
+        console.error("Mrn: manualFetchCall: fetch failed", e);
+    }
 }
 
 //scrolls ig? w- wtf am i supposed to explain
@@ -276,8 +278,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Date.now() - JSON.parse(localStorage.getItem("lastFetchDate")) >= 7200000) {
         localStorage.setItem("lastFetchDate", JSON.stringify(Date.now()));
         if (!fetched) {
-            applyData("languages", null, 265);
-            applyData("koncertyInfo", null, 266);
+            applyData("languages", null, 281);
+            applyData("koncertyInfo", null, 282);
             console.warn("fetched at dom")
         }
     }
