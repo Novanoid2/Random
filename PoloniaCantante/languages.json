@@ -129,9 +129,9 @@
     },
     "ppl": {
         "add": [
-            "eval(console.log('test');)"
+            "Dodana.osoba"
         ],
         "rm": []
     },
-    "v": "1.2b"
+    "v": "1.2c"
 }

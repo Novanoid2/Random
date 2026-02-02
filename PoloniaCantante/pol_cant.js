@@ -7,8 +7,7 @@ langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
 let fetched = false;
-!localStorage.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(new Date.now())) : null;
-console.log(localStorage.getItem("lastFetchDate"), 11);
+!localStorage?.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(Date.now())) : null;
 
 async function loadKeys() {//load keys from cache
     for (let key of cache_keys) {
@@ -89,6 +88,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
     } else if (type === "languages") {
         let data = dataPassed || await fetchData(type, from);
         let dataLang = data[current_lang];
+        console.log(data["v"], currentVLangs)
         if (data["v"] !== currentVLangs || langChange) { //if version is different or language changed
             langChange = false;
             for (let key in dataLang) {
@@ -228,9 +228,10 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     });
 
     dataPassed["add"].forEach(name => {
-        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
+        if (document.getElementById(name.split("_")[1]).contains(grupyBox.querySelector(`li[alt='${name.split("_")[0]}']`))) console.log("aHHHHHHHHHHH");
         console.log(`Mrn: for debugging: adding: ${name}`);
         const li = document.createElement("li");
+        li.setAttribute("alt", name.split("_")[0]);
         const img = document.createElement("img");
         img.setAttribute("alt", name.split("_")[0]);
         img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
@@ -251,11 +252,12 @@ async function manualFetchCall() {//check this
     button.textContent = '...';
     setTimeout(() => {
         button.removeAttribute('disabled');
-        button.textContent = JSON.parse(localStorage.getItem('key_langs').current_lang.manualFetchCall);
+        button.textContent = JSON.parse(localStorage.getItem('key_langs').current_lang.manualFetch);
         document.getElementById("fetchlabel").textContent = ""
     }, 3000);
     await applyData("languages", null, 'htmlCall');
     await applyData("koncertyInfo", null, 'htmlCall');
+    console.log("test");
     document.getElementById("fetchlabel").textContent = "✔️";
 }
 
@@ -271,8 +273,8 @@ window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame
 //fetched again on load w if statements
 document.addEventListener('DOMContentLoaded', () => {
     //if last fetch date is more than two hours ago, it fetches again (2 * 1000 * 60 * 60)
-    if (new Date.now() - new Date(`${JSON.parse(localStorage.getItem("lastFetchDate"))}`) >= 7200000) {
-        localStorage.setItem("lastFetchDate", JSON.stringify(new Date.now()));
+    if (Date.now() - JSON.parse(localStorage.getItem("lastFetchDate")) >= 7200000) {
+        localStorage.setItem("lastFetchDate", JSON.stringify(Date.now()));
         if (!fetched) {
             applyData("languages", null, 265);
             applyData("koncertyInfo", null, 266);
