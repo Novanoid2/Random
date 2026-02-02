@@ -1,4 +1,4 @@
-//current todo: search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: mk button to user to manually fetch, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -66,6 +66,13 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = "📌 " + info.adress;
                     if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
                     if (box.querySelector("img")) box.querySelector("img").src = info.src;
+                    /* test this out:
+                    box?.querySelector(".dates")?.innerHTML = "📅 " + info?.date;
+                    box?.querySelector(".times")?.innerHTML = "🕓 " + info?.time;
+                    box?.querySelector(".adresses")?.innerHTML = "📌 " + info?.adress;
+                    box?.querySelector(".prices")?.innerHTML = "€" + info?.price;
+                    box?.querySelector("img")?.src = info?.src;
+                    */
                 } else {
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
                     if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
