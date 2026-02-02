@@ -88,7 +88,7 @@
             <div class="swiper-slide"><img src="pics/pic1.jpg"></div>
             <div class="swiper-slide"><img src="pics/pic2.jpg"></div>
             <div class="swiper-slide"><img src="pics/pic3.jpg"></div>
-            <div class="swiper-slide"><img src="pics/pic4.jpg"></div>
+            <div class="swiper-slide"><img src="pics/wszyscy1.jpg"></div>
             <div class="swiper-slide"><img src="pics/catPlaceholder.png"></div>
         </div>
 
@@ -437,21 +437,21 @@
                         <!-- Additional required wrapper -->
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
+                                <img id="" class="proby-img" src="pics/pic4.jpg">
                             </div>
 
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
+                                <img id="" class="proby-img" src="pics/pic4.jpg">
                             </div>
 
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/wszyscy2-non.jpg">
+                                <img id="" class="proby-img" src="pics/pic4.jpg">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="right">
-                    <h2 id="probyOpis">info info info info info info info info info info</h2>
+                    <h2 id="probyOpis">Powiadom mnie jesli to widac</h2>
                 </div>
             </div>
         </section>
@@ -496,7 +496,6 @@
                         <img src="pics/" alt="sylwia">
                         <h3>Sylwia</h3>
                     </li>
-
                 </ol>
             </section>
             <hr style="width:90%;">
@@ -533,7 +532,6 @@
             <section id="tenor">
                 <h2 id="tenorTitle">Nasze alty 2:</h2>
                 <ol>
-
                     <li>
                         <img src="pics/" alt="ania">
                         <h3>Ania</h3>
@@ -594,9 +592,10 @@
         <div class="footer-right">
             © &middot; 2026
             <br>
-            <button onclick="applyData('languages', null, 'htmlCall'), applyData('koncertyInfo', null, 'htmlCall')">
-
+            <button onclick="manualFetchCall();" id="manualFetch" style="font-size: clamp(1rem, 1.5vw, 1.8rem);">
+                Chcesz sprawdzic czy informacje na stronie sa aktualne? Nacisnij mnie!
             </button>
+            <label for="manualFetch" id="fetchlabel" style="font-size: clamp(1rem, 1.5vw, 1.8rem);"></label>
             <br>
             <button style="border-radius:5px;margin:5px;position:relative;"><a
                     style="margin:5px;font-size:clamp(1em,1.6vw,1.3em);"

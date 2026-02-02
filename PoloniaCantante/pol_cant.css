@@ -620,6 +620,7 @@ footer button {
     top: auto;
     border: 2px solid black;
     background: none;
+    border-radius: 10px;
 }
 
 .footer-right {

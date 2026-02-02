@@ -28,6 +28,7 @@
         "doGory": "Wróć na górę",
         "errorReport": "Jest jakiś błąd? Możesz to tutaj zgłosić!",
         "autor": "Strona zrobiona przez Bernard K-K",
+        "manualFetch": "Chcesz sprawdzić, czy informacje na stronie są aktualne? Kliknij mnie!",
         "concertEndedText": "Ups, Mineło! Do nastepnego razu!"
     },
     "EN": {
@@ -59,6 +60,7 @@
         "doGory": "Back to top",
         "errorReport": "Saw any errors? Report them here!",
         "autor": "Website by Bernard K-K",
+        "manualFetch": "Want to check if the information on the website is up to date? Click me!",
         "concertEndedText": "Oops, it ended! See you next time!"
     },
     "FR": {
@@ -90,6 +92,7 @@
         "doGory": "Retour en haut",
         "errorReport": "Y-a-t-il une erreur? Rapporte-la ici!",
         "autor": "Site créé par Bernard K-K",
+        "manualFetch": "Vérifier si les informations sur le site sont à jour? Cliquez sur moi!",
         "concertEndedText": "Oups, c'est finit! À la prochaine!"
     },
     "NL": {
@@ -121,13 +124,14 @@
         "doGory": "Terug naar boven",
         "errorReport": "Een fout gevonden? Meld het hier!",
         "autor": "Website gemaakt door Bernard K-K",
+        "manualFetch": "Wil je controleren of de informatie op de website up-to-date is? Klik op mij!",
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
         "add": [
-            "Dodana.osoba.np:Bert_tenor"
+            "eval(console.log('test');)"
         ],
         "rm": []
     },
-    "v": "1.2"
+    "v": "1.2b"
 }

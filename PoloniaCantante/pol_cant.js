@@ -1,6 +1,4 @@
-//current todo: mk button to user to manually fetch, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
-//idea: save fetch date in localStorage and only fetch if more than x hours have passed
-
+//current todo: manualFetchCall trans + css, 248 check, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -132,33 +130,6 @@ function changeLang(lang) {
     adjustBoxes();
 }
 
-function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
-    console.log("editing grupy...", from);
-    const grupyBox = document.getElementById("boxGrupy");
-    dataPassed["rm"].forEach(name => {
-        const li = grupyBox.querySelector(`li img[alt='${name}']`);
-        if (li) li.parentElement.remove();
-    });
-
-    dataPassed["add"].forEach(name => {
-        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
-        console.log(`Mrn: for debugging: adding: ${name}`);
-        const li = document.createElement("li");
-        const img = document.createElement("img");
-        img.setAttribute("alt", name.split("_")[0]);
-        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
-        img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
-        li.appendChild(img);
-        const h3 = document.createElement("h3");
-        h3.innerHTML = name.split("_")[0];
-        li.appendChild(h3);
-        document.getElementById(name.split("_")[1]).querySelector("ol").appendChild(li);
-    });
-
-    console.log("finished editing grupy");
-}
-
-
 function adjustBoxes() {
     for (let helpBox of ["langBox", "contactInfoBox", "pomocBox"]) {
         const box = document.getElementById(helpBox);
@@ -246,6 +217,46 @@ function toggleBox(id) {
             setTimeout(() => box.style.opacity = 0, 10);
         }
     }
+}
+
+function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
+    console.log("editing grupy...", from);
+    const grupyBox = document.getElementById("boxGrupy");
+    dataPassed["rm"].forEach(name => {
+        const li = grupyBox.querySelector(`li img[alt='${name}']`);
+        if (li) li.parentElement.remove();
+    });
+
+    dataPassed["add"].forEach(name => {
+        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
+        console.log(`Mrn: for debugging: adding: ${name}`);
+        const li = document.createElement("li");
+        const img = document.createElement("img");
+        img.setAttribute("alt", name.split("_")[0]);
+        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
+        img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
+        li.appendChild(img);
+        const h3 = document.createElement("h3");
+        h3.innerHTML = name.split("_")[0];
+        li.appendChild(h3);
+        document.getElementById(name.split("_")[1]).querySelector("ol").appendChild(li);
+    });
+
+    console.log("finished editing grupy");
+}
+
+async function manualFetchCall() {//check this
+    const button = document.getElementById("manualFetch");
+    button.setAttribute('disabled', '');
+    button.textContent = '...';
+    setTimeout(() => {
+        button.removeAttribute('disabled');
+        button.textContent = JSON.parse(localStorage.getItem('key_langs').current_lang.manualFetchCall);
+        document.getElementById("fetchlabel").textContent = ""
+    }, 3000);
+    await applyData("languages", null, 'htmlCall');
+    await applyData("koncertyInfo", null, 'htmlCall');
+    document.getElementById("fetchlabel").textContent = "✔️";
 }
 
 //scrolls ig? w- wtf am i supposed to explain
