@@ -1,4 +1,6 @@
 //current todo: mk button to user to manually fetch, search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//idea: save fetch date in localStorage and only fetch if more than x hours have passed
+
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -7,9 +9,8 @@ langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
 let fetched = false;
-(!localStorage.getItem("lastFetchDate")) ? localStorage.setItem("lastFetchDate", JSON.stringify(new Date.now())) : null;
+!localStorage.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(new Date.now())) : null;
 console.log(localStorage.getItem("lastFetchDate"), 11);
-//idea: save fetch date in localStorage and only fetch if more than x hours have passed
 
 async function loadKeys() {//load keys from cache
     for (let key of cache_keys) {
@@ -256,13 +257,14 @@ function scrollToId(id) {
 let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
-//check files again on load w if statements just in case the cache is outdated
+//fetched again on load w if statements
 document.addEventListener('DOMContentLoaded', () => {
-    if (new Date.now().getHours() - new Date(`${JSON.parse(localStorage.getItem("lastFetchDate"))}`).getHours() >= 2) {
-        
+    //if last fetch date is more than two hours ago, it fetches again (2 * 1000 * 60 * 60)
+    if (new Date.now() - new Date(`${JSON.parse(localStorage.getItem("lastFetchDate"))}`) >= 7200000) {
+        localStorage.setItem("lastFetchDate", JSON.stringify(new Date.now()));
         if (!fetched) {
-            applyData("languages", null, 250);
-            applyData("koncertyInfo", null, 250);
+            applyData("languages", null, 265);
+            applyData("koncertyInfo", null, 266);
             console.warn("fetched at dom")
         }
     }
