@@ -7,7 +7,8 @@ langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
 let langChange = true;
 let fetched = false;
-//let lastDate = new Date.now();
+(!localStorage.getItem("lastFetchDate")) ? localStorage.setItem("lastFetchDate", JSON.stringify(new Date.now())) : null;
+console.log(localStorage.getItem("lastFetchDate"), 11);
 //idea: save fetch date in localStorage and only fetch if more than x hours have passed
 
 async function loadKeys() {//load keys from cache
@@ -255,6 +256,15 @@ function scrollToId(id) {
 let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
-//check files again on load just in case the cache is outdated
-document.addEventListener('DOMContentLoaded', () => { if (!fetched) { applyData("languages", null, 250); applyData("koncertyInfo", null, 250); console.warn("fetched at dom") } });
+//check files again on load w if statements just in case the cache is outdated
+document.addEventListener('DOMContentLoaded', () => {
+    if (new Date.now().getHours() - new Date(`${JSON.parse(localStorage.getItem("lastFetchDate"))}`).getHours() >= 2) {
+        
+        if (!fetched) {
+            applyData("languages", null, 250);
+            applyData("koncertyInfo", null, 250);
+            console.warn("fetched at dom")
+        }
+    }
+});
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
