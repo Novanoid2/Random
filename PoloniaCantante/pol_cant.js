@@ -97,19 +97,18 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 }
             }
             document.querySelectorAll(`.concert[ended]`).forEach(i => i.querySelector(".times").innerHTML = dataLang.concertEndedText);
-            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 99);
+            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 100);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
         }
         console.log(`done applying ${type}!!1!1`);
     } else console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
-    console.log(`done applying ${type}!!1!1`);
 }
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 112);
-    await applyData("koncertyInfo", null, 113);
+    await applyData("languages", null, 110);
+    await applyData("koncertyInfo", null, 111);
 }, 1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
@@ -124,7 +123,7 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 function changeLang(lang) {
     current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
     langChange = true;
-    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), 128);
+    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), "langChange");
     adjustBoxes();
 }
 
@@ -226,6 +225,7 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     });
 
     dataPassed["add"].forEach(name => {
+        //if you get an error on line below, its most likely because of name isnt complete or languages json if fucked up
         if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
         console.log(`Mrn: for debugging: adding: ${name}`);
         const li = document.createElement("li");
@@ -277,8 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Date.now() - JSON.parse(localStorage.getItem("lastFetchDate")) >= 7200000) {
         localStorage.setItem("lastFetchDate", JSON.stringify(Date.now()));
         if (!fetched) {
-            applyData("languages", null, 281);
-            applyData("koncertyInfo", null, 282);
+            applyData("languages", null, 280);
+            applyData("koncertyInfo", null, 281);
             console.warn("fetched at dom")
         }
     }

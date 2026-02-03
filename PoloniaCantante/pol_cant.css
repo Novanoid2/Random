@@ -500,7 +500,7 @@ li a {
     flex: 1;
     max-height: 50vh;
     max-width: 35vw;
-    height:auto;
+    height: auto;
     overflow: hidden;
 }
 
