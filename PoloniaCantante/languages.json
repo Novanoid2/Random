@@ -129,7 +129,7 @@
     },
     "ppl": {
         "add": [
-            "Dodana.osoba.np.Bert_tenor"
+            "Dodana.osoba"
         ],
         "rm": []
     },

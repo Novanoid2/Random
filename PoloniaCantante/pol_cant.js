@@ -80,6 +80,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
             });
             localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
             currentVConcerts = data["v"];
+            console.log(`done applying ${type}!!1!1`);
         }
         console.log(`done applying ${type}!!1!1`);
     } else if (type === "languages") {
@@ -99,12 +100,10 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
             if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 99);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
+            console.log(`done applying ${type}!!1!1`);
         }
-        console.log(`done applying ${type}!!1!1`);
-    } else {
-        console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
-        throw new Error("Mrn: applyData: none or wrong 'type' given");
-    }
+    } else console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
+    console.log(`done applying ${type}!!1!1`);
 }
 
 loadKeys(); //initial load from cache
