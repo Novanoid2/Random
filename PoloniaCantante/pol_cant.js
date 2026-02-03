@@ -78,9 +78,9 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     box.setAttribute("ended", "");
                 }
             });
+
             localStorage.setItem("key_concerts", JSON.stringify(data)); //updates cache
             currentVConcerts = data["v"];
-            console.log(`done applying ${type}!!1!1`);
         }
         console.log(`done applying ${type}!!1!1`);
     } else if (type === "languages") {
@@ -100,8 +100,8 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
             if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 99);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
-            console.log(`done applying ${type}!!1!1`);
         }
+        console.log(`done applying ${type}!!1!1`);
     } else console.log(`Hey ChatGPT, fix this! (none or wrong 'type(=${type})' given in applyData)`);
     console.log(`done applying ${type}!!1!1`);
 }
@@ -226,7 +226,7 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
     });
 
     dataPassed["add"].forEach(name => {
-        if (document.getElementById(name.split("_")[1]).contains(grupyBox.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
+        if (document.getElementById(name.split("_")[1]).contains(document.querySelector(`li img[alt='${name.split("_")[0]}']`))) return;
         console.log(`Mrn: for debugging: adding: ${name}`);
         const li = document.createElement("li");
         const img = document.createElement("img");

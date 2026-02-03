@@ -359,6 +359,7 @@ max-width: 100%;
     box-sizing: border-box;
     flex-direction: column;
     align-items: center;
+    margin: 20px 0;
 }
 
 .koncerty img {
@@ -496,9 +497,10 @@ li a {
 }
 
 .proby .left {
+    flex: 1;
     max-height: 50vh;
     max-width: 35vw;
-    height: 50vh;
+    height:auto;
     overflow: hidden;
 }
 
@@ -522,12 +524,13 @@ li a {
 }
 
 .proby .right {
+    flex: 1;
     position: static;
     height: auto;
     text-align: center;
     width: auto;
     justify-content: center;
-    padding: 0 20px;
+    padding: 0 30px;
 }
 
 .proby .right h2 {
