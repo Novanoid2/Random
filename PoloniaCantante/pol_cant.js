@@ -1,4 +1,4 @@
-//current todo: search for bugs/things to shorten, dif wesbite versions, gotowe (= done)
+//current todo: add counter to see how many users online / total, search for bugs/things to shorten
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "NL";
 const cache_keys = ["key_langs", "key_concerts"];
@@ -63,11 +63,11 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 if (!box) return;
 
                 if (!info.ended) {
-                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = "📅 " + info.date;
-                    if (box.querySelector(".times")) box.querySelector(".times").innerHTML = "🕓 " + info.time;
-                    if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = "📌 " + info.adress;
-                    if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info.price;
-                    if (box.querySelector("img")) box.querySelector("img").src = info.src;
+                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = "📅 " + info?.date;
+                    if (box.querySelector(".times")) box.querySelector(".times").innerHTML = "🕓 " + info?.time;
+                    if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = "📌 " + info?.adress;
+                    if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info?.price;
+                    if (box.querySelector("img")) box.querySelector("img").src = info?.src;
                 } else {
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
                     if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
@@ -97,7 +97,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 }
             }
             document.querySelectorAll(`.concert[ended]`).forEach(i => i.querySelector(".times").innerHTML = dataLang.concertEndedText);
-            if (data["ppl"].add.length !== 0 || data["ppl"].rm.length !== 0) editGrupy(data["ppl"], 100);
+            if (data["ppl"]?.add.length !== 0 || data["ppl"]?.rm.length !== 0) editGrupy(data["ppl"], 100);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
         }
@@ -165,19 +165,6 @@ function adjustBoxes() {
 
         box.setAttribute("hidden", ""); //hides navBoxes lol
         box.style.opacity = 0;
-    }
-
-    const t = document.getElementById("welcome");
-    if (window.innerWidth <= 700) { //oh yeah also fix this cuz i wanna do <wbr> but width in css fucks it up
-        if (current_lang === "PL") t.innerHTML = "Witamy na stronie<br>Polonia Cantante!";
-        else if (current_lang === "EN") t.innerHTML = "Welcome to the<br>Polonia Cantante website!";
-        else if (current_lang === "NL") t.innerHTML = "Welkom op de website<br>van Polonia Cantante!";
-        else if (current_lang === "FR") t.innerHTML = "Bienvenue sur le<br>site de Polonia Cantante!";
-    } else {
-        if (current_lang === "PL") t.innerHTML = "Witamy na stronie Polonia Cantante!";
-        else if (current_lang === "EN") t.innerHTML = "Welcome to the Polonia Cantante website!";
-        else if (current_lang === "NL") t.innerHTML = "Welkom op de website van Polonia Cantante!";
-        else if (current_lang === "FR") t.innerHTML = "Bienvenue sur le site de Polonia Cantante!";
     }
 }
 
