@@ -167,12 +167,17 @@ function adjustBoxes() {
         box.style.opacity = 0;
     }
 
+    const t = document.getElementById("welcome");
     if (window.innerWidth <= 700) { //oh yeah also fix this cuz i wanna do <wbr> but width in css fucks it up
-        const t = document.getElementById("welcome");
         if (current_lang === "PL") t.innerHTML = "Witamy na stronie<br>Polonia Cantante!";
         else if (current_lang === "EN") t.innerHTML = "Welcome to the<br>Polonia Cantante website!";
         else if (current_lang === "NL") t.innerHTML = "Welkom op de website<br>van Polonia Cantante!";
         else if (current_lang === "FR") t.innerHTML = "Bienvenue sur le<br>site de Polonia Cantante!";
+    } else {
+        if (current_lang === "PL") t.innerHTML = "Witamy na stronie Polonia Cantante!";
+        else if (current_lang === "EN") t.innerHTML = "Welcome to the Polonia Cantante website!";
+        else if (current_lang === "NL") t.innerHTML = "Welkom op de website van Polonia Cantante!";
+        else if (current_lang === "FR") t.innerHTML = "Bienvenue sur le site de Polonia Cantante!";
     }
 }
 
@@ -188,11 +193,13 @@ async function showErrorDiv(info) {
     } else console.log("Mrn: Error div blocked from " + info);
 }
 
-//set pictures for in grupy
-document.querySelectorAll("#boxGrupy li img").forEach(img => {
-    img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image is found
-    img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
-});
+//set pictures in boxGrupy, with timeout because sometimes it would load too fast and couldnt find the .src in the pic folder
+setTimeout(() => {
+    document.querySelectorAll("#boxGrupy li img").forEach(img => {
+        img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
+        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image is found
+    });
+}, 5);
 
 //toggle navBoxes visibility when one of them is opened
 function toggleBox(id) {
