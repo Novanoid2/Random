@@ -1,6 +1,8 @@
-//current todo: add counter to see how many users online / total, search for bugs/things to shorten
+//current todo: update trans,add counter to see how many users online / total, search for bugs/things to shorten
+//spotkanie: archive koncerty, bilety: "musi sie pojawiac qr kod", wyslac potwierdzenie na mail, "qr moze sie zmieniac", koncerty img src beda przesylac, pol cant yt link
+//prob change the dolaczSeperate buttons logic to js and css?
 const langs = ["PL", "EN", "NL", "FR"];
-const default_lang = "NL";
+const default_lang = "PL";
 const cache_keys = ["key_langs", "key_concerts"];
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
@@ -228,9 +230,9 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
         img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
         img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
         li.appendChild(img);
-        const h3 = document.createElement("h3");
-        h3.innerHTML = name.split("_")[0];
-        li.appendChild(h3);
+        const h2 = document.createElement("h2");
+        h2.innerHTML = name.split("_")[0];
+        li.appendChild(h2);
         document.getElementById(name.split("_")[1]).querySelector("ol").appendChild(li);
     });
 

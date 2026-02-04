@@ -15,7 +15,7 @@
         <nav id="navBar"> <!--nav bar ig?-->
             <button id="oNas" onclick="scrollToId('boxONas-outer')" class="but">O nas</button>
             <button id="koncerty" onclick="scrollToId('boxKoncerty')" class="but">Koncerty & Bilety</button>
-            <button id="zdjecia" onclick="scrollToId('boxZdjecia')" class="but">Zdjęcia</button>
+            <button id="zdjecia" onclick="scrollToId('boxGaleria')" class="but">Zdjęcia</button>
             <button id="proby" onclick="scrollToId('boxProby')" class="but">Próby</button>
             <button id="pomoc" onclick="toggleBox('pomocBox')" class="but">Wspomóż nas</button>
             <button id="dolacz" onclick="toggleBox('contactInfoBox')" class="but">Dołącz do nas</button>
@@ -94,9 +94,8 @@
 
     </div>
 
-    <div id="welcomeDiv">
-        <h1 id="welcome">Witamy na stronie Polonia Cantante!</h1>
-    </div>
+    <!--<div id="welcomeDiv">  </div>-->
+    <h1 id="welcome">Witamy na stronie Polonia Cantante!</h1>
 
     <main class="boxes">
         <!-- you might notice some text tags here have values that are overridden in js later, thats in case if the script gets an error reading the
@@ -231,27 +230,7 @@
                                 </li>
                             </ol>
                         </div>
-                        <div class="swiper-slide concert" id="c6">
-                            <ol>
-                                <li>
-                                    <span class="dates">2026-07-07</span>
-                                    <br>
-                                    <hr style="width: 90%;">
-                                    <span class="times">18:00</span>
-                                    <br>
-                                    <span class="adresses">Leuven</span>
-                                    <br>
-                                    <span class="prices">€3</span>
-                                    <br>
-                                    <span class="buttons"> <a href="bilety.html" class="ticket">BILETY</a>
-                                    </span>
-                                </li>
-                                <li>
-                                    <img src="pics/przyklad.jpg">
-                                </li>
-                            </ol>
-                        </div>
-                        <div class="swiper-slide fakeConcert" id="c7"></div>
+                        <div class="swiper-slide fakeConcert" id="c6"></div>
                     </div>
                 </div>
 
@@ -259,28 +238,92 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
+            <button id="archive"><a href="archive.html">Archiwum koncertów</a></button>
         </section>
 
-        <section id="boxZdjecia" class="box">
+        <section id="boxGaleria" class="box">
             <span class="titles" id="zdjeciaTitle">Zdjęcia</span>
             <hr style="width: 35%;">
             <div class="swiper swiper-pics">
                 <div class="swiper-wrapper" style="transition-timing-function: linear;">
-                    <div class="swiper-slide"><img id="" class="" src="pics/head.jpg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/pic1.jpg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/pic2.jpg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/pic3.jpg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby1.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby2.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby3.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby4.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby5.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby6.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby7.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/proby8.jpeg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/przykladBL.jpg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/wszyscy1.jpg"></div>
-                    <div class="swiper-slide"><img id="" class="" src="pics/wszyscy2.jpg"></div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/head.jpg">
+                        </div>
+                        <h2 id="forG1">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/pic1.jpg">
+                        </div>
+                        <h2 id="forG2">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/pic3.jpg">
+                        </div>
+                        <h2 id="forG3">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby1.jpeg">
+                        </div>
+                        <h2 id="forG4">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby2.jpeg">
+                        </div>
+                        <h2 id="forG5">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby3.jpeg">
+                        </div>
+                        <h2 id="forG6">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby4.jpeg">
+                        </div>
+                        <h2 id="forG7">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby5.jpeg">
+                        </div>
+                        <h2 id="forG8">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby6.jpeg">
+                        </div>
+                        <h2 id="forG9">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby7.jpeg">
+                        </div>
+                        <h2 id="forG10">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/proby8.jpeg">
+                        </div>
+                        <h2 id="forG11">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/wszyscy1.jpg">
+                        </div>
+                        <h2 id="forG12">Test</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="img-wrap">
+                            <img id="" class="" src="pics/wszyscy2.jpg">
+                        </div>
+                        <h2 id="forG13">Test</h2>
+                    </div>
                 </div>
             </div>
         </section>
@@ -294,34 +337,62 @@
                         <!-- Additional required wrapper -->
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/proby1.jpeg">
+                                <div class="img-wrap">
+                                    <img class="proby-img" src="pics/pic3.jpg">
+                                </div>
+                                <h2 id="for1">Test</h2>
                             </div>
-                            <div class="swiper-slide">
+                            <!--<div class="swiper-slide">
+                                                                <div class="img-wrap">
                                 <img id="" class="proby-img" src="pics/proby2.jpeg">
+                                <h2 id="for2">Test</h2>
                             </div>
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/proby3.jpeg">
+                                                                <div class="img-wrap">
+                                <img id="" class="proby-img" src="pics/proby3.jpeg"></div>
+                                <h2 id="for3">Test</h2>
                             </div>
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/proby4.jpeg">
+                                                                <div class="img-wrap">
+                                <img id="" class="proby-img" src="pics/proby4.jpeg"></div>
+                                <h2 id="for4">Test</h2>
                             </div>
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/proby5.jpeg">
+                                                                <div class="img-wrap">
+                                <img id="" class="proby-img" src="pics/proby5.jpeg"></div>
+                                <h2 id="for5">Test</h2>
                             </div>
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/proby6.jpeg">
+                                                                <div class="img-wrap">
+                                <img id="" class="proby-img" src="pics/proby6.jpeg"></div>
+                                <h2 id="for6">Test</h2>
                             </div>
                             <div class="swiper-slide">
-                                <img id="" class="proby-img" src="pics/proby7.jpeg">
-                            </div>
+                                                                <div class="img-wrap">
+                                <img id="" class="proby-img" src="pics/proby7.jpeg"></div>
+                                <h2 id="for7">Test</h2>
+                            </div>-->
                             <div class="swiper-slide">
                                 <img id="" class="proby-img" src="pics/proby8.jpeg">
+                                <h2 id="for8">Test</h2>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="right">
                     <h2 id="probyOpis">Powiadom mnie jesli to widac</h2>
+                    <br>
+                    <span id="textProby" style="color: white; font-size: clamp(1.4rem, 1.7vw, 1.7rem);">
+                        <button
+                            onclick='if(document.getElementById("textProby").style.color == "white") {document.getElementById("textProby").style.color = "black"; document.getElementById("textAProby").style.color = "red"}else{document.getElementById("textProby").style.color = "white";document.getElementById("textAProby").style.color = "white"}'
+                            id="dolaczSeperateProby">Chcesz dołączyć?
+                        </button>
+                        <br>
+                        &middot; +32 wciąż nie wiem /
+                        <a style="color: white;margin: 10px 0;" id="textAProby"
+                            href="mailto:PoloniaCantante@gmail.com?subject=Chciał(a) bym dołączyć do waszego chóru">
+                            PoloniaCantante@gmail.com</a>
+                    </span>
                 </div>
             </div>
         </section>
@@ -330,96 +401,111 @@
             <span class="titles" id="glosyTitle">Nasze głosy</span>
             <hr style="width: 35%;">
             <section id="dyrygentka">
-                <h2 id="dyrygentTitle">Dyrygentka:</h2>
+                <h1 id="dyrygentTitle">Dyrygentka:</h1>
                 <ol>
                     <li>
                         <img src="pics/" alt="maya">
-                        <h3>Maya</h3>
+                        <h2>Maya</h2>
                     </li>
                 </ol>
             </section>
             <hr style="width:90%;">
             <section id="sopran">
-                <h2 id="sopranTitle">Nasze soprany:</h2>
+                <h1 id="sopranTitle">Nasze soprany:</h1>
                 <ol>
                     <li>
                         <img src="pics/" alt="aneta">
-                        <h3>Aneta</h3>
+                        <h2>Aneta</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="jowi">
-                        <h3>Jowi</h3>
+                        <h2>Jowi</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="justyna">
-                        <h3>Justyna</h3>
+                        <h2>Justyna</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="milka">
-                        <h3>Miłka</h3>
+                        <h2>Miłka</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="monika">
-                        <h3>Monika</h3>
+                        <h2>Monika</h2>
+                    </li>
+                    <li>
+                        <img src="pics/" alt="ola">
+                        <h2>Ola</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="sylwia">
-                        <h3>Sylwia</h3>
+                        <h2>Sylwia</h2>
                     </li>
                 </ol>
             </section>
             <hr style="width:90%;">
             <section id="alt">
-                <h2 id="altTitle">Nasze alty 1:</h2>
+                <h1 id="altTitle">Nasze alty 1:</h1>
                 <ol>
                     <li>
                         <img src="pics/" alt="aleksandra">
-                        <h3>Aleksandra</h3>
+                        <h2>Aleksandra</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="andzelika">
-                        <h3>Andżelika</h3>
+                        <h2>Andżelika</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="beata">
-                        <h3>Beata</h3>
+                        <h2>Beata</h2>
+                    </li>
+                    <li>
+                        <img src="pics/" alt="eda">
+                        <h2>Eda</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="ela">
-                        <h3>Ela</h3>
+                        <h2>Ela</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="karolina">
-                        <h3>Karolina</h3>
+                        <h2>Karolina</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="marta">
-                        <h3>Marta</h3>
+                        <h2>Marta</h2>
                     </li>
                 </ol>
             </section>
             <hr style="width:90%;">
             <section id="tenor">
-                <h2 id="tenorTitle">Nasze alty 2:</h2>
+                <h1 id="tenorTitle">Nasze alty 2:</h1>
                 <ol>
                     <li>
                         <img src="pics/" alt="ania">
-                        <h3>Ania</h3>
+                        <h2>Ania</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="darek">
-                        <h3>Darek</h3>
+                        <h2>Darek</h2>
                     </li>
                     <li>
                         <img src="pics/" alt="gosha">
-                        <h3>Gosha</h3>
+                        <h2>Gosha</h2>
                     </li>
                 </ol>
             </section>
             <!--I am NOT adding stuff to js just for this thing, i dont care if this is trash-->
-            <span id="text" style="color: white; font-size: clamp(1.4rem, 1.7vw, 1.7rem);"><button
-                    onclick='document.getElementById("text").style.color == "white" ? document.getElementById("text").style.color = "black" : document.getElementById("text").style.color = "white"'
-                    id="dolaczSeperate">Chcesz dołączyć?</button><br>&middot; +32 nie wiem / Jowi_może@email.com</span>
+            <span id="textGrupy" style="color: white; font-size: clamp(1.4rem, 1.7vw, 1.7rem);">
+                <button
+                    onclick='if(document.getElementById("textGrupy").style.color == "white") {document.getElementById("textGrupy").style.color = "black"; document.getElementById("textAGrupy").style.color = "red"}else{document.getElementById("textGrupy").style.color = "white";document.getElementById("textAGrupy").style.color = "white"}'
+                    id="dolaczSeperateGrupy">Chcesz dołączyć?</button>
+                <br>
+                &middot; +32 wciąż nie wiem /
+                <a style="color: white;" id="textAGrupy"
+                    href="mailto:PoloniaCantante@gmail.com?subject=Chciał(a) bym dołączyć do waszego chóru">
+                    PoloniaCantante@gmail.com</a>
+            </span>
         </section>
     </main>
 
@@ -442,10 +528,11 @@
                             d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                     </svg>
                 </a>
-                <a href="https://www.tiktok.com/@poloniacantante" style="margin-top: 5px;">
-                    <svg viewBox="0 0 32 32" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z" />
+                <a href="https://www.youtube.com/poloniacantante/">
+                    <svg height=" 200px" width="200px" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 461.001 461.001" fill="#000000">
+                        <path style="fill:#F61C0D;"
+                            d="M365.257,67.393H95.744C42.866,67.393,0,110.259,0,163.137v134.728 c0,52.878,42.866,95.744,95.744,95.744h269.513c52.878,0,95.744-42.866,95.744-95.744V163.137 C461.001,110.259,418.135,67.393,365.257,67.393z M300.506,237.056l-126.06,60.123c-3.359,1.602-7.239-0.847-7.239-4.568V168.607 c0-3.774,3.982-6.22,7.348-4.514l126.06,63.881C304.363,229.873,304.298,235.248,300.506,237.056z" />
                     </svg>
                 </a>
             </fieldset>
@@ -475,8 +562,8 @@
             <br>
             <span style="position: relative; font-size: clamp(0.8rem, 1.3vw, 1.2rem);" id="autor">
                 Strona zrobiona przez Bernard Kutrzeba-Kotowski</span>
-                <br>
-                v: 0.8.2.4
+            <br>
+            v: 0.8.3
             <!---->
         </div>
     </footer>
@@ -520,6 +607,7 @@
             loop: true,
             slidesPerView: 1,
             spaceBetween: 0,
+            autoHeight: true,
             effect: "coverflow",
             coverflowEffect: {
                 rotate: 80,

@@ -1,9 +1,11 @@
 /* *adds a very realistic copyright restriction here* */
 
 :root {
-    --swiper-navigation-top-offset: 8%;
-    --swiper-navigation-sides-offset: 20px;
-    --swiper-navigation-color: red;
+    --swiper-navigation-top-offset: 50%;
+    --swiper-navigation-sides-offset: 40px;
+    --swiper-navigation-color: blue;
+    --galeria-caption-h: 1.5rem;
+
 }
 
 * {
@@ -15,7 +17,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(to bottom right, green, orange, yellow, blue);
+    background-color: rgb(34, 45, 90);
     overflow-x: hidden;
 }
 
@@ -35,7 +37,7 @@ a:hover {
 }
 
 hr {
-    border: 2px solid rgba(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
 }
 
 .titles {
@@ -170,32 +172,31 @@ header {
 #welcomeDiv {
     z-index: 1;
     width: auto;
-    background-color: rgba(178, 54, 255, 0.2);
+    background-color: rgba(47, 40, 255, 0.242);
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 12%;
     transform: translate(-50%, -50%);
     border-radius: 20px;
-    height: clamp(50px, calc(2vw + 3vh), 70px);
+    height: clamp(50px, calc(3vw + 4vh), 75px);
 }
 
 #welcome {
-    /* without the parent (#h1Div) div:
+    /* without the parent (#h1Div) div:*/
     z-index: 1;
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 10%;
     width: max-content;
+    max-width: 80vw;
     transform: translate(-50%, -50%);
-    font-size: 3.5rem;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
     font-family: Palatino;
     font-weight: bold;
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
-    background: url("pics/pobrane2.png") no-repeat center/cover;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent; */
-    position: relative;
+    text-align: center;
+    color: rgb(46, 87, 253);
+    -webkit-text-stroke: 2px black;
+    /*position: relative;
     width: max-content;
     max-width: 80vw;
     padding: 0 10px;
@@ -209,12 +210,11 @@ header {
     -webkit-text-fill-color: transparent;
     color: transparent;
     transform: translateY(-40%);
-    display: inline-block;
+    display: inline-block;*/
 
 }
 
 .swiper {
-    /* this one is absolutely necessary*/
     overflow: hidden;
     max-width: 100vw;
 }
@@ -306,6 +306,11 @@ max-width: 100%;
     font-size: clamp(1.3rem, 1.8vw, 1.7rem);
 }
 
+.swiper-button-next,
+.swiper-button-prev {
+    transform: scale(3.5, 1.5);
+}
+
 #boxKoncerty {
     background-color: white;
 }
@@ -315,15 +320,15 @@ max-width: 100%;
 }
 
 .times {
-    font-size: clamp(1.6rem, 2.3vw, 2.3rem)
+    font-size: clamp(1.6rem, 2.3vw, 2.3rem);
 }
 
 .adresses {
-    font-size: clamp(1.2rem, 2.2vw, 1.8rem)
+    font-size: clamp(1.2rem, 2.2vw, 1.8rem);
 }
 
 .prices {
-    font-size: clamp(1.1rem, 2vw, 1.6rem)
+    font-size: clamp(1.1rem, 2vw, 1.6rem);
 }
 
 .buttons {
@@ -342,6 +347,11 @@ max-width: 100%;
     width: 100%;
     /* 100 dla poziom i mami v, 95 dla pion*/
     margin: 2vh 0;
+}
+
+.swiper-concerts {
+    width: auto;
+    height: auto;
 }
 
 .swiper-concerts .concert {
@@ -398,26 +408,59 @@ li a {
     border-radius: 6px;
 }
 
-#boxZdjecia {
+#archive {
+    border: solid black 2px;
+    border-radius: 6px;
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    background-color: transparent;
+}
+
+#boxGaleria {
     background-color: white;
     overflow-x: hidden;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
 }
 
 .swiper-pics {
     position: relative;
     width: 100%;
     height: 45vh;
-    pointer-events: none;
     margin: 25px 0 5px 0;
+    pointer-events: none;
 }
 
-.swiper-pics .swiper-slide img {
-    width: 100%;
+.swiper-pics .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.swiper-pics .img-wrap {
+    height: calc(45vh - var(--galeria-caption-h)- 5px);
+    max-height: calc(45vh - var(--galeria-caption-h) - 5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper-pics img {
+    max-width: 100%;
+    max-height: 95%;
+    width: auto;
+    height: auto;
     object-fit: contain;
-    object-position: center;
     display: block;
 }
+
+.swiper-pics h2 {
+    height: var(--galeria-caption-h);
+    line-height: var(--galeria-caption-h);
+    margin: 0;
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    flex-shrink: 0;
+}
+
 
 #boxProby {
     background-color: white;
@@ -432,10 +475,16 @@ li a {
 
 .proby .left {
     flex: 1;
-    max-height: 50vh;
     max-width: 35vw;
-    height: auto;
-    overflow: hidden;
+    margin-bottom: 10px;
+    overflow: visible;
+}
+
+.img-wrap {
+    max-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .swiper-proby {
@@ -443,18 +492,15 @@ li a {
     height: 100%;
 }
 
-.swiper-concerts {
+.proby-img {
+    max-width: 100%;
+    max-height: 40vh;
     width: auto;
     height: auto;
-}
-
-.proby-img {
-    width: 100%;
-    margin-inline: auto;
-    object-fit: cover;
-    object-position: center;
+    object-fit: contain;
     display: block;
 }
+
 
 .proby .right {
     flex: 1;
@@ -468,14 +514,15 @@ li a {
 
 .proby .right h2 {
     position: relative;
-    top: 40%;
-    transform: translateY(-50%);
     font-size: clamp(1.1rem, 1.6vw, 2rem);
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-    border: 2px solid blue;
+#dolaczSeperateProby {
+    font-size: clamp(1.4rem, 1.7vw, 1.7rem);
+    border: 2px black solid;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 
 #boxGrupy {
@@ -484,14 +531,13 @@ li a {
 
 #boxGrupy ol {
     gap: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
 #boxGrupy ol li {
     flex: 1 0 10%;
     margin: 20px 0;
     height: 120px;
-    background-color: rgba(178, 54, 255, 0.2);
     justify-content: center;
     text-align: center;
     border-radius: 30px;
@@ -507,16 +553,16 @@ li a {
     margin: 0 10px;
 }
 
-#boxGrupy ol li h3 {
+#boxGrupy ol li h2 {
     margin: 3px 0 10px 0;
 }
 
-#dolaczSeperate {
+#dolaczSeperateGrupy {
     font-size: clamp(1.4rem, 1.7vw, 1.7rem);
     border: 2px black solid;
     border-radius: 10px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 footer {
@@ -605,6 +651,11 @@ footer button {
 
     .swiper-pics {
         height: 30vh;
+    }
+
+    .swiper-pics .img-wrap {
+        height: calc(30vh - var(--galeria-caption-h)- 5px);
+        max-height: calc(30vh - var(--galeria-caption-h) - 5px);
     }
 }
 
@@ -749,6 +800,11 @@ footer button {
 
     .swiper-pics {
         height: 20vh;
+    }
+
+    .swiper-pics .img-wrap {
+        height: calc(20vh - var(--galeria-caption-h)- 5px);
+        max-height: calc(20vh - var(--galeria-caption-h) - 5px);
     }
 
     #boxGrupy ol li {

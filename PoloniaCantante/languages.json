@@ -5,8 +5,8 @@
         "oNas": "O nas",
         "oNas2": "O nas",
         "koncerty": "Koncerty & Bilety",
-        "zdjecia": "Zdjęcia",
-        "zdjeciaTitle": "Zdjęcia",
+        "zdjecia": "Galeria",
+        "zdjeciaTitle": "Galeria",
         "proby": "Próby",
         "pomoc": "Wspomóż nas",
         "dolacz": "Dołącz do nas",
@@ -14,16 +14,18 @@
         "contactTitle": "Kontakt z nami:",
         "loremHead": "Polonia Cantante to pełen entuzjazmu polski chór amatorski z Leuven, który od 2019 roku spotyka się, aby dzielić się miłością do muzyki i radością wspólnego śpiewania. Nasz repertuar jest tak różnorodny, jak nasi członkowie.",
         "loremSub": "Zapraszamy na nasze koncerty!",
-        "koncertTitle": "Nasze koncerty:",
+        "koncertTitle": "Koncerty sezon '25/'26:",
         "bilet": "> Bilety <",
-        "probyTitle": "Nasze próby",
-        "probyOpis": "Próby odbywają się w środy bla bla nie pamietam co od mamy miałem napisać",
-        "glosyTitle": "Nasze głosy",
+        "archive": "Archiwum koncertów",
+        "probyTitle": "Próby",
+        "probyOpis": "Próby odbywają się w środy, jeśli chcesz dołączycz, klinkij tutaj i śmiało pisz do nas!",
+        "glosyTitle": "Głosy",
         "dyrygentTitle": "Dyrygentka",
         "sopranTitle": "Soprany",
         "altTitle": "Alty 1",
         "tenorTitle": "Alty 2",
-        "dolaczSeperate": "Chcesz dołączyć?",
+        "dolaczSeperateGrupy": "Chcesz dołączyć?",
+        "dolaczSeperateProby": "Chcę dołączyć",
         "linksTitle": "Można nas znaleźć na:",
         "doGory": "Wróć na górę",
         "errorReport": "Jest jakiś błąd? Możesz to tutaj zgłosić!",
@@ -128,10 +130,8 @@
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
-        "add": [
-            "Dodana.osoba.np.Bert_tenor"
-        ],
+        "add": [],
         "rm": []
     },
-    "v": "1.2e"
+    "v": "1.3"
 }

@@ -1,14 +1,6 @@
 {
     "concerts": [
         {
-            "date": "32-12-2025",
-            "time": "-12:00",
-            "adress": "Blanden, Haasrodestraat 72",
-            "price": "3",
-            "src": "pics/przykladBL.jpg",
-            "ended": true
-        },
-        {
             "date": "25-1-2026",
             "time": "17:00",
             "adress": "Celestijnenlaan 'nie wiem ktory numer'",
@@ -49,5 +41,5 @@
             "ended": false
         }
     ],
-    "v": "0.6"
+    "v": "0.7"
 }
