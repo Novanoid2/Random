@@ -70,6 +70,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     if (box.querySelector(".adresses")) box.querySelector(".adresses").innerHTML = "📌 " + info?.adress;
                     if (box.querySelector(".prices")) box.querySelector(".prices").innerHTML = "€" + info?.price;
                     if (box.querySelector("img")) box.querySelector("img").src = info?.src;
+                    box.style.opacity = 1;
                 } else {
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
                     if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
