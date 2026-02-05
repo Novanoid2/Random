@@ -50,6 +50,7 @@
         "loremSub": "Join us for our concerts!",
         "koncertTitle": "Concerts season '25/'26",
         "bilet": "> Tickets <",
+        "archive": "Archive of concerts",
         "probyTitle": "Rehearsals",
         "probyOpis": "Rehearsals happen every wednesday, if you want to join us, click the button and write to us!",
         "glosyTitle": "Voices",
@@ -81,8 +82,9 @@
         "contactTitle": "Contacte avec nous:",
         "loremHead": "Polonia Cantante est un chœur amateur polonais enthousiaste de Louvain qui se réunit depuis 2019 pour partager l’amour de la musique et la joie de chanter ensemble. Notre répertoire est aussi varié que nos membres.",
         "loremSub": "Nous vous invitons à nos concerts !",
-        "koncertTitle": "Concerts seson '25/'26",
+        "koncertTitle": "Concerts saison '25/'26",
         "bilet": "> Billets <",
+        "archive": "Archive de concerts",
         "probyTitle": "Répétitions",
         "probyOpis": "Les répétitions ont lieu le mercredi. Si vous souhaitez participer, cliquez sur le bouton et n'hésitez pas à nous écrire!",
         "glosyTitle": "Voix",
@@ -116,6 +118,7 @@
         "loremSub": "Kom naar onze concerten!",
         "koncertTitle": "Concerten sezoen '25/'26",
         "bilet": "> Tickets <",
+        "archive": "Archief van koncerten",
         "probyTitle": "Repetities",
         "probyOpis": "Repetities vinden plaats op woensdagen. Als je wilt meedoen, klik dan op de knop en stuur ons gerust een berichtje!",
         "glosyTitle": "Stemmen",
@@ -136,5 +139,5 @@
         "add": [],
         "rm": []
     },
-    "v": "1.4"
+    "v": "1.5"
 }
