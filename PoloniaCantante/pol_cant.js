@@ -1,9 +1,8 @@
-//current todo: update trans,add counter to see how many users online / total, search for bugs/things to shorten
+//current todo: add counter to see how many users online / total, search for bugs/things to shorten
 //spotkanie: archive koncerty, bilety: "musi sie pojawiac qr kod", wyslac potwierdzenie na mail, "qr moze sie zmieniac", koncerty img src beda przesylac, pol cant yt link
 //prob change the dolaczSeperate buttons logic to js and css?
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "PL";
-const cache_keys = ["key_langs", "key_concerts"];
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
 langs.splice(langs.indexOf(current_lang), 1);
 let currentVConcerts, currentVLangs;
@@ -13,7 +12,7 @@ let fetched = false;
 !localStorage?.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(Date.now())) : null;
 
 async function loadKeys() {//load keys from cache
-    for (let key of cache_keys) {
+    for (let key of ["key_langs", "key_concerts"]) {
         const cached = localStorage.getItem(key);
         if (cached) {
             const data = JSON.parse(cached);
