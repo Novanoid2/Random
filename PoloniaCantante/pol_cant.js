@@ -99,7 +99,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 }
             }
             document.querySelectorAll(`.concert[ended]`).forEach(i => i.querySelector(".times").innerHTML = dataLang.concertEndedText);
-            if (data["ppl"]?.add.length !== 0 || data["ppl"]?.rm.length !== 0) editGrupy(data["ppl"], 103);
+            if (data["ppl"]?.add.length !== 0 || data["ppl"]?.rm.length !== 0) editGrupy(data["ppl"], 102);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
         }
@@ -123,10 +123,12 @@ for (let tag of document.querySelectorAll("#langBox a")) {
 }
 
 function changeLang(lang) {
-    current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
-    langChange = true;
-    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), "langChange");
-    adjustBoxes();
+    if (!document.getElementById("langBox").hasAttribute("hidden")) {
+        current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
+        langChange = true;
+        applyData("languages", JSON.parse(localStorage.getItem("key_langs")), "langChange");
+        adjustBoxes();
+    }
 }
 
 function adjustBoxes() {

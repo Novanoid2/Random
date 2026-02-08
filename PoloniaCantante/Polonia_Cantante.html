@@ -86,17 +86,34 @@
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper">
             <!-- Slides -->
-            <div class="swiper-slide"><img src="pics/koncerty/koncert2.jpeg"></div>
-            <div class="swiper-slide"><img src="pics/koncerty/wosp26.jpeg"></div>
-            <div class="swiper-slide"><img src="pics/koncerty/koncert6.jpeg"></div>
-            <div class="swiper-slide"><img src="pics/pic2.jpg"></div>
-            <div class="swiper-slide"><img src="pics/koncerty/koncert18.jpeg"></div>
-            <div class="swiper-slide"><img src="pics/pic1.jpg"></div>
-            <div class="swiper-slide"><img src="pics/koncerty/koncert12.jpeg"></div>
-            <div class="swiper-slide"><img src="pics/wszyscy2.jpg"></div>
-            <div class="swiper-slide"><img src="pics/koncerty/koncert17.jpeg"></div>
+            <div class="swiper-slide">
+                <div class="wrap"> <img src="pics/koncerty/koncert2.jpeg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/koncerty/wosp26.jpeg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/koncerty/koncert6.jpeg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/pic2.jpg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/koncerty/koncert18.jpeg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/koncerty/koncert12.jpeg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/wszyscy2.jpg"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="wrap"><img src="pics/koncerty/koncert17.jpeg"></div>
+            </div>
         </div>
-
+        <!-- navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
 
     <!--<div id="welcomeDiv">  </div>-->
@@ -672,7 +689,7 @@
             <span style="position: relative; font-size: clamp(0.8rem, 1.3vw, 1.2rem);" id="autor">
                 Strona zrobiona przez Bernard Kutrzeba-Kotowski</span>
             <br>
-            v: 0.8.3
+            v: 0.8.3.2
             <!---->
         </div>
     </footer>
@@ -683,8 +700,9 @@
         const swiperMain = new Swiper('.swiper-main', {
             speed: 2500,
             loop: true,
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 0,
+            centeredSlides: true,
             autoplay: {
                 delay: 3000,
             }

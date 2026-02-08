@@ -18,7 +18,7 @@
     width: 100%;
     background-color: red;
     color: black;
-    position:fixed;
+    position: fixed;
     bottom: 0;
     top: auto;
     left: 0;
@@ -72,7 +72,7 @@ header {
 }
 
 .logo {
-    z-index: 3;
+    z-index: 2;
     overflow: hidden;
     position: fixed;
     top: -395px;
@@ -87,7 +87,7 @@ header {
 #polCant {
     z-index: 2;
     position: absolute;
-    top: -19px;
+    top: -23px;
     left: 90px;
     text-align: center;
     font-size: 2.1rem;
@@ -186,6 +186,7 @@ header {
     border-radius: 10px;
 }
 
+/*
 #welcomeDiv {
     z-index: 1;
     width: auto;
@@ -197,7 +198,7 @@ header {
     border-radius: 20px;
     height: clamp(50px, calc(3vw + 4vh), 75px);
 }
-
+*/
 #welcome {
     /* without the parent (#h1Div) div:*/
     z-index: 1;
@@ -211,8 +212,8 @@ header {
     font-family: Palatino;
     font-weight: bold;
     text-align: center;
-    color: rgb(46, 87, 253);
-    -webkit-text-stroke: 1.5px black;
+    color: white;
+    -webkit-text-stroke: 1px black;
     /*position: relative;
     width: max-content;
     max-width: 80vw;
@@ -228,7 +229,6 @@ header {
     color: transparent;
     transform: translateY(-40%);
     display: inline-block;*/
-
 }
 
 .swiper {
@@ -237,28 +237,35 @@ header {
 }
 
 .swiper-main {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    height: calc(100vh - 90px);
-    z-index: -1;
-    pointer-events: none;
+    margin-top: 30px;
+    height: calc(100vh - 90px - 50px);
+    overflow: hidden;
 }
 
 .swiper-slide {
     width: 100%;
     height: 100%;
-    z-index: -1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.swiper-slide .wrap {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
 }
 
 .swiper-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     display: block;
-    z-index: -1;
 }
 
 .left {
@@ -438,14 +445,14 @@ li a {
 #boxGaleria {
     background-color: white;
     overflow-x: hidden;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 }
 
 .swiper-pics {
     position: relative;
     width: 100%;
     height: 45vh;
-    margin: 25px 0 5px 0;
+    margin: 20px 0 5px 0;
 }
 
 .swiper-pics .swiper-slide {
@@ -711,10 +718,15 @@ footer button {
         align-items: center;
         gap: 15px;
         right: 4px;
+        margin: 0;
     }
 
     header {
         height: 0;
+    }
+
+    #polCant {
+        top: -38px;
     }
 
     .svgNav {
@@ -752,7 +764,13 @@ footer button {
     #polCant {
         left: 75px;
         font-size: 1.6rem;
-        top: -5px;
+        top: -30px;
+    }
+
+    #welcome {
+        top: 100px;
+        left: 40%;
+        max-width: 60vw;
     }
 
     #boxONas-inner {
@@ -774,7 +792,7 @@ footer button {
 @media (max-width: 650px) {
     #welcome {
         font-size: 1.5rem;
-        transform: translateY(-25%);
+        transform: translate(-50%, -25%);
     }
 
     .swiper-button-next,
@@ -804,11 +822,12 @@ footer button {
     #polCant {
         left: 60px;
         font-size: 1.3rem;
-        top: 1px;
+        top: -25px;
     }
 
     #welcome {
         font-size: 1.3rem;
+        left: 35%;
     }
 
     .infoONas {
