@@ -13,6 +13,24 @@
     user-select: none;
 }
 
+#globalMsg {
+    height: 50px;
+    width: 100%;
+    background-color: red;
+    color: black;
+    position:fixed;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: auto;
+    z-index: 2;
+    text-align: center;
+    justify-content: center;
+    vertical-align: center;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -594,6 +612,7 @@ footer {
     color: black;
     text-align: center;
     padding-top: 10px;
+    padding-bottom: 50px;
     display: flex;
 }
 
