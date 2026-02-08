@@ -5,7 +5,7 @@
             "time": "15:32",
             "adress": "Erps",
             "price": "6! - log2(8)",
-            "src": "pics/karta2.jpg",
+            "src": "pics/karta2.jpeg",
             "ended": true
         },
         {
@@ -33,5 +33,5 @@
             "ended": false
         }
     ],
-    "v": "0.8"
+    "v": "0.8b"
 }
