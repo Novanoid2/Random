@@ -19,7 +19,7 @@
         "archive": "Archiwum koncertów",
         "probyTitle": "Próby",
         "probyOpis": "Próby odbywają się w środy, jeśli chcesz dołączycz, klinkij guzik i śmiało pisz do nas!",
-        "glosyTitle": "Głosy",
+        "glosyTitle": "Nasze Głosy",
         "dyrygentTitle": "Dyrygentka",
         "sopranTitle": "Soprany",
         "altTitle": "Alty 1",
@@ -53,7 +53,7 @@
         "archive": "Archive of concerts",
         "probyTitle": "Rehearsals",
         "probyOpis": "Rehearsals happen every wednesday, if you want to join us, click the button and write to us!",
-        "glosyTitle": "Voices",
+        "glosyTitle": "Our Voices",
         "dyrygentTitle": "Director",
         "sopranTitle": "Sopranos",
         "altTitle": "Altos 1",
@@ -87,7 +87,7 @@
         "archive": "Archive de concerts",
         "probyTitle": "Répétitions",
         "probyOpis": "Les répétitions ont lieu le mercredi. Si vous souhaitez participer, cliquez sur le bouton et n'hésitez pas à nous écrire!",
-        "glosyTitle": "Voix",
+        "glosyTitle": "Nos Voix",
         "dyrygentTitle": "Cheffe d'orchestre",
         "sopranTitle": "Sopranos",
         "altTitle": "Altos 1",
@@ -121,7 +121,7 @@
         "archive": "Archief van koncerten",
         "probyTitle": "Repetities",
         "probyOpis": "Repetities vinden plaats op woensdagen. Als je wilt meedoen, klik dan op de knop en stuur ons gerust een berichtje!",
-        "glosyTitle": "Stemmen",
+        "glosyTitle": "Onze Stemmen",
         "dyrygentTitle": "Dirigente",
         "sopranTitle": "Sopranen",
         "altTitle": "Alten 1",
@@ -139,5 +139,5 @@
         "add": [],
         "rm": []
     },
-    "v": "1.5"
+    "v": "1.6"
 }
