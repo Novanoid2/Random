@@ -18,14 +18,14 @@ async function loadKeys() {//load keys from cache
             const data = JSON.parse(cached);
             //passes data to applying function
             key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
-            key === "key_langs" ? await applyData("languages", data, 20) : await applyData("koncertyInfo", data, 20);
+            key === "key_langs" ? await applyData("languages", data, 21) : await applyData("koncertyInfo", data, 21);
         } else {
             //if no cache it fetches the jsons and get saved to localStorage in applyData();
             try {
                 fetched = true;
                 console.log(`fetched: ${fetched}`);
-                const data = key === "key_langs" ? await fetchData("languages", 26) : await fetchData("koncertyInfo", 26);
-                key === "key_langs" ? await applyData("languages", data, 27) : await applyData("koncertyInfo", data, 27);
+                const data = key === "key_langs" ? await fetchData("languages", 27) : await fetchData("koncertyInfo", 27);
+                key === "key_langs" ? await applyData("languages", data, 28) : await applyData("koncertyInfo", data, 28);
             } catch (e) {
                 fetched = false;
                 console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)", e);
@@ -99,7 +99,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                 }
             }
             document.querySelectorAll(`.concert[ended]`).forEach(i => i.querySelector(".times").innerHTML = dataLang.concertEndedText);
-            if (data["ppl"]?.add.length !== 0 || data["ppl"]?.rm.length !== 0) editGrupy(data["ppl"], 100);
+            if (data["ppl"]?.add.length !== 0 || data["ppl"]?.rm.length !== 0) editGrupy(data["ppl"], 103);
             localStorage.setItem("key_langs", JSON.stringify(data)); //updates cache
             currentVLangs = data["v"];
         }
@@ -109,8 +109,8 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 110);
-    await applyData("koncertyInfo", null, 111);
+    await applyData("languages", null, 112);
+    await applyData("koncertyInfo", null, 113);
 }, 1000 * 60 * 10); //check for updates every 10 min
 
 //add the "onlick" attribute to change language accordingly
@@ -273,9 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Date.now() - JSON.parse(localStorage.getItem("lastFetchDate")) >= 7200000) {
         localStorage.setItem("lastFetchDate", JSON.stringify(Date.now()));
         if (!fetched) {
-            applyData("languages", null, 280);
-            applyData("koncertyInfo", null, 281);
-            console.warn("fetched at dom")
+            applyData("languages", null, "fetch@dom");
+            applyData("koncertyInfo", null, "fetch@dom");
+            console.warn("fetched at dom");
         }
     }
 });
