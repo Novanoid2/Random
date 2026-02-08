@@ -20,9 +20,9 @@
             z-index: 2;
             overflow: hidden;
             position: fixed;
-            top: -395px;
+            top: -380px;
             left: -205px;
-            transform: scale(0.1);
+            transform: scale(0.12);
         }
 
         .logo img {
@@ -33,6 +33,20 @@
             text-align: center;
             font-size: 2.5rem;
             color: white;
+        }
+
+        #return {
+            position: relative;
+            top: -100px;
+            left: 100px;
+            color: white;
+            text-decoration: none;
+            border: solid white 2px;
+            border-radius: 6px;
+            font-size: clamp(1.1rem, 2vw, 1.9rem);
+            background-color: transparent;
+            cursor: pointer;
+            padding: 0 5px;
         }
 
         .svg {
@@ -83,6 +97,7 @@
         #langBox a {
             margin-left: -32px;
             cursor: pointer;
+            color: black;
         }
 
         a:hover {
@@ -114,59 +129,36 @@
             width: 100%;
             justify-content: center;
             align-items: center;
+            padding: 0;
+            margin: 0;
         }
 
-        .date {
-            text-align: center;
-            font-size: 2.2rem;
-        }
-
-        .left {
-            display: flex;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .left img {
+        .wrap img {
             margin-inline: auto;
-            width: 60%;
+            width: auto;
+            max-width: 40vw;
             object-fit: contain;
             object-position: center;
             display: block;
             border: 2px solid black;
             border-radius: 20px;
+            padding: 0;
+            margin: 0;
         }
 
-        .right {
-            flex: 1;
-            position: static;
-            height: auto;
-            top: 50%;
+        .date,
+        .ppl {
+            margin: 10px 0;
             text-align: center;
-        }
-
-        ol {
-            display: flex;
-            justify-content: space-evenly;
-            list-style-type: none;
-            font-weight: bold;
-            height: auto;
-            flex-wrap: wrap;
-            margin: 0;
-            padding: 0;
-            line-height: 10px;
-            flex-direction: column;
-        }
-
-        li {
-            width: auto;
-            height: auto;
-            margin: 0;
             padding: 0;
         }
 
-        li hr {
-            width: 50%;
+        .date {
+            font-size: 2.1rem;
+        }
+
+        .ppl {
+            font-size: 1.4rem;
         }
 
         hr {
@@ -180,6 +172,7 @@
         <img src='pics/logoPCtrans.png'>
     </div>
     <h1>Archive of concerts</h1>
+    <a id="return" href="Polonia_Cantante.html">← Polonia Cantante</a>
     <button id="lang" onclick="toggleBox()" class="svg">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
             <path fill="#ffffff"
@@ -203,101 +196,41 @@
     <main>
         <section class="concert">
             <h1 class="date"></h1>
+            <h2 class="ppl"></h2>
             <div class="wrap">
-                <div class="left">
-                    <img src="pics/proby1.jpeg" alt="Whoops!">
-                </div>
-                <article class="right">
-                    <ol>
-                        <li>
-                            <h2 class="time"></h2>
-                            <br>
-                            <h2 class="address"></h2>
-                            <br>
-                            <h2 class="ppl"></h2>
-                        </li>
-                    </ol>
-                </article>
+                <img src="" alt="Whoops!">
             </div>
         </section>
         <hr>
         <section class="concert">
-            <h2 class="date"></h2>
+            <h1 class="date"></h1>
+            <h2 class="ppl"></h2>
             <div class="wrap">
-                <div class="left">
-                    <img src="pics/proby1.jpeg" alt="Whoops!">
-                </div>
-                <article class="right">
-                    <ol>
-                        <li>
-                            <h2 class="time"></h2>
-                            <br>
-                            <h2 class="address"></h2>
-                            <br>
-                            <h3 class="ppl"></h3>
-                        </li>
-                    </ol>
-                </article>
+                <img src="" alt="Whoops!">
             </div>
         </section>
         <hr>
         <section class="concert">
-            <h2 class="date"></h2>
+            <h1 class="date"></h1>
+            <h2 class="ppl"></h2>
             <div class="wrap">
-                <div class="left">
-                    <img src="pics/proby1.jpeg" alt="Whoops!">
-                </div>
-                <article class="right">
-                    <ol>
-                        <li>
-                            <h2 class="time"></h2>
-                            <br>
-                            <h2 class="address"></h2>
-                            <br>
-                            <h3 class="ppl"></h3>
-                        </li>
-                    </ol>
-                </article>
+                <img src="" alt="Whoops!">
             </div>
         </section>
         <hr>
         <section class="concert">
-            <h2 class="date"></h2>
+            <h1 class="date"></h1>
+            <h2 class="ppl"></h2>
             <div class="wrap">
-                <div class="left">
-                    <img src="pics/proby1.jpeg" alt="Whoops!">
-                </div>
-                <article class="right">
-                    <ol>
-                        <li>
-                            <h2 class="time"></h2>
-                            <br>
-                            <h2 class="address"></h2>
-                            <br>
-                            <h3 class="ppl"></h3>
-                        </li>
-                    </ol>
-                </article>
+                <img src="" alt="Whoops!">
             </div>
         </section>
         <hr>
         <section class="concert">
-            <h2 class="date"></h2>
+            <h1 class="date"></h1>
+            <h2 class="ppl"></h2>
             <div class="wrap">
-                <div class="left">
-                    <img src="pics/proby1.jpeg" alt="Whoops!">
-                </div>
-                <article class="right">
-                    <ol>
-                        <li>
-                            <h2 class="time"></h2>
-                            <br>
-                            <h2 class="address"></h2>
-                            <br>
-                            <h3 class="ppl"></h3>
-                        </li>
-                    </ol>
-                </article>
+                <img src="" alt="Whoops!">
             </div>
         </section>
     </main>
@@ -307,65 +240,57 @@
             "concerts": [
                 {
                     "date": "25/1/2026",
-                    "time": "17:00",
-                    "address": "Celestijnenlaan 'nie wiem ktory numer'",
-                    "ppl": "a ja tam wiem?"
+                    "ppl": "~45",
+                    "img": "pics/koncerty/wosp26.jpeg"
+                },
+                {
+                    "date": "-/12/2025",
+                    "ppl": "~85",
+                    "img": "pics/karta1.jpeg"
+                },
+                {
+                    "date": "-/11/2025",
+                    "ppl": "~75",
+                    "img": "pics/karta2.jpeg"
                 },
                 {
                     "date": "",
-                    "time": "",
-                    "address": "",
                     "ppl": ""
                 },
                 {
                     "date": "",
-                    "time": "",
-                    "address": "",
-                    "ppl": ""
-                },
-                {
-                    "date": "",
-                    "time": "",
-                    "address": "",
-                    "ppl": ""
-                },
-                {
-                    "date": "",
-                    "time": "",
-                    "address": "",
                     "ppl": ""
                 }
             ]
-        }
+        };
         const concert = document.querySelectorAll(".concert");
-        const infoData = ["date"];
-        const infoSection = [];
         let ludzi = " ludzi przyszło";
 
         function applyData() {
             data.concerts.forEach((info, i) => {
+                //you know what to do here, make divs seperately
                 const section = concert[i];
                 if (!section) return;
 
                 section.querySelector(".date").innerHTML = "📅 " + info?.date;
-                section.querySelector(".time").innerHTML = "🕓 " + info?.time;
-                section.querySelector(".address").innerHTML = "📌 " + info?.address;
                 section.querySelector(".ppl").innerHTML = "👥 " + info?.ppl + ludzi;
-                //section.querySelector("img").src = `pics/archive/koncert` + (i + 1);
+                section.querySelector("img").src = info?.img;
             });
         }
+
         function language(lang) {
             lang = lang.toUpperCase().trim();
             const h1 = document.querySelector("h1");
             switch (lang) {
-                case "PL": h1.innerHTML = "Witamy w archiwum naszych koncertów!<br>Tutaj znajdziesz wszystkie nasze przeszłe koncerty."; ludzi = " ludzi przyszło"; break;
+                case "PL": h1.innerHTML = "Witamy w archiwum naszych koncertów!<br>Tutaj znajdziesz wszystkie nasze poprzednie koncerty."; ludzi = " ludzi przyszło"; break;
                 case "NL": h1.innerHTML = "Welkom in het archief van onze koncerten!<br>Hier vindt u al onze vroegere koncerten."; ludzi = " mensen kwamen"; break;
                 case "EN": h1.innerHTML = "Welcome to the concerts archive!<br>Here you will find all of our previous concerts."; ludzi = " listeners came"; break;
-                case "FR": h1.innerHTML = "Bienvenu(e) dans le archive de nos concerts!<br>Ici pouvez-vous trouver tous les notres concerts passes."; ludzi = " personnes sont venus"; break;
+                case "FR": h1.innerHTML = "Bienvenue dans l’archive de nos concerts!<br>Ici, vous trouverez tous nos concerts passés."; ludzi = " personnes sont venues"; break;
                 default: h1.innerHTML = "Welcome to the concerts archive!<br>Here you will find all of our previous concerts.";
             }
             applyData();
         }
+
         language("PL");
 
         //toggle navBoxes visibility when one of them is opened

@@ -1,5 +1,5 @@
 //current todo: add counter to see how many users online / total, search for bugs/things to shorten
-//spotkanie: archive koncerty, bilety: "musi sie pojawiac qr kod", wyslac potwierdzenie na mail, "qr moze sie zmieniac", koncerty img src beda przesylac, pol cant yt link
+//spotkanie: bilety: "musi sie pojawiac qr kod", wyslac potwierdzenie na mail, "qr moze sie zmieniac", koncerty img src beda przesylac, pol cant yt link
 //prob change the dolaczSeperate buttons logic to js and css?
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "PL";
@@ -186,6 +186,7 @@ async function showErrorDiv(info) {
 setTimeout(() => {
     document.querySelectorAll("#boxGrupy li img").forEach(img => {
         img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
+        img.parentElement.setAttribute("id", img.alt.toLowerCase().trim());
         img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image is found
     });
 }, 5);

@@ -1,45 +1,37 @@
 {
     "concerts": [
         {
+            "date": "11-2025",
+            "time": "15:32",
+            "adress": "Erps",
+            "price": "6! - log2(8)",
+            "src": "pics/karta2.jpg",
+            "ended": true
+        },
+        {
+            "date": "12-2025",
+            "time": "",
+            "adress": "Leuven",
+            "price": "",
+            "src": "pics/karta1.jpeg",
+            "ended": true
+        },
+        {
             "date": "25-1-2026",
             "time": "17:00",
             "adress": "Celestijnenlaan 'nie wiem ktory numer'",
             "price": "60.000",
-            "src": "pics/przyklad.jpg",
+            "src": "pics/przykladBL.jpg",
             "ended": true
         },
         {
-            "date": "?-?-2026",
-            "time": "15:32",
-            "adress": "Leuven, ulica ulicowa, zyx",
-            "price": "6! - log2(8)",
-            "src": "pics/przyklad.jpg",
-            "ended": false
-        },
-        {
-            "date": "w tym stuleciu",
-            "time": "34:97:113",
-            "adress": "ziema?",
-            "price": "43^2*sin(64)",
-            "src": "pics/przyklad.jpg",
-            "ended": false
-        },
-        {
-            "date": "chyba 2028",
-            "time": "zegar nie działa",
-            "adress": "pracuje nad tym o 11",
-            "price": "wybierzcie",
-            "src": "pics/przyklad.jpg",
-            "ended": false
-        },
-        {
-            "date": "?",
-            "time": "?",
+            "date": "13-6-2026",
+            "time": "xx:xx",
             "adress": "?",
-            "price": "?",
+            "price": "10",
             "src": "pics/przyklad.jpg",
             "ended": false
         }
     ],
-    "v": "0.7"
+    "v": "0.8"
 }
