@@ -1,6 +1,6 @@
-//current todo: add counter to see how many users online / total, search for bugs/things to shorten
-//spotkanie: bilety: "musi sie pojawiac qr kod", wyslac potwierdzenie na mail, "qr moze sie zmieniac", koncerty img src beda przesylac, pol cant yt link
-//prob change the dolaczSeperate buttons logic to js and css?
+//current todo: add counter to see how many users online / total, maybe add comments to css and html, prob change the dolaczSeperate buttons logic to js and css?, search for bugs/things to shorten
+//spotkanie: bilety: "musi sie pojawiac qr kod", wyslac potwierdzenie na mail, "qr moze sie zmieniac"
+//if you see this, hey there! my discord is miren.3 or email me at ber.kk.11.2022@gmail.com if you want to contact me :)
 const langs = ["PL", "EN", "NL", "FR"];
 const default_lang = "PL";
 let current_lang = langs.includes(default_lang) ? default_lang : "EN" || "PL";
@@ -58,6 +58,7 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
         const data = dataPassed || await fetchData(type, from);
         if (data["v"] !== currentVConcerts || first) { //if version is different
             first = false;
+            document.documentElement.style.setProperty('--initSlide', data.initSlide);
             const concert = document.querySelectorAll(".concert");
             data.concerts.forEach((info, i) => {
                 const box = concert[i];
@@ -72,12 +73,11 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
                     box.style.opacity = 1;
                 } else {
                     box.querySelectorAll("br").forEach(i => i.remove()); //remove br's
-                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info.date;
-                    if (box.querySelector("img")) box.querySelector("img").src = info.src;
+                    if (box.querySelector(".dates")) box.querySelector(".dates").innerHTML = info?.date;
+                    if (box.querySelector("img")) box.querySelector("img").src = info?.src;
                     box.querySelector(".times").innerHTML = JSON.parse(localStorage.getItem("key_langs"))?.[current_lang]?.concertEndedText;
                     for (let cls of ['.adresses', ".prices", ".buttons"]) if (box.querySelector(cls)) box.querySelector(cls).remove();
                     box.style.opacity = 0.5;
-                    box.setAttribute("ended", "");
                 }
             });
 
@@ -243,6 +243,7 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
 }
 
 async function manualFetchCall() {//check this
+    if (!window.confirm("Are you sure? This uses more more internet data / Jesteś pewny(a)? To zużywa więcej danych internetowych / Ben je zeker? Dit verbruikt meer internetdata / Êtes-vous sûr(e)? Cela utilise plus de données Internet")) return;
     const buttonA = document.getElementById("manualFetch");
     buttonA.parentElement.setAttribute('disabled', '');
     buttonA.textContent = '...';
@@ -250,7 +251,7 @@ async function manualFetchCall() {//check this
         buttonA.parentElement.removeAttribute('disabled');
         buttonA.textContent = JSON.parse(localStorage.getItem('key_langs'))[current_lang].manualFetch;
         document.getElementById("fetchlabel").textContent = "";
-    }, 3000);
+    }, 3500);
     try {
         await applyData("languages", null, 'htmlCall');
         await applyData("koncertyInfo", null, 'htmlCall');

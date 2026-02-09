@@ -501,12 +501,14 @@ li a {
 .proby .left {
     flex: 1;
     max-width: 35vw;
+    max-height: 70vh;
     margin-bottom: 10px;
     overflow: visible;
 }
 
 .img-wrap {
-    max-height: 70vh;
+    max-height: 55vh;
+    height: 55vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -561,12 +563,9 @@ li a {
     flex: 1 0 10%;
     margin: 0 0 15px 0;
     height: auto;
-    /* allow content (image + heading) to fit */
     display: flex;
     flex-direction: column;
-    /* stack image above name */
     align-items: center;
-    /* center image and text horizontally */
     justify-content: flex-start;
     text-align: center;
     gap: 6px;
@@ -574,18 +573,13 @@ li a {
 }
 
 #boxGrupy ol li img {
-    /* Preserve aspect ratio, scale down or up to fit the box without cropping */
     object-fit: contain;
     object-position: center;
     width: 110px;
-    /* target display width */
     height: 125px;
-    /* target display height */
     margin: 0 auto;
-    /* center the image horizontally inside the li */
     display: block;
     background-color: white;
-    /* optional: makes empty areas visible */
     border-radius: 5px;
 }
 
@@ -599,7 +593,8 @@ li a {
     height: 170px;
 }
 
-#jowi img {
+#jowi img,
+#darek img {
     transform: scaleX(1.1);
 }
 
