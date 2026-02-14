@@ -6,7 +6,7 @@
             "time": "15:32",
             "adress": "Erps",
             "price": "6! - log2(8)",
-            "src": "pics/karta2.jpeg",
+            "src": "https://poloniacantante.org/wp-content/uploads/2026/02/karta2.jpeg",
             "ended": true
         },
         {
@@ -14,7 +14,7 @@
             "time": "",
             "adress": "Leuven",
             "price": "",
-            "src": "pics/karta1.jpeg",
+            "src": "https://poloniacantante.org/wp-content/uploads/2026/02/karta1.jpeg",
             "ended": true
         },
         {
@@ -22,7 +22,7 @@
             "time": "17:00",
             "adress": "Celestijnenlaan 'nie wiem ktory numer'",
             "price": "60.000",
-            "src": "pics/przykladBL.jpg",
+            "src": "https://poloniacantante.org/wp-content/uploads/2026/02/przykladBL.jpg",
             "ended": true
         },
         {
@@ -30,9 +30,9 @@
             "time": "xx:xx",
             "adress": "?",
             "price": "10",
-            "src": "pics/przyklad.jpg",
+            "src": "https://poloniacantante.org/wp-content/uploads/2026/02/przyklad.jpg",
             "ended": false
         }
     ],
-    "v": "0.9"
+    "v": "0.9b"
 }
