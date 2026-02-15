@@ -31,7 +31,7 @@
         "doGory": "Wróć na górę",
         "errorReport": "Jest jakiś błąd? Możesz to tutaj zgłosić!",
         "autor": "Strona zrobiona przez Bernard K-K",
-        "manualFetch": "Chcesz sprawdzić, czy informacje na stronie są aktualne? Kliknij mnie!",
+        "manualFetch": "Sprawdz, czy informacje<br>na stronie są aktualne.",
         "concertEndedText": "Ups, Mineło! Do nastepnego razu!"
     },
     "EN": {
@@ -66,7 +66,7 @@
         "doGory": "Back to top",
         "errorReport": "Saw any errors? Report them here!",
         "autor": "Website by Bernard K-K",
-        "manualFetch": "Want to check if the information on the website is up to date? Click me!",
+        "manualFetch": "Check if the information on<br>the website is up to date?",
         "concertEndedText": "Oops, it ended! See you next time!"
     },
     "FR": {
@@ -101,7 +101,7 @@
         "doGory": "Retour en haut",
         "errorReport": "Y-a-t-il une erreur? Rapporte-la ici!",
         "autor": "Site créé par Bernard K-K",
-        "manualFetch": "Vérifier si les informations sur le site sont à jour? Cliquez sur moi!",
+        "manualFetch": "Vérifie les informations<br>sur le site sont à jour?",
         "concertEndedText": "Oups, c'est finit! À la prochaine!"
     },
     "NL": {
@@ -136,12 +136,12 @@
         "doGory": "Terug naar boven",
         "errorReport": "Een fout gevonden? Meld het hier!",
         "autor": "Website gemaakt door Bernard K-K",
-        "manualFetch": "Wil je controleren of de informatie op de website up-to-date is? Klik op mij!",
+        "manualFetch": "Controleren of de informatie<br>op de website up-to-date is?",
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
         "add": [],
         "rm": []
     },
-    "v": "1.7"
+    "v": "1.7b"
 }

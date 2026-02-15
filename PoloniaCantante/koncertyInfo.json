@@ -22,7 +22,7 @@
             "time": "17:00",
             "adress": "Celestijnenlaan 'nie wiem ktory numer'",
             "price": "60.000",
-            "src": "https://poloniacantante.org/wp-content/uploads/2026/02/wosp26.jpg",
+            "src": "https://poloniacantante.org/wp-content/uploads/2026/02/wosp26.jpeg",
             "ended": true
         },
         {
@@ -34,5 +34,5 @@
             "ended": false
         }
     ],
-    "v": "1"
+    "v": "1.0"
 }
