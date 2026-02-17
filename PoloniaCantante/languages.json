@@ -136,8 +136,8 @@
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
-        "add": ["DJ_dyrygentka"],
-        "rm": []
+        "add": [],
+        "rm": ["DJ"]
     },
-    "v": "2.0"
+    "v": "2.0b"
 }
