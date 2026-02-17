@@ -4,31 +4,13 @@
     --swiper-navigation-top-offset: 50%;
     --swiper-navigation-sides-offset: 35px;
     --swiper-navigation-color: blue;
-    --galeria-caption-h: 1.5rem;
+    --galeria-caption-h: 1.7rem;
 }
 
 * {
     box-sizing: border-box;
-    font-family: "Trebuchet MS";
+    font-family: monospace;
     user-select: none;
-}
-
-#globalMsg {
-    height: 50px;
-    width: 100%;
-    background-color: red;
-    color: black;
-    position: fixed;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    right: auto;
-    z-index: 2;
-    text-align: center;
-    justify-content: center;
-    vertical-align: center;
-    font-size: 1.5rem;
-    padding: 10px;
 }
 
 body {
@@ -57,9 +39,8 @@ hr {
     border: 2px solid rgb(0, 0, 0);
 }
 
-.titles {
-    font-weight: bold;
-    font-size: clamp(1.6rem, 3vw, 2.7rem);
+ul {
+    margin: 12px -3px;
 }
 
 header {
@@ -67,54 +48,63 @@ header {
     background-color: rgb(250, 250, 250);
     height: 90px;
     /*connected to .swiper-main height */
-    max-height: 95px;
+    max-height: 90px;
     z-index: 2;
+}
+
+.titles {
+    font-weight: bold;
+    font-size: clamp(1.6rem, 3.4vw, 3rem);
 }
 
 .logo {
     z-index: 2;
     overflow: hidden;
     position: fixed;
-    top: -395px;
-    left: -205px;
-    transform: scale(0.1);
+    top: 4px;
+    left: 10px;
+    transform-origin: top left;
 }
 
 .logo img {
+    width: 50px;
+    /* konkretna wartość */
+    height: auto;
     display: block;
 }
 
 #polCant {
     z-index: 2;
     position: absolute;
-    top: -23px;
-    left: 90px;
+    top: -15px;
+    left: 70px;
     text-align: center;
-    font-size: 2.1rem;
+    font-size: 2.2rem;
     background: url("pics/POLAND.png") no-repeat center/cover;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    -webkit-text-stroke: 1px black
+    -webkit-text-stroke: 1px black;
 }
 
 #navBar {
     z-index: 2;
     position: absolute;
     display: flex;
-    gap: clamp(10px, 1.3vw, 40px);
+    gap: clamp(10px, 1.3vw, 20px);
     right: 20px;
     margin: 23px 0 0 250px;
 }
 
 .navBox {
+    z-index: 3;
     background-color: rgb(250, 250, 250);
     position: absolute;
     height: auto;
     width: max-content;
     border-radius: 20px;
-    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    font-size: clamp(1.2rem, 1.8vw, 1.7rem);
     box-shadow: 0px 0px 25px black;
     display: flex;
     flex-direction: column;
@@ -123,21 +113,18 @@ header {
     transition-timing-function: ease-out;
 }
 
-.navBox svg {
-    position: absolute;
-    pointer-events: none;
-}
-
 .but {
     cursor: pointer;
     background-color: transparent;
-    font-size: clamp(1.4rem, 1.4vw, 1.9rem);
+    font-size: clamp(1.4rem, 1.5vw, 1.9rem);
     width: auto;
     height: auto;
     font-weight: bold;
     border: black 2px solid;
     border-radius: 5px;
     color: black;
+    padding: 2px 9px;
+    backdrop-filter: blur(3px);
 }
 
 .svgNav {
@@ -150,12 +137,13 @@ header {
     align-items: center;
     justify-content: center;
     background-color: transparent;
+    margin-top: -1px;
 }
 
 .svgNav svg {
     position: absolute;
-    width: 100%;
-    height: 110%;
+    width: 90%;
+    height: 90%;
     min-width: 40px;
     min-height: 20px;
 }
@@ -204,16 +192,17 @@ header {
     z-index: 1;
     position: absolute;
     left: 50%;
-    top: 90px;
+    top: 100px;
     width: max-content;
     max-width: 80vw;
     transform: translate(-50%, -50%);
     font-size: clamp(1.9rem, 3.5vw, 3rem);
-    font-family: Palatino;
+    font-family: monospace;
     font-weight: bold;
     text-align: center;
     color: white;
     -webkit-text-stroke: 1px black;
+    backdrop-filter: blur(5px);
     /*position: relative;
     width: max-content;
     max-width: 80vw;
@@ -239,8 +228,7 @@ header {
 .swiper-main {
     position: relative;
     width: 100%;
-    margin-top: 30px;
-    height: calc(100vh - 90px - 50px);
+    height: calc(100vh - 90px);
     overflow: hidden;
 }
 
@@ -262,7 +250,7 @@ header {
 
 .swiper-slide img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 95%;
     width: auto;
     height: auto;
     display: block;
@@ -328,12 +316,13 @@ max-width: 100%;
     vertical-align: middle;
     line-height: 38px;
     font-weight: bold;
-    font-size: clamp(1.3rem, 1.8vw, 1.7rem);
+    font-size: clamp(1.3rem, 1.8vw, 2.3rem);
 }
 
 .swiper-button-next,
 .swiper-button-prev {
     transform: scale(3, 1.5);
+    backdrop-filter: blur(3px);
 }
 
 #boxKoncerty {
@@ -399,7 +388,6 @@ max-width: 100%;
 
 .koncerty img {
     margin-top: 10px;
-    /* tylko mami v*/
     margin-inline: auto;
     width: 80%;
     /*mami v 80%, pion 50%;*/
@@ -414,7 +402,7 @@ ol {
     display: flex;
     justify-content: space-evenly;
     list-style-type: none;
-    line-height: clamp(5px, calc(2vw + 1vh), 35px);
+    line-height: clamp(15px, calc(2vw + 1vh), 35px);
     font-family: Palatino;
     font-weight: bold;
     height: auto;
@@ -436,7 +424,7 @@ li a {
 #archive {
     border: solid black 2px;
     border-radius: 6px;
-    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
     background-color: transparent;
     cursor: pointer;
     padding: 1px 6px;
@@ -451,7 +439,7 @@ li a {
 .swiper-pics {
     position: relative;
     width: 100%;
-    height: 45vh;
+    height: 55vh;
     margin: 20px 0 5px 0;
 }
 
@@ -463,8 +451,8 @@ li a {
 }
 
 .swiper-pics .img-wrap {
-    height: calc(45vh - var(--galeria-caption-h)- 5px);
-    max-height: calc(45vh - var(--galeria-caption-h) - 5px);
+    height: calc(55vh - var(--galeria-caption-h)- 5px);
+    max-height: calc(55vh - var(--galeria-caption-h) - 5px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -483,7 +471,7 @@ li a {
     height: var(--galeria-caption-h);
     line-height: var(--galeria-caption-h);
     margin: 0;
-    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    font-size: clamp(1rem, 1.5vw, 1.6rem);
     flex-shrink: 0;
 }
 
@@ -507,7 +495,7 @@ li a {
 }
 
 .img-wrap {
-    max-height: 55vh;
+    max-height: 100%;
     height: 55vh;
     display: flex;
     align-items: center;
@@ -521,7 +509,7 @@ li a {
 
 .proby-img {
     max-width: 100%;
-    max-height: 40vh;
+    max-height: 100%;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -535,16 +523,16 @@ li a {
     text-align: center;
     width: auto;
     justify-content: center;
-    padding: 0 30px;
+    padding: 10px 30px;
 }
 
 .proby .right h2 {
     position: relative;
-    font-size: clamp(1.1rem, 1.6vw, 2rem);
+    font-size: clamp(1.2rem, 1.6vw, 2rem);
 }
 
 #dolaczSeperateProby {
-    font-size: clamp(1.4rem, 1.7vw, 1.7rem);
+    font-size: clamp(1.4rem, 1.7vw, 1.8rem);
     border: 2px black solid;
     border-radius: 10px;
     cursor: pointer;
@@ -577,6 +565,8 @@ li a {
     object-position: center;
     width: 110px;
     height: 125px;
+    min-width: 110px;
+    min-height: 125px;
     margin: 0 auto;
     display: block;
     background-color: white;
@@ -593,13 +583,22 @@ li a {
     height: 170px;
 }
 
+#boxGrupy #tenor ol li {
+    flex: 0.12;
+}
+
+#boxGrupy #tenor ol {
+    justify-content: center;
+    gap: 40px;
+}
+
 #jowi img,
 #darek img {
     transform: scaleX(1.1);
 }
 
 #dolaczSeperateGrupy {
-    font-size: clamp(1.4rem, 1.7vw, 1.7rem);
+    font-size: clamp(1.4rem, 1.7vw, 1.8rem);
     border: 2px black solid;
     border-radius: 10px;
     cursor: pointer;
@@ -614,7 +613,6 @@ footer {
     color: black;
     text-align: center;
     padding-top: 10px;
-    padding-bottom: 50px;
     display: flex;
 }
 
@@ -628,12 +626,13 @@ footer {
 
 .links {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     position: relative;
     align-items: center;
-    padding: 20px 0;
+    padding: 15px 0;
     max-width: 100%;
     border: none;
+    gap: 3vw;
 }
 
 .links svg {
@@ -681,47 +680,50 @@ footer button {
     }
 
     .logo {
-        top: -395px;
-        left: -215px;
-        transform: scale(0.09);
+        top: 5px;
+        left: 10px;
+    }
+
+    .logo img {
+        width: 45px;
     }
 
     #polCant {
-        left: 80px;
-        font-size: 1.7rem;
-        top: -10px;
-    }
-
-    .swiper-pics {
-        height: 30vh;
-    }
-
-    .swiper-pics .img-wrap {
-        height: calc(30vh - var(--galeria-caption-h)- 5px);
-        max-height: calc(30vh - var(--galeria-caption-h) - 5px);
+        left: 65px;
+        font-size: 1.9rem;
+        top: -5px;
     }
 }
 
 @media (max-width: 950px) {
     .but {
-        font-size: clamp(0.9rem, 2.4vw, 2rem);
-        max-width: 152px;
+        font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+        align-items: end;
+        color: white;
+        border-color: white;
     }
 
     #navBar {
         flex-direction: column-reverse;
         align-items: center;
-        gap: 15px;
-        right: 4px;
-        margin: 0;
+        gap: 10px;
+        right: 5px;
+        margin-top: 10px;
     }
 
     header {
         height: 0;
     }
 
+    #welcome {
+        left: 40%;
+        max-width: 60vw;
+        -webkit-text-stroke: 0px;
+    }
+
     #polCant {
-        top: -38px;
+        top: -7px;
+        -webkit-text-stroke: 0px;
     }
 
     .svgNav {
@@ -734,7 +736,7 @@ footer button {
     }
 
     footer {
-        padding: 20px 0 4vh 0;
+        padding-top: 20px;
     }
 
     .proby {
@@ -742,30 +744,33 @@ footer button {
     }
 
     .proby .left {
+        margin-top: -30px;
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+        max-width: 90%;
+    }
+
+    .img-wrap {
+        height: 65vh;
     }
 
 }
 
 @media (max-width: 768px) {
     .logo {
-        top: -390px;
-        left: -220px;
-        transform: scale(0.08);
+        top: 5px;
+        left: 6px;
+    }
+
+    .logo img {
+        width: 40px;
     }
 
     #polCant {
-        left: 75px;
-        font-size: 1.6rem;
-        top: -30px;
-    }
-
-    #welcome {
-        top: 100px;
-        left: 40%;
-        max-width: 60vw;
+        left: 55px;
+        font-size: 1.8em;
+        top: -6px;
     }
 
     #boxONas-inner {
@@ -774,19 +779,45 @@ footer button {
         margin: 0 20px;
     }
 
+    #boxGrupy ol li img {
+        width: 100px;
+        height: 115px;
+        min-width: 100px;
+        min-height: 115px;
+    }
+
+    /*custom size for dirigent*/
+    #dyrygentka ol li img {
+        width: 145px;
+        height: 165px;
+        min-width: 145px;
+        min-height: 165px;
+    }
+
+    #dyrygentTitle,
+    #sopranTitle,
+    #altTitle,
+    #tenorTitle {
+        font-size: 1.8rem;
+    }
+
+    #boxGrupy ol li h2 {
+        font-size: 1.6rem;
+    }
+
     #karta {
         width: 50%;
         height: 50%;
     }
 
     footer button {
-        margin-top: -2px;
+        margin-top: -5px;
     }
 }
 
 @media (max-width: 650px) {
     #welcome {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         transform: translate(-50%, -25%);
     }
 
@@ -799,34 +830,49 @@ footer button {
         width: 60%;
     }
 
-    footer {
-        padding: 20px 0 5vh 0;
+    .koncerty img {
+        width: 60%;
+    }
+
+    #boxONas-outer {
+        margin-top: -100px;
     }
 }
 
 @media (max-width: 480px) {
+    :root {
+        --swiper-navigation-sides-offset: 20px;
+    }
+
     #navBar {
         right: 10px;
     }
 
+    .navBox {
+        font-size: 1rem;
+    }
+
+    .svgNav svg {
+        background-color: red;
+    }
+
     .logo {
-        top: -395px;
-        left: -225px;
+        top: 5px;
+        left: 5px;
+    }
+
+    .logo img {
+        width: 37px;
     }
 
     #polCant {
-        left: 60px;
-        font-size: 1.3rem;
-        top: -25px;
+        left: 45px;
+        font-size: 1.7rem;
+        top: -5px;
     }
 
     #welcome {
-        font-size: 1.3rem;
-        left: 35%;
-    }
-
-    .infoONas {
-        font-size: 1rem;
+        left: 31%;
     }
 
     #boxONas-inner .right {
@@ -834,23 +880,23 @@ footer button {
     }
 
     .dates {
-        font-size: 1.3rem;
+        font-size: 1.35rem;
     }
 
     .times {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
     }
 
     .adresses {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
 
     .prices {
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
 
     .buttons {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .koncerty {
@@ -858,23 +904,35 @@ footer button {
         width: 100%;
     }
 
-    .swiper-pics {
-        height: 20vh;
-    }
-
-    .swiper-pics .img-wrap {
-        height: calc(20vh - var(--galeria-caption-h)- 5px);
-        max-height: calc(20vh - var(--galeria-caption-h) - 5px);
-    }
-
     #boxGrupy ol li {
         flex: 1 0 30%;
     }
 
     #boxGrupy ol li img {
-        width: 95px;
-        height: 110px;
+        width: 90px;
+        height: 105px;
+        min-width: 90px;
+        min-height: 105px;
         margin: 0 auto;
+    }
+
+    /*custom size for dirigent*/
+    #dyrygentka ol li img {
+        width: 145px;
+        height: 165px;
+        min-width: 145px;
+        min-height: 165px;
+    }
+
+    #dyrygentTitle,
+    #sopranTitle,
+    #altTitle,
+    #tenorTitle {
+        font-size: 1.5rem;
+    }
+
+    #boxGrupy ol li h2 {
+        font-size: 1.3rem;
     }
 
     .proby .right h2 {
@@ -884,7 +942,7 @@ footer button {
 
     .footer-left,
     .footer-right {
-        padding-bottom: 80px;
+        padding-bottom: 30px;
     }
 
     #karta,

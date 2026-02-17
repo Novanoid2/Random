@@ -29,7 +29,7 @@
         "linksTitle": "Można nas znaleźć na:",
         "doGory": "Wróć na górę",
         "errorReport": "Jest jakiś błąd? Możesz to tutaj zgłosić!",
-        "autor": "Strona zrobiona przez Bernard K-K",
+        "autor": "Strona i tłumaczenia zrobione przez Bernard K-K",
         "manualFetch": "Chcesz sprawdzić, czy informacje na stronie są aktualne?",
         "concertEndedText": "Ups, Mineło! Do nastepnego razu!"
     },
@@ -63,21 +63,21 @@
         "linksTitle": "You can find us on:",
         "doGory": "Back to top",
         "errorReport": "Saw any errors? Report them here!",
-        "autor": "Website by Bernard K-K",
+        "autor": "Website and translations by Bernard K-K",
         "manualFetch": "Want to check if the information on the website is up to date?",
         "concertEndedText": "Oops, it ended! See you next time!"
     },
     "FR": {
         "welcome": "Bienvenue sur le site de Polonia Cantante!",
         "errorMsg": "Une erreur s’est produite de notre côté. Certaines informations peuvent être incorrectes. Nous y travaillons.",
-        "oNas": "À propos de nous",
+        "oNas": "À propos",
         "oNas2": "À propos de nous",
         "koncerty": "Concerts & Billets",
         "zdjecia": "Galerie",
         "zdjeciaTitle": "Galerie",
         "proby": "Répétitions",
-        "pomoc": "Soutenez-nous",
-        "dolacz": "Rejoignez-nous",
+        "pomoc": "Soutien",
+        "dolacz": "Adhérer",
         "pomocBoxTitle": "Vous pouvez nous soutenir en<br>versantun montant de votre<br>choix sur le compte suivant:",
         "contactTitle": "Contacte avec nous:",
         "loremHead": "Polonia Cantante est un chœur amateur polonais enthousiaste de Louvain qui se réunit depuis 2019 pour partager l’amour de la musique et la joie de chanter ensemble. Notre répertoire est aussi varié que nos membres.",
@@ -97,7 +97,7 @@
         "linksTitle": "Vous pouvez nous trouver sur:",
         "doGory": "Retour en haut",
         "errorReport": "Y-a-t-il une erreur? Rapporte-la ici!",
-        "autor": "Site créé par Bernard K-K",
+        "autor": "Site et translations créé par Bernard K-K",
         "manualFetch": "Voulez-vous vérifier si les informations sur le site sont à jour?",
         "concertEndedText": "Oups, c'est finit! À la prochaine!"
     },
@@ -131,7 +131,7 @@
         "linksTitle": "U kunt ons vinden op:",
         "doGory": "Terug naar boven",
         "errorReport": "Een fout gevonden? Meld het hier!",
-        "autor": "Website gemaakt door Bernard K-K",
+        "autor": "Website en vertalingen gemaakt door Bernard K-K",
         "manualFetch": "Wil je controleren of de informatie op de website up-to-date is?",
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
@@ -139,5 +139,5 @@
         "add": [],
         "rm": []
     },
-    "v": "1.8b"
+    "v": "1.9"
 }

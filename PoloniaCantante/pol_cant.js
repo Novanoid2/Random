@@ -9,7 +9,8 @@ let currentVConcerts, currentVLangs;
 let langChange = true;
 let first = true;
 let fetched = false;
-!localStorage?.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(Date.now())) : null;
+let removeWrappers = true;
+!localStorage?.getItem("lastFetchDate") ? localStorage.setItem("lastFetchDate", JSON.stringify(Date.now())) : console.info('lastFetchDate availabe');
 
 async function loadKeys() {//load keys from cache
     for (let key of ["key_langs", "key_concerts"]) {
@@ -18,14 +19,13 @@ async function loadKeys() {//load keys from cache
             const data = JSON.parse(cached);
             //passes data to applying function
             key === "key_langs" ? currentVLangs = data["v"] : currentVConcerts = data["v"];
-            key === "key_langs" ? await applyData("languages", data, 21) : await applyData("koncertyInfo", data, 21);
+            await applyData(key === "key_langs" ? "languages" : "koncertyInfo", data, '@loadKeys');
         } else {
             //if no cache it fetches the jsons and get saved to localStorage in applyData();
             try {
                 fetched = true;
-                console.log(`fetched: ${fetched}`);
-                const data = key === "key_langs" ? await fetchData("languages", 27) : await fetchData("koncertyInfo", 27);
-                key === "key_langs" ? await applyData("languages", data, 28) : await applyData("koncertyInfo", data, 28);
+                const data = await fetchData(key === "key_langs" ? "languages" : "koncertyInfo", '@loadKeysFetchFetch')
+                await applyData(key === "key_langs" ? "languages" : "koncertyInfo", data, '@loadKeysFetchApply')
             } catch (e) {
                 fetched = false;
                 console.warn("Mrn: loadKeys: fetch failed, using fallback (aka cache you stupid)", e);
@@ -109,26 +109,16 @@ async function applyData(type, dataPassed, from) {//applies the jsons, duhhh
 
 loadKeys(); //initial load from cache
 setInterval(async () => {
-    await applyData("languages", null, 112);
-    await applyData("koncertyInfo", null, 113);
-}, 1000 * 60 * 10); //check for updates every 10 min
+    await applyData("languages", null, "fetch@every30");
+    await applyData("koncertyInfo", null, "fetch@every30");
+}, 1000 * 60 * 30); //check for updates every 30 min
 
-//add the "onlick" attribute to change language accordingly
-let order = 0;
-for (let tag of document.querySelectorAll("#langBox a")) {
-    let langs = ["PL", "EN", "NL", "FR"]; //shut up i know duplication is stupid
-    tag.innerHTML = `${langs[order]}`;
-    tag.setAttribute("onclick", `changeLang('${langs[order]}')`);
-    order++;
-}
 
 function changeLang(lang) {
-    if (!document.getElementById("langBox").hasAttribute("hidden")) {
-        current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
-        langChange = true;
-        applyData("languages", JSON.parse(localStorage.getItem("key_langs")), "langChange");
-        adjustBoxes();
-    }
+    current_lang = /FR|EN|NL|PL/.test(lang.toUpperCase().trim()) ? lang.toUpperCase().trim() : current_lang;
+    langChange = true;
+    applyData("languages", JSON.parse(localStorage.getItem("key_langs")), "langChange");
+    adjustBoxes();
 }
 
 function adjustBoxes() {
@@ -140,11 +130,16 @@ function adjustBoxes() {
 
         //Adjust the navBoxes positions
         if (window.innerWidth < 950) {
-            let top = 30;
-            if (helpBox === 'langBox') top = 60;
-            box.style.left = `${buttonPos.left - boxPos.width - top}px`;
-            //old code for helpBox: box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
-            box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
+            if (window.innerWidth <= 400) {
+                box.style.left = `20px`;
+                box.style.top = `${window.innerHeight - 70 - boxPos.height}px`;
+            } else {
+                let top = 30;
+                if (helpBox === 'langBox') top = 58;
+                box.style.left = `${buttonPos.left - boxPos.width - top}px`;
+                //old code for helpBox: box.style.top = `${buttonPos.top / 2 + scrollY / 2}px`;
+                box.style.top = `${buttonPos.top + scrollY - buttonPos.height / 2}px`;
+            }
         } else {
             box.style.left = `${(buttonPos.left + buttonPos.width / 2) - (boxPos.width / 2)}px`;
             box.style.top = `${buttonPos.top + scrollY + buttonPos.height + 35}px`;
@@ -156,23 +151,24 @@ function adjustBoxes() {
         if (!svg) continue;
         const polygon = svg.querySelector("polygon");
         if (window.innerWidth < 950) {
+            document.querySelector(".svgNav svg").setAttribute("fill", "#ffffff");
             polygon.setAttribute("points", "20,10 0,0 0,20");
             svg.style.top = "17px";
             svg.style.left = 'auto';
             svg.style.right = "-30px";
         } else {
+            document.querySelector(".svgNav svg").setAttribute("fill", "#00000");
             polygon.setAttribute("points", "15,0 0,20 30,20");
             svg.style.top = "-19px";
             svg.style.right = 'auto';
             svg.style.left = `${newBoxPos.width / 2 - 15}px`;
         }
 
+        box.style.pointerEvents = 'none';
         box.setAttribute("hidden", ""); //hides navBoxes lol
         box.style.opacity = 0;
     }
 }
-
-requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement, right after load
 
 //Shows an error message on (top of) the screen
 let allowError = true;
@@ -189,7 +185,7 @@ setTimeout(() => {
     document.querySelectorAll("#boxGrupy li img").forEach(img => {
         img.src = `pics/headshot/${img.alt.toLowerCase().trim()}.png`;
         img.parentElement.setAttribute("id", img.alt.toLowerCase().trim());
-        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image is found
+        img.onerror = function () { this.src = 'pics/headshot/default.jpg'; }; //if no image is found
     });
 }, 5);
 
@@ -200,15 +196,19 @@ function toggleBox(id) {
     else {
         arr.splice(arr.indexOf(id), 1);
         for (let other of arr) {
-            document.getElementById(other).setAttribute("hidden", "");
+            document.getElementById(other).style.pointerEvents = 'none';
             document.getElementById(other).style.opacity = 0;
+            document.getElementById(other).setAttribute("hidden", "");
         }
 
         const box = document.getElementById(id);
         if (box.hasAttribute("hidden")) {
             box.removeAttribute("hidden");
+            box.style.pointerEvents = 'auto';
+            //document.addEventListener('click', (e) => {if(e.x <= )})
             setTimeout(() => box.style.opacity = 1, 10);
         } else {
+            box.style.pointerEvents = 'none';
             box.setAttribute("hidden", "");
             setTimeout(() => box.style.opacity = 0, 10);
         }
@@ -230,7 +230,7 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
         const li = document.createElement("li");
         const img = document.createElement("img");
         img.setAttribute("alt", name.split("_")[0]);
-        img.onerror = function () { this.src = 'pics/placeholder.jpg'; }; //if no image found in files
+        img.onerror = function () { this.src = 'pics/headshot/default.jpg'; }; //if no image found in files
         img.src = `pics/headshot/${name.split("_")[0].toLowerCase().trim()}.png`;
         li.appendChild(img);
         const h2 = document.createElement("h2");
@@ -245,19 +245,18 @@ function editGrupy(dataPassed, from) {//adds / removes people from grupyBox
 async function manualFetchCall() {//check this
     if (!window.confirm("Are you sure? This uses more more internet data / Jesteś pewny(a)? To zużywa więcej danych internetowych / Ben je zeker? Dit verbruikt meer internetdata / Êtes-vous sûr(e)? Cela utilise plus de données Internet")) return;
     const buttonA = document.getElementById("manualFetch");
-    buttonA.parentElement.setAttribute('disabled', '');
+    buttonA.style.pointerEvents = 'none';
     buttonA.textContent = '...';
     setTimeout(() => {
-        buttonA.parentElement.removeAttribute('disabled');
+        buttonA.style.pointerEvents = 'auto';
         buttonA.textContent = JSON.parse(localStorage.getItem('key_langs'))[current_lang].manualFetch;
-        document.getElementById("fetchlabel").textContent = "";
     }, 3500);
     try {
         await applyData("languages", null, 'htmlCall');
         await applyData("koncertyInfo", null, 'htmlCall');
-        document.getElementById("fetchlabel").textContent = "✔️";
+        buttonA.textContent = "✔️";
     } catch (e) {
-        document.getElementById("fetchlabel").textContent = "❌";
+        buttonA.textContent = "❌";
         console.error("Mrn: manualFetchCall: fetch failed", e);
     }
 }
@@ -271,10 +270,10 @@ function scrollToId(id) {
 let resizeRAF;
 window.addEventListener('resize', () => { toggleBox("all"); cancelAnimationFrame(resizeRAF); resizeRAF = requestAnimationFrame(() => { adjustBoxes(); }); });
 
-//fetched again on load w if statements
-document.addEventListener('DOMContentLoaded', () => {
-    //if last fetch date is more than two hours ago, it fetches again (2 * 1000 * 60 * 60)
-    if (Date.now() - JSON.parse(localStorage.getItem("lastFetchDate")) >= 7200000) {
+document.addEventListener('DOMContentLoaded', () => {//fetches again on load w if statements
+	requestAnimationFrame(() => adjustBoxes()); //first navBoxes adjustement, right after load
+    //if last fetch date is more than 1.5 hours ago, it fetches again (1.5 * 1000 * 60 * 60)
+    if (Date.now() - JSON.parse(localStorage.getItem("lastFetchDate")) >= 4900000) {
         localStorage.setItem("lastFetchDate", JSON.stringify(Date.now()));
         if (!fetched) {
             applyData("languages", null, "fetch@dom");
@@ -282,5 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("fetched at dom");
         }
     }
+	requestAnimationFrame(() => adjustBoxes()); //again lol, because the langBox is somehow acting weird
 });
+
 console.log("%c Hello! watch'ya doing here? ", 'background: #222; color: #bada55; font-size: 20px;');
