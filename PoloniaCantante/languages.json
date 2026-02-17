@@ -136,8 +136,8 @@
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
     "ppl": {
-        "add": ["DJ_tenor"],
-        "rm": []
+        "add": [],
+        "rm": ["DJ"]
     },
-    "v": "2"
+    "v": "2.0"
 }
