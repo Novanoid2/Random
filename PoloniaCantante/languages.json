@@ -29,7 +29,7 @@
         "linksTitle": "Można nas znaleźć na:",
         "doGory": "Wróć na górę",
         "errorReport": "Jest jakiś błąd? Możesz to tutaj zgłosić!",
-        "autor": "Strona i tłumaczenia zrobione przez Bernard K-K",
+        "autor": "Strona i tłumaczenia zrobione przez Bernard K-K<br>Ta strona jest open source na moim GitHub: miren-3",
         "manualFetch": "Chcesz sprawdzić, czy informacje na stronie są aktualne?",
         "concertEndedText": "Ups, Mineło! Do nastepnego razu!"
     },
@@ -63,7 +63,7 @@
         "linksTitle": "You can find us on:",
         "doGory": "Back to top",
         "errorReport": "Saw any errors? Report them here!",
-        "autor": "Website and translations by Bernard K-K",
+        "autor": "Website and translations by Bernard K-K<br>The code is open source on my GitHub: miren-3",
         "manualFetch": "Want to check if the information on the website is up to date?",
         "concertEndedText": "Oops, it ended! See you next time!"
     },
@@ -97,7 +97,7 @@
         "linksTitle": "Vous pouvez nous trouver sur:",
         "doGory": "Retour en haut",
         "errorReport": "Y-a-t-il une erreur? Rapporte-la ici!",
-        "autor": "Site et translations créé par Bernard K-K",
+        "autor": "Site et translations créé par Bernard K-K<br>le site est open-source au mom GitHub: miren-3",
         "manualFetch": "Voulez-vous vérifier si les informations sur le site sont à jour?",
         "concertEndedText": "Oups, c'est finit! À la prochaine!"
     },
@@ -131,7 +131,7 @@
         "linksTitle": "U kunt ons vinden op:",
         "doGory": "Terug naar boven",
         "errorReport": "Een fout gevonden? Meld het hier!",
-        "autor": "Website en vertalingen gemaakt door Bernard K-K",
+        "autor": "Website en vertalingen gemaakt door Bernard K-K<br>De website is open-source op mijn GitHub: miren-3",
         "manualFetch": "Wil je controleren of de informatie op de website up-to-date is?",
         "concertEndedText": "Oei, het is gedaan! Tot de volgende keer!"
     },
@@ -139,5 +139,5 @@
         "add": [],
         "rm": ["DJ","Bert"]
     },
-    "v": "2.1"
+    "v": "2.1b"
 }
