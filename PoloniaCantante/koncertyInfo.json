@@ -28,11 +28,11 @@
         {
             "date": "13-6-2026",
             "time": "??:??",
-            "adress": "Blanden, ??-straat ??",
+            "adress": "Blanden, Haasrodestraat 72",
             "price": "10",
             "src": "https://poloniacantante.org/wp-content/uploads/2026/02/przyklad.jpg",
             "ended": false
         }
     ],
-    "v": "1.0b"
+    "v": "1.1"
 }
