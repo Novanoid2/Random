@@ -116,7 +116,7 @@
         "contactTitle": "Contact met ons:",
         "loremHead": "Polonia Cantante is een enthousiaste Poolse amateurkoor uit Leuven dat sinds 2019 samenkomt om de liefde voor muziek en het plezier van samen zingen te delen. Ons repertoire is net zo divers als onze leden.",
         "loremSub": "Kom naar onze concerten!",
-        "koncertTitle": "Concerten sezoen '25/'26",
+        "koncertTitle": "Concerten seizoen '25/'26",
         "bilet": "> Tickets <",
         "archive": "Archief van koncerten",
         "probyTitle": "Repetities",
@@ -139,5 +139,5 @@
         "add": [],
         "rm": ["DJ","Bert"]
     },
-    "v": "2.1b"
+    "v": "2.2"
 }
