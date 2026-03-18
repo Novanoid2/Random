@@ -20,6 +20,7 @@ for (let i = 0; i < (canv.width / barsWidth) - 5; i++) {
         alg.rect(bars[i].pos.x, bars[i].pos.y, barsWidth, -bars[i].h);
         alg.fill();
     }
+
     show();
     x -= barsWidth;
 }
@@ -44,6 +45,7 @@ function startSorting() {
             } else {
                 completed++;
             }
+
             num++;
 
         } else {
@@ -54,6 +56,7 @@ function startSorting() {
             num = 0;
             completed = 0;
         }
+
         //redraws the rects
         alg.clearRect(0, 0, canv.width, canv.height);
         for (let i = 0; i < bars.length; i++) {
@@ -62,7 +65,6 @@ function startSorting() {
             alg.rect(bars[i].pos.x, bars[i].pos.y, barsWidth, -bars[i].h);
             alg.fill();
         }
-
     }, 1);
 }
 
@@ -70,7 +72,7 @@ function startSorting() {
 function getRandomNum(max) {
     let a = Math.floor(Math.random() * max);
     while (a < 35) a += 5;
-    255 - a >= 180 ? a *= 1.5 : a;
+    if (255 - a >= 180) a = 1.5;
     return a;
 }
 

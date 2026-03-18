@@ -7,22 +7,6 @@
   </head>
   <body>
     <main>
-      <script>
-        function taskPrompt() {
-          if(counter < maxTasks + 1){
-          currentTask = prompt("Task number " + counter + ":");
-        } else {
-          currentTask = prompt("Max number of tasks achieved!");
-          }
-        }
-        function taskPromptDelete(){
-          if(taskList.length !== 0){
-            currentTaskDelete = prompt("Choose which task to delete:", "Type task number here")
-            currentTaskDelete = currentTaskDelete - 1;
-            deleteTask();
-          }
-        }
-      </script>
     </main>
     <script src="tasklist.js"></script>
   </body>

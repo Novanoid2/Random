@@ -7,6 +7,7 @@ let player2points = 0;
 let makenewball = 0;
 let makebackground = 0;
 
+//setup function + makes ball
 function setup() {
   createCanvas(windowWidth, windowHeight);
   textSize(30);
@@ -15,36 +16,47 @@ function setup() {
   makeSlider();
   makeSlider2();
   i = random(1, 2);
+
   if (i >= 1.5) {
     ballvel = createVector(random(4, 5), random(-4, 4));
   } else {
     ballvel = createVector(random(-4, -5), random(-4, 4));
   }
+
   slider2y = windowHeight / 2 - 55;
 }
+
+//adds ball on mouseclick
 function mouseClicked() {
   makebackground = 1;
+
   if (ball.length < 1) {
     ball.push(new movingBall(windowWidth / 2, windowHeight / 2));
   }
 }
+
+//"draws" the text values and updates the ball + slider positions 
 function draw() {
   text(player1points + "     " + player2points, windowWidth / 2 - 40, 50);
-  if (player1points == 9 || player2points == 9) {
+
+  if (player1points === 9 || player2points === 9) {
     if (player1points == 9) {
       text("Player 1 wins!", 70, 70);
     } else {
       text("Player 2 wins!", windowWidth - 270, 70);
     }
   }
+
   stroke("white");
   strokeWeight(10);
   line(windowWidth / 2, 0, windowWidth / 2, windowHeight);
   strokeWeight(1);
-  if (makebackground == 1) {
+
+  if (makebackground === 1) {
     background(0, 0, 0, 60);
-    text("ai", windowWidth - (windowWidth/4 ), 50);
+    text("ai", windowWidth - (windowWidth / 4), 50);
   }
+
   for (let b = 0; b < ball.length; b++) {
     ball[b].show();
     ball[b].move();
@@ -59,23 +71,28 @@ function draw() {
   }
 }
 
+//ball info + logic
 class movingBall {
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.size = 15;
     this.vel = ballvel;
   }
+
   show() {
     let p = this.pos;
     fill("white");
     circle(p.x, p.y, this.size);
   }
+
   //madrzejsze ai
   /*ai(slider2) {
     let slidervel = this.vel.y / 1.2;
     slider2y += slidervel;
   }*/
+
   //glupsze ai
+  //adds speeds or subtracts speed according to where it and the ball is
   ai2(slider2) {
     if (this.vel.y >= 1.5 && slider2y < windowHeight - 110) {
       slidervel = 2;
@@ -95,8 +112,11 @@ class movingBall {
       slider2y += slidervel;
     }
   }
+
+  //if the ball touches one of the sides logic
   move() {
     this.pos.add(this.vel);
+
     if (
       this.pos.x - this.size / 2 <= 0 ||
       this.pos.x + this.size / 2 >= windowWidth - 0
@@ -118,8 +138,10 @@ class movingBall {
       }
     }
 
+    //logic to continue playing when the ball touched one of the sides
     if (makenewball == 1 && player1points !== 9 && player2points !== 9) {
       text("Click to resume playing", windowWidth / 2 + 15, 100);
+
       if (mouseIsPressed == true) {
         let a = random(1, 2);
         if (a > 1.5) {
@@ -142,10 +164,13 @@ class movingBall {
     ) {
       this.vel.y *= -1;
     }
-  } 
+  }
+
+  //logic to change speed and direction when bounced off of left slider
   collision(slider) {
     for (let i = 0; i < sliderholder.length; i++) {
       let movingslider = sliderholder[i];
+
       if (
         this.pos.x + this.size / 2 >= 10 &&
         this.pos.x - this.size / 2 <= 25 &&
@@ -169,9 +194,13 @@ class movingBall {
       }
     }
   }
+
+
+  //logic to change speed and direction when bounced off of right slider
   collision2(slider2) {
     for (let j = 0; j < sliderholder2.length; j++) {
       let movingslider2 = sliderholder2[j];
+
       if (
         this.pos.x + this.size / 2 >= windowWidth - 25 &&
         this.pos.x - this.size / 2 <= windowWidth - 10 &&
@@ -196,35 +225,47 @@ class movingBall {
     }
   }
 }
+
+//left slider info
 class slider {
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.slidercolor = "white";
   }
+
   showslider() {
     fill(this.slidercolor);
     rect(10, mouseY, 15, 100);
   }
 }
+
+//right slider info
 class slider2 {
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.slidercolor = "white";
   }
+
   showslider() {
     fill(this.slidercolor);
+
     /* if (keyIsDown(38) === true && slider2y > 0) {
       slider2y -= 3;
     } else if (keyIsDown(40) === true && slider2y < windowHeight - 110) {
       slider2y += 3;
     }*/
+
     rect(windowWidth - 25, slider2y, 15, 110);
   }
 }
+
+//makes left slider
 function makeSlider() {
   let newslider = new slider(10, mouseY, 15, 110);
   sliderholder.push(newslider);
 }
+
+//makes right slider
 function makeSlider2() {
   let newslider2 = new slider2(windowWidth - 25, mouseY, 15, 110);
   sliderholder2.push(newslider2);

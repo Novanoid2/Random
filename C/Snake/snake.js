@@ -1,5 +1,5 @@
 //first finished and working version: 30d/6m/'25 19:51 (w/ bugs i think)
-// © - 2025 by novanoid2 on discord
+// © - 2025 by miren.3 on discord
 'use strict';
 const sqsize = 25;
 const canvas = document.getElementById("canvas");
@@ -18,6 +18,7 @@ let start = true;
 let lost = false;
 let time = 25;
 
+//initialize snake body
 function makeSnake(x, y, amm) {
     if (amm === 1) {
         snakeBlocks.push(new snakeAndFood(x, y));
@@ -30,11 +31,13 @@ function makeSnake(x, y, amm) {
     }
 }
 
+//info snake body and food 
 class snakeAndFood {
     constructor(x, y) {
         this.pos = { x: x, y: y };
         this.size = sqsize * 5 / 6;
     }
+
     showSnake() {
         if (blockNum === 1) {
             sq.fillStyle = "darkgreen";
@@ -42,10 +45,12 @@ class snakeAndFood {
         } else {
             sq.fillStyle = "lightgreen";
         }
+
         sq.beginPath();
         sq.roundRect(this.pos.x, this.pos.y, this.size, this.size, 5);
         sq.fill();
     }
+
     showFood() {
         sq.fillStyle = "red";
         sq.beginPath();
@@ -54,10 +59,12 @@ class snakeAndFood {
     }
 }
 
+//updates each snake body position and then clears and draws them again, does the same for food
 function updateAndDraw() {
     for (let i = snakeBlocks.length - 1; i >= 0; i--) {
         //swap out [0] block pos so the [1] block goes to the right pos and then revert the [0] position
         if (i === 1) snakeBlocks[0].pos = copy0Before; else snakeBlocks[0].pos = copy0After;
+
         if (i !== 0) {
             snakeBlocks[i].pos.x = snakeBlocks[i - 1].pos.x;
             snakeBlocks[i].pos.y = snakeBlocks[i - 1].pos.y;
@@ -67,9 +74,12 @@ function updateAndDraw() {
             break;
         }
     }
+
     blockNum = 1;
     sq.clearRect(0, 0, canvas.width, canvas.height);
+
     if (foodExists) food[0].showFood();
+
     for (let i = 0; i < snakeBlocks.length; i++) {
         snakeBlocks[i].showSnake();
     }
@@ -79,6 +89,7 @@ function updateAndDraw() {
 window.addEventListener("keydown", function (event) {
     if (isInBounds()) {
         changeAToB(event.key);
+
         //to not let it go in the oppossite direction
         const opposite = (
             (nextMove === "ArrowUp" && lastMove === "ArrowDown") ||
@@ -86,6 +97,7 @@ window.addEventListener("keydown", function (event) {
             (nextMove === "ArrowRight" && lastMove === "ArrowLeft") ||
             (nextMove === "ArrowDown" && lastMove === "ArrowUp")
         );
+
         if (!opposite && nextMove !== lastMove) {
             allowRepeatedMove = false;
             setTimeout(() => {
@@ -123,15 +135,17 @@ window.addEventListener("keydown", function (event) {
                         lastMove = "ArrowRight";
                     }
             }
+
             copy0After = { x: snakeBlocks[0].pos.x, y: snakeBlocks[0].pos.y };
+
             if (Math.random() < 0.15) makeFood();
+
             updateAndDraw();
             start = false;
         }
     } else {
         if (lost === false) lostGame("Wyszedles poza granice. Ty ćmoku");
     }
-
 });
 
 //second move "function", the repeated version
@@ -152,6 +166,7 @@ setInterval(() => {
                 case "ArrowLeft":
                     snakeBlocks[0].pos.x -= sqsize;
             }
+
             copy0After = { x: snakeBlocks[0].pos.x, y: snakeBlocks[0].pos.y };
             makeFood();
             updateAndDraw();
@@ -162,12 +177,14 @@ setInterval(() => {
 }, 500);
 
 //makes food, duuuhhh...
+//known bug: sometimes the food can spawn inside the snake body
 function makeFood() {
     if (!foodExists) {
         let x = Math.floor(Math.random() * (canvas.width - sqsize));
         let y = Math.floor(Math.random() * (canvas.height - sqsize));
         let xCopy = x;
         let yCopy = y;
+
         //calculates difference and adds/subtracts it from the original x pos
         if (x % sqsize !== 0) {
             x = x.toString();
@@ -179,21 +196,26 @@ function makeFood() {
             } else if (x.length == 4) {
                 x = x.slice(2);
             }
+
             xCopy += sqsize - (+x);
         }
+
         if (y % sqsize !== 0) {
             y = y.toString();
+
             if (y.length == 3) {
                 y = y.slice(1);
             } else if (y.length == 4) {
                 y = y.slice(2);
             }
+
             yCopy += sqsize - (+y);
         }
 
         food[0] = (new snakeAndFood(xCopy, yCopy));
         foodExists = true;
         time = 25;
+
         //food disappears after some time
         if (timeoutId !== undefined) {
             clearTimeout(timeoutId);
@@ -201,15 +223,16 @@ function makeFood() {
         }
 
         setText();
-        let timeoutTime = time * 1000
+        let timeoutTime = time * 1000;
         timeoutId = setTimeout(() => {
             food = [];
             foodExists = false;
             time = 25;
             document.getElementById("text").removeChild(text);
-        }, timeoutTime)
+        }, timeoutTime);
     }
 }
+
 //make and update the time text for when the food disappears
 function setText() {
     if (document.getElementById("text").childElementCount === 1) document.getElementById("text").removeChild(text);
@@ -218,6 +241,7 @@ function setText() {
     text.textContent = `${time} sekund aż jedzenie zniknie.`;
     time--;
     document.getElementById("text").appendChild(text);
+
     intervalId = setInterval(() => {
         if (time >= 0 && food.length > 0 && foodExists === true) {
             text.textContent = `${time} sekund aż jedzenie zniknie.`;
@@ -246,11 +270,13 @@ setInterval(() => {
 //should i just put this in the interval thing?
 function extendSnake(last2PosX) {
     let newPos = { x: snakeBlocks[snakeBlocks.length - 1].pos.x, y: snakeBlocks[snakeBlocks.length - 1].pos.y };
+
     if (last2PosX - snakeBlocks[snakeBlocks.length - 1].pos.x > 0) {
         makeSnake(newPos.x - sqsize, newPos.y, 1);
     } else {
         makeSnake(newPos.x + sqsize, newPos.y, 1);
     }
+
     score++;
     food = [];
 }
@@ -273,13 +299,15 @@ function lostGame(reason) {
     nextMove = lastMove = null;
     food = [];
     foodExists = false;
+
     if (snakeBlocks.length < 35) {
         for (let i = 1; i < snakeBlocks.length; i++) {
             speed -= 15;
         }
     } else {
-        speed = 100;
+        speed = 2;
     }
+
     let message = document.createElement("h2");
     message.textContent = `Przegrales: ${reason}`;
     message.style = `position: absolute; left: 50%; top: ${canvas.top}; transform: translate(-50%, 20%);
@@ -291,15 +319,18 @@ function lostGame(reason) {
     color: rgb(106, 82, 195); font-family: Garamond; z-index: 2; font-size: 1.5em`;
     document.body.appendChild(scoreMessage);
     document.getElementById("restart").style = "color: red; border: turquoise solid 2px; font-size: 2.5em";
+
     setInterval(() => {
         snakeBlocks.pop();
         sq.clearRect(0, 0, canvas.width, canvas.height);
+
         for (let i = 0; i < snakeBlocks.length; i++) {
             if (inside) {
                 if (i === 0) blockNum = 1;
             } else {
                 if (i === 1) blockNum = 1;
             }
+
             snakeBlocks[i].showSnake();
         }
     }, speed);
@@ -315,7 +346,7 @@ function changeAToB(key) {
     } else if (/ArrowUp|ArrowDown|ArrowLeft|ArrowRight/.test(key)) {
         nextMove = key;
     } else {
-        nextMove = lastMove
+        nextMove = lastMove;
     }
 }
 
@@ -327,6 +358,7 @@ function isInBounds() {
     else
         return false;
 }
+
 //for some reason these two behave differently, idk why + too lazy to fix it cuz it works x3
 //detects if snake head goes past border and ends game if yes
 setInterval(() => {

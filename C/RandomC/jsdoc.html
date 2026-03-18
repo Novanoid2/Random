@@ -35,20 +35,19 @@
         let text = "testlol";
         document.getElementById("button").onclick = function () {
             document.getElementById("button").textContent == "Changed >:3" ?
-                document.getElementById("button").textContent = "meow~~"
-                :
-                document.getElementById("button").textContent = "Changed >:3"
+                document.getElementById("button").textContent = "meow~~" : document.getElementById("button").textContent = "Changed >:3";
 
             if (!document.body.contains(document.getElementById("divtest"))) {
                 let alfa = document.createElement("div");
                 alfa.id = "divtest";
                 document.body.appendChild(alfa);
             }
+            
             let a = document.createElement("p");
             a.id = "test";
             a.textContent = text;
             document.getElementById("divtest").appendChild(a);
-            Math.random()*1.01 > 0.06 ? text += "lol" : text += " co ja robie ";
+            Math.random() * 1.01 > 0.06 ? text += "lol" : text += " co ja robie ";
         }
     </script>
 </body>
