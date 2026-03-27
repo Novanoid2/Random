@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl-PL">
 
 <head>
     <meta charset="UTF-8">
@@ -47,6 +47,26 @@
             padding: 5px 0;
         }
 
+        ul {
+            display: flex;
+            flex-direction: row;
+            gap: 7px;
+            list-style-type: none;
+            margin-left: -30px;
+            position: relative;
+            top: -10px;
+        }
+
+        .polishSigns {
+            width: 35px;
+            height: 35px;
+            font-size: x-large;
+            cursor: pointer;
+            padding: 0;
+            transition: background-color 0.45s ease;
+            border: 2px solid black;
+        }
+
         #inputPlace {
             position: absolute;
             bottom: 0;
@@ -63,7 +83,7 @@
             position: relative;
             bottom: 20px;
             width: 91%;
-            height: 72px;
+            height: 100%;
             border: none;
             font-size: x-large;
             text-align: center;
@@ -77,13 +97,12 @@
             background-color: rgba(179, 179, 179, 0.3);
         }
 
-        button {
+        #send {
             position: relative;
             bottom: 20px;
             left: 0;
             width: 7%;
             height: 70px;
-            border: none;
             font-size: xx-large;
             cursor: pointer;
             transition: background-color 0.45s ease;
@@ -91,7 +110,17 @@
         }
 
         button:hover {
-            background-color: rgba(128, 0, 128, 0.81);
+            background-color: rgba(128, 0, 128, 60%);
+        }
+
+        @media (max-width: 1800px) {
+            ul {
+                top: -40px;
+            }
+
+            #inputPlace {
+                height: 65px;
+            }
         }
     </style>
 </head>
@@ -101,15 +130,42 @@
     <main>
         <section id="top"></section>
         <section id="bottom">
+            <ul>
+                <li>
+                    <button class="polishSigns">ą</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ć</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ę</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ł</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ń</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ó</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ś</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ż</button>
+                </li>
+                <li>
+                    <button class="polishSigns">ź</button>
+                </li>
+            </ul>
             <div id="inputPlace">
-                <textarea placeholder="Wpisz coś"
-                    id="input"></textarea>
-                <button>↑</button>
+                <textarea placeholder="Wpisz coś" id="input"></textarea>
+                <button id="send">↑</button>
             </div>
         </section>
     </main>
     <script type="module" src="AI.js"></script>
-    <script type="module" src="AI.mjs"></script>
 </body>
 
 </html>
