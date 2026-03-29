@@ -4,8 +4,6 @@ let inputSentence = '';
 const supabase = createClient(
     'https://iwmlttiwxdptxjoppayb.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bWx0dGl3eGRwdHhqb3BwYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODQ4ODMsImV4cCI6MjA4OTc2MDg4M30.p0qVLnX2hNcC_ZRSoLwyGLod55k1qeyE8j_68ZPJOAA'
-    //service role:
-    // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bWx0dGl3eGRwdHhqb3BwYXliIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDE4NDg4MywiZXhwIjoyMDg5NzYwODgzfQ.W3IjqKfqXDZdvbZueO5DDl6u5loJwbXPMoJnpAU-mf8
     //anon public:
     // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bWx0dGl3eGRwdHhqb3BwYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODQ4ODMsImV4cCI6MjA4OTc2MDg4M30.p0qVLnX2hNcC_ZRSoLwyGLod55k1qeyE8j_68ZPJOAA
 );
