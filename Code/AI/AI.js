@@ -1,9 +1,13 @@
 'use strict';
 let topMsg = 15;
 let inputSentence = '';
+let dataObject = {};
+let numAdded = 1;
 const supabase = createClient(
     'https://iwmlttiwxdptxjoppayb.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bWx0dGl3eGRwdHhqb3BwYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODQ4ODMsImV4cCI6MjA4OTc2MDg4M30.p0qVLnX2hNcC_ZRSoLwyGLod55k1qeyE8j_68ZPJOAA'
+    //service role:
+    // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bWx0dGl3eGRwdHhqb3BwYXliIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDE4NDg4MywiZXhwIjoyMDg5NzYwODgzfQ.W3IjqKfqXDZdvbZueO5DDl6u5loJwbXPMoJnpAU-mf8
     //anon public:
     // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bWx0dGl3eGRwdHhqb3BwYXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODQ4ODMsImV4cCI6MjA4OTc2MDg4M30.p0qVLnX2hNcC_ZRSoLwyGLod55k1qeyE8j_68ZPJOAA
 );
@@ -11,12 +15,13 @@ const supabase = createClient(
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 //GET (pobieranie danych)
-const { data, error } = await supabase
+let { data, error } = await supabase
     .from('dictionary')
     .select('*');
 
-console.log(data ?? error, typeof data, Array.isArray(data));
-
+data.forEach(i => { dataObject[i.words] = { numerical: i.numerical, next_words: i.next_words } });
+console.log(dataObject);
+data = dataObject;
 
 /* todo later idk:
 await supabase.auth.signInWithPassword({
@@ -32,89 +37,125 @@ console.log(data.session);
 */
 
 async function aiResponse(input) {
-    //addVocab(inputSentence);
+    console.info(`inputSentence for vocab: ${inputSentence}`);
+    addVocab(inputSentence);
     return generate(input);
 }
 
-async function addVocab(sentence) {
-    const sentenceArr = sentence.replaceAll(/\.\;\'\"\\\/\!\,\?\(\)/g, "").split(" ");
-    let wordToAdd = '';
-    let vocabToAdd = [];
+async function appendToBackend(createOrAdd, origWord, appendWord) {
+    return true; //temporary block
+    if (createOrAdd === "create") {
+        supabase.from('dictionary').insert({
+            words: origWord,
+            next_words: appendWord,
+            numerical: 1//,
+            //user_id: (await supabase.auth.getUser()).data.user.id
+        });
 
-    sentenceArr.forEach((current, next, secondNext, thirdNext, fourthNext) => {
+    } else if (createOrAdd === "add") {
+        supabase.rpc('array_append', {
+            orig: origWord,
+            new_word: appendWord
+        });
+
+    } else console.error("nuh uh, wrong action silly");
+}
+
+async function addVocab(sentence) {
+    const sentenceArr = sentence.split(" ");
+
+    for (let i = 0; i < sentenceArr.length - 1; i++) {
+        const current = sentenceArr[i];
+        const next = sentenceArr[i + 1];
+        const secondNext = sentenceArr[i + 2];
+        const thirdNext = sentenceArr[i + 3];
+        const fourthNext = sentenceArr[i + 4];
+        console.log(`word volgorde:`, current, next, secondNext, thirdNext, fourthNext);
+        console.log(`somthing idk:`, data[current], data[current]?.next_words, data[current]?.next_words.includes(next) || false, "=", next || undefined);
+
         //monogram
         if (sentenceArr.length > 1) {
-            if (!data[current] && next) data[current] = [next];
-            else if (!data[current].has(next) && next) data[current].push(next);
+            if (!data[current] && next) appendToBackend("create", current, next);
+            else if (!data[current]?.next_words.includes(next) && next) appendToBackend("add", current, next);
         }
 
         //digram
         if (sentenceArr.length > 2) {
-            if (!data[current + next] && next && secondNext) data[current + next] = [secondNext];
-            else if (!data[current + next].has(secondNext) && next && secondNext) data[current + next].push(secondNext);
+            const word = current + " " + next;
+            if (!data[word] && next && secondNext) appendToBackend("create", word, secondNext);
+            else if (!data[word]?.next_words.includes(secondNext) && next && secondNext) appendToBackend("add", word, secondNext);
         }
 
         //trigram 
         if (sentenceArr.length > 3) {
-            if (!data[current + next + secondNext] && next && secondNext && thirdNext) data[current + next + secondNext] = [thirdNext];
-            else if (!data[current + next + secondNext].has(thirdNext) && next && secondNext && thirdNext) data[current + next + secondNext].push(thirdNext);
+            const word = current + " " + next + " " + secondNext;
+            if (!data[word] && next && secondNext && thirdNext) appendToBackend("create", word, thirdNext);
+            else if (!data[word]?.next_words.includes(thirdNext) && next && secondNext && thirdNext) appendToBackend("add", word, thirdNext);
         }
 
         //quad?gram 
         if (sentenceArr.length > 4) {
-            if (!data[current + next + secondNext + thirdNext] && next && secondNext && thirdNext && fourthNext) data[current + next + secondNext + thirdNext] = [fourthNext];
-            else if (!data[current + next + secondNext + thirdNext].has(thirdNext) && next && secondNext && thirdNext && fourthNext) data[current + next + secondNext + thirdNext].push(fourthNext);
+            const word = current + " " + next + " " + secondNext + " " + thirdNext;
+            if (!data[word] && next && secondNext && thirdNext && fourthNext) appendToBackend("create", word, fourthNext);
+            else if (!data[word]?.next_words.includes(thirdNext) && next && secondNext && thirdNext && fourthNext) appendToBackend("add", word, fourthNext);
         }
-    });
+    };
 
-    // POST (dodawanie)
-    await supabase.from('dictionary').insert({
-        words: wordToAdd,
-        next_words: vocabToAdd,
-        numerical: 1//,
-        //user_id: (await supabase.auth.getUser()).data.user.id
-    });
-
-    console.log('done adding');
+    console.log(`done adding '${sentence}' x${numAdded++} (${sentenceArr.length > 1 ? true : false})`);
 }
 
 function generate(start) {
     let word = start;
     let sentence = word;
-    console.log(word, sentence);
-    let wordCount = Math.round(Math.random() * (inputSentence.split(' ').length * (Math.random() * 15)));
-    wordCount < 5 ? wordCount += wordCount : wordCount;
+    console.log("current word:", "'" + word + "'", "current sentence:", "'" + sentence + "'");
+    let wordCount = Math.round(Math.random() * (inputSentence.split(' ').length * (Math.random() * 0)));
+    wordCount < 5 ? wordCount += 5 : wordCount;
     wordCount > 20 ? wordCount -= 5 : wordCount;
 
     for (let i = 0; i < wordCount; i++) {
-        console.log(wordCount);
+        console.log('wordcount:', wordCount, 'num:', i);
         const next = nextWord(word);
-        if (!next || /\%\e/.test(next)) break;
+        if (!next) break;
+        if (/\%\e/.test(next)) { const nextReplaced = next.replace(/\%\e/g, ""); sentence += " " + nextReplaced; break; };
+
         sentence += " " + next;
         word = next;
     }
 
-    console.log(word, sentence);
+    console.log("last word:", word, "last sentence:", sentence);
     return sentence;
 }
 
 function nextWord(word) {
-    const options = data[word];
+    word = word.replace('\n', '');
+    const options = data[word]?.next_words;
+    console.log("full:", data[word] || 'not found', `word: ${word}`, "options:", options || 'not found');
 
     if (!options) {
-        const optionLocal = data[word.replaceAll("ą", "a").replaceAll("ę", "e").replaceAll("ł", "l").replaceAll("ó", "o").replaceAll("ń", "n").replaceAll("ć", "c").replaceAll("ż", "z").replaceAll("ź", "z").replaceAll("ś", "s")]
+        word = word.replace(/[ąęłóńćżźś]/g, (char) => ({
+            'ą': 'a',
+            'ę': 'e',
+            'ł': 'l',
+            'ó': 'o',
+            'ń': 'n',
+            'ć': 'c',
+            'ż': 'z',
+            'ź': 'z',
+            'ś': 's'
+        }[char]));
+        const optionLocal = data[word]?.next_words;
         if (optionLocal) return optionLocal[Math.floor(Math.random() * optionLocal.length)];
-
+        console.log('backup', optionLocal);
         //returns a random word from a random key if not found
-        return data[Object.keys(data)[Math.floor(Math.random() * Object.keys(data).length)]];
-        //return undefined;
+        //return data[Object.keys(data)[Math.floor(Math.random() * Object.keys(data).length)]];
+        return '(słownictwo mi się skonczyło)%e';
     }
+
     //returns a random word from key "word"
     return options[Math.floor(Math.random() * options.length)];
 }
 
 async function sendMsg(msg) {
-    inputSentence = msg;
     const textDiv = document.createElement("div");
     const text = document.createElement("h4");
 
@@ -127,7 +168,8 @@ async function sendMsg(msg) {
     document.getElementById("top").appendChild(textDiv);
     document.getElementById("input").value = '';
     topMsg += document.querySelectorAll(".message")[document.querySelectorAll(".message").length - 1].offsetHeight + 15;
-    msg = msg.toLowerCase();
+    msg = msg.replaceAll(/[^\p{L}\s]/gu, "").replaceAll(/\s+/g, " ").toLowerCase();
+    inputSentence = msg;
 
     setTimeout(() => textDiv.style.opacity = 1, 10);
 
@@ -137,14 +179,14 @@ async function sendMsg(msg) {
     responseDiv.classList.add("textAI");
     responseDiv.classList.add("message");
     responseText.style = "margin:0;overflow-wrap:break-word;";
-    responseText.textContent = "...";
-    responseDiv.style = `position:absolute;top:${topMsg}px;left:10px;right:auto;font-size: x-large;background-color:grey;padding:10px;color:black;max-width: 85%;opacity:0;transition:opacity 0.6s ease;`;
+    responseText.textContent = "nie rozmawiam po polsku, sorki";
+    responseDiv.style = `position:absolute;top:${topMsg}px;left:10px;right:auto;font-size:x-large;background-color:grey;padding:10px;color:black;max-width: 85%;opacity:0;transition:opacity 0.6s ease;`;
     responseDiv.appendChild(responseText);
     document.getElementById("top").appendChild(responseDiv);
 
     setTimeout(() => responseDiv.style.opacity = 1, 10);
 
-    const response = await aiResponse(msg.split(" ")[Math.floor(Math.random() * (msg.split(" ").length - 1))] || msg);
+    const response = await aiResponse(msg.split(" ")[Math.floor(Math.random() * (msg.split(" ").length - 1))].replace('\n', '') || msg);
     //const response = await generate(msg.split(" ")[Math.floor(Math.random() * (msg.split(" ").length - 1))] || msg);
 
     document.querySelectorAll(".message h4")[document.querySelectorAll(".message h4").length - 1].textContent = response;
@@ -153,14 +195,14 @@ async function sendMsg(msg) {
 }
 
 
-document.getElementById("input").addEventListener("keydown", (e) => {
+document.getElementById("input").addEventListener("keydown", e => {
     if (e.key === "Enter" && document.getElementById("input").value.trim().length !== 0) {
         e.preventDefault();
         sendMsg(document.getElementById("input").value);
     }
 });
 
-document.getElementById("send").addEventListener("click", (e) => {
+document.getElementById("send").addEventListener("click", e => {
     if (document.getElementById("input").value.trim().length !== 0) {
         e.preventDefault();
         sendMsg(document.getElementById("input").value);
